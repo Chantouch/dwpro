@@ -15,8 +15,8 @@ class CreateUserLanguagesTable extends Migration
     {
         Schema::create('user_languages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->integer('language_id')->unsigned();
+            $table->integer('user_id', false, true)->unsigned();
+            $table->integer('language_id', false, true)->unsigned();
             $table->enum('level', ['', 'Beginner Level', 'Conversational Level', 'Business Level', 'Fluent Level'])->nullable();
             $table->timestamps();
 

@@ -29,6 +29,10 @@ Route::group(['middleware' => 'api'], function () {
             Route::resource('levels', 'Api\LevelController');
             Route::resource('languages', 'Api\LanguageController');
             Route::resource('positions', 'Api\PositionController');
+            Route::resource('contract-types', 'Api\ContractTypeController');
+        });
+        Route::prefix('employees')->name('admin.employees.')->group(function () {
+            Route::resource('manage', 'Api\AdminController');
         });
     });
 });

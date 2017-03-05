@@ -20,6 +20,9 @@
             <li class="{!! Request::is('admin/modules/city-provinces*')? 'active' : '' !!}">
                 <a href="{!! route('admin.modules.city-provinces.index') !!}">Cities/Provinces</a>
             </li>
+            <li class="{!! Request::is('admin/modules/contract-types*')? 'active' : '' !!}">
+                <a href="{!! route('admin.modules.contract-types.index') !!}">Contract Type/Terms</a>
+            </li>
             <li class="{!! Request::is('admin/modules/departments*')? 'active' : '' !!}">
                 <a href="{!! route('admin.modules.departments.index') !!}">Departments</a>
             </li>
@@ -45,12 +48,13 @@
     </li>
 
     <li class="has_sub">
-        <a href="#" class="waves-effect waves-light"><i class="ti-home"></i>
+        <a href="#" class="waves-effect waves-light {!! Request::is('admin/employees*') ? 'active' : '' !!}">
+            <i class="ti-home"></i>
             <span>Employees</span>
         </a>
         <ul class="list-unstyled">
-            <li>
-                <a href="#">All</a>
+            <li class="{!! Request::is('admin/employees/manage') ? 'active' : ''!!}">
+                <a href="{!! route('admin.employees.manage') !!}">All</a>
             </li>
             <li>
                 <a href="#">UnActive</a>

@@ -21,7 +21,7 @@ class CreateUserReferencesTable extends Migration
             $table->string('position')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('email')->nullable();
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id', false, true)->unsigned();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

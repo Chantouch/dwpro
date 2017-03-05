@@ -16,7 +16,7 @@ class Employee extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'last_name', 'email', 'password', 'phone_number', 'status', 'verified_by'
     ];
 
     /**
@@ -27,4 +27,12 @@ class Employee extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function verified_by()
+    {
+        return $this->belongsTo(Admin::class, 'verified_by');
+    }
 }

@@ -17,7 +17,7 @@ class CreateUserProfilesTable extends Migration
             $table->increments('id');
             $table->longText('bio')->nullable();
             $table->longText('cover_letter')->nullable();
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id', false, true)->unsigned();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

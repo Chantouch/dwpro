@@ -15,8 +15,8 @@ class CreatePostsLanguagesTable extends Migration
     {
         Schema::create('posts_languages',function (Blueprint $table){
            $table->increments('id');
-           $table->integer('post_id')->unsigned();
-           $table->integer('language_id')->unsigned();
+           $table->integer('post_id', false, true)->unsigned();
+           $table->integer('language_id', false, true)->unsigned();
            $table->timestamps();
            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
            $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade');

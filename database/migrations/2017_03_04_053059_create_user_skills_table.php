@@ -18,7 +18,7 @@ class CreateUserSkillsTable extends Migration
             $table->string('name')->nullable();
             $table->enum('level', ['Beginner', 'Intermediate', 'Professional']);
             $table->integer('year_exp')->nullable();
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id', false, true)->unsigned();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

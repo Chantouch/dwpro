@@ -20,18 +20,17 @@ class CreateUserEducationsTable extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->tinyInteger('is_studying')->nullable(0);
-            $table->integer('country_id')->unsigned();
-            $table->integer('city_id')->unsigned();
+            $table->integer('country_id', false, true)->unsigned();
+            $table->integer('city_id', false, true)->unsigned();
             $table->string('field_of_study')->nullable();
             $table->string('grade')->nullable();
-            $table->integer('level_id')->unsigned();
-            $table->integer('user_id')->insigned();
+            $table->string('level')->nullable();
+            $table->integer('user_id', false, true)->insigned();
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
-            $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

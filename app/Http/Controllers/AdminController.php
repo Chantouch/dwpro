@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Employee;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    public $employees;
 
-    public function __construct()
+    /**
+     * AdminController constructor.
+     * @param Employee $employees
+     */
+    public function __construct(Employee $employees)
     {
         $this->middleware('auth:admin');
+        $this->employees = $employees;
     }
 
     public function index()
@@ -17,48 +24,15 @@ class AdminController extends Controller
         return view('admin-home');
     }
 
-    public function getBusinessType()
+    public function employees()
     {
-        return view('administrator.modules.business-type.index');
+        $title = "Employee management";
+        return view('admin.employees.index', compact('title'));
     }
 
-    public function getCityProvince()
+    public function show_employee($id)
     {
-        return view('administrator.modules.city-province.index');
-    }
-
-    public function getDepartment()
-    {
-        return view('administrator.modules.department.index');
-    }
-
-    public function getFunction()
-    {
-        return view('administrator.modules.function.index');
-    }
-
-    public function getIndustry()
-    {
-        return view('administrator.modules.industry.index');
-    }
-
-    public function getQualification()
-    {
-        return view('administrator.modules.qualification.index');
-    }
-
-    public function getLevel()
-    {
-        return view('administrator.modules.level.index');
-    }
-
-    public function getLanguage()
-    {
-        return view('administrator.modules.language.index');
-    }
-
-    public function getPosition()
-    {
-        return view('administrator.modules.position.index');
+        $employee = $this->employees->with('verified_by')->find($id);
+        return response()->json($employee);
     }
 }
