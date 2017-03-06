@@ -31,6 +31,7 @@ const business = new Vue({
             items: [],
             formErrors: {},
             formErrorsUpdate: {},
+            searchName: "",
         }
     },
     computed: {
@@ -54,6 +55,22 @@ const business = new Vue({
                 pagesArray.push(from);
             }
             return pagesArray;
+        },
+        //A computed property that holds only those items that match the searchName
+        filterItem(){
+            let item_array = this.items, searchName = this.searchName;
+            if (!searchName) {
+                return item_array;
+            }
+            searchName = searchName.trim().toLowerCase();
+            item_array = item_array.filter(function (item) {
+                if (item.name.toLowerCase().indexOf(searchName) !== -1 || item.description.toLowerCase().indexOf(searchName) !== -1) {
+                    return item;
+                }
+            });
+
+            //Return an array with the filtered data.
+            return item_array;
         }
     },
     created(){
@@ -124,5 +141,15 @@ const business = new Vue({
             this.pagination.current_page = page;
             this.fetchItems(page)
         }
-    }
+    },
+    // filters: {
+    //     truncate: function (text, length, clamp) {
+    //         clamp = clamp || '...';
+    //         let node = document.createElement('div');
+    //         node.innerHTML = text;
+    //         let content = node.textContent;
+    //         return content.length > length ? content.slice(0, length) + clamp : content;
+    //     }
+    //
+    // }
 });

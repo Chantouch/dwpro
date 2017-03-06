@@ -22,60 +22,89 @@
                         </div>
                     </div>
                     <div class="col-lg-12">
-                        <div class="p-20">
-                            <table class="table table-bordered m-0">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="item in items">
-                                    <td scope="row">@{{ item.id }}</td>
-                                    <td>@{{ item.name }}</td>
-                                    <td>@{{ item.description }}</td>
-                                    <td>@{{ item.status }}</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn btn-default btn-xs waves-effect waves-light">
-                                                <i class="glyphicon glyphicon-eye-open"></i></button>
-                                            <button class="btn btn-default btn-xs waves-effect waves-light"
-                                                    @click.prevent="editItem(item)">
-                                                <i class="glyphicon glyphicon-edit"></i></button>
-                                            <button type="submit" class="btn btn-danger btn-xs waves-effect waves-light"
-                                                    @click.prevent="deleteItem(item)">
-                                                <i class="glyphicon glyphicon-trash"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <nav>
-                                <ul class="pagination" v-if="pagination.total > pagination.per_page">
-                                    <li v-if="pagination.current_page > 1">
-                                        <a href="#" aria-label="Previous"
-                                           @click.prevent="changePage(pagination.current_page - 1)">
-                                            <span aria-hidden="true">«</span>
-                                        </a>
-                                    </li>
-                                    <li v-for="page in pagesNumber" v-bind:class="[ page == isActive ? 'active' : '']">
-                                        <a href="#" @click.prevent="changePage(page)">
-                                            @{{ page }}
-                                        </a>
-                                    </li>
-                                    <li v-if="pagination.current_page < pagination.last_page">
-                                        <a href="#" aria-label="Next"
-                                           @click.prevent="changePage(pagination.current_page + 1)">
-                                            <span aria-hidden="true">»</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+                        <div class="form-inline m-b-20">
+                            <div class="row">
+                                <div class="col-sm-6 text-xs-center">
+                                    <div class="form-group">
+                                        <label class="control-label m-r-5">Show</label>
+                                        <select id="demo-foo-filter-status" class="form-control input-sm">
+                                            <option value="">All</option>
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="200">200</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 text-xs-center text-right">
+                                    <div class="form-group">
+                                        <input id="searchName" type="text" placeholder="Search"
+                                               class="form-control input-sm" autocomplete="on" name="searchName"
+                                               v-model="searchName">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <table class="table table-bordered m-0">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Created at</th>
+                                <th>Updated at</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="item in filterItem">
+                                <td scope="row">@{{ item.id }}</td>
+                                <td>@{{ item.name }}</td>
+                                <td>@{{ item.description | truncate }}</td>
+                                <td>@{{ item.status }}</td>
+                                <td>@{{ item.created_at | dateshow }}</td>
+                                <td>@{{ item.updated_at | dateshow }}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button class="btn btn-default btn-xs waves-effect waves-light">
+                                            <i class="glyphicon glyphicon-eye-open"></i></button>
+                                        <button class="btn btn-default btn-xs waves-effect waves-light"
+                                                @click.prevent="editItem(item)">
+                                            <i class="glyphicon glyphicon-edit"></i></button>
+                                        <button type="submit" class="btn btn-danger btn-xs waves-effect waves-light"
+                                                @click.prevent="deleteItem(item)">
+                                            <i class="glyphicon glyphicon-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr v-if="!filterItem.length">
+                                <th colspan="12">
+                                    <span>No result was found for your search keyword!</span>
+                                </th>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <nav>
+                            <ul class="pagination" v-if="pagination.total > pagination.per_page">
+                                <li v-if="pagination.current_page > 1">
+                                    <a href="#" aria-label="Previous"
+                                       @click.prevent="changePage(pagination.current_page - 1)">
+                                        <span aria-hidden="true">«</span>
+                                    </a>
+                                </li>
+                                <li v-for="page in pagesNumber" v-bind:class="[ page == isActive ? 'active' : '']">
+                                    <a href="#" @click.prevent="changePage(page)">
+                                        @{{ page }}
+                                    </a>
+                                </li>
+                                <li v-if="pagination.current_page < pagination.last_page">
+                                    <a href="#" aria-label="Next"
+                                       @click.prevent="changePage(pagination.current_page + 1)">
+                                        <span aria-hidden="true">»</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
                 <!-- Create Item Modal -->
@@ -160,3 +189,8 @@
     <script src="{!! asset('assets/plugins/notifications/notify-metro.js') !!}"></script>
     <script src="{!! asset('js/controller/modules/business.type.js') !!}"></script>
 @stop
+
+@push('plugins')
+{{--<script src="{!! asset('assets/plugins/moment/moment.min.js') !!}"></script>--}}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.js"></script>
+@endpush

@@ -28,7 +28,7 @@ class BusinessTypeController extends Controller
      */
     public function index()
     {
-        $business_type = $this->business_type->paginate(5);
+        $business_type = $this->business_type->paginate(50);
         return response()->json($business_type);
     }
 

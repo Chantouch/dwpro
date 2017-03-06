@@ -56,11 +56,11 @@
 <body class="fixed-left">
 <div id="app">
 
-    {{--<div class="animationload">--}}
-        {{--<div class="loader"></div>--}}
-    {{--</div>--}}
+{{--<div class="animationload">--}}
+{{--<div class="loader"></div>--}}
+{{--</div>--}}
 
-    <!-- Begin page -->
+<!-- Begin page -->
     <div id="wrapper">
 
         <!-- Top Bar Start -->
@@ -435,6 +435,6 @@
 <script src="{!! asset('assets/js/jquery.core.js') !!}"></script>
 <script src="{!! asset('assets/js/jquery.app.js') !!}"></script>
 <script src="{!! asset('js/apps.js') !!}"></script>
-
+@stack('plugins')
 </body>
 </html>
