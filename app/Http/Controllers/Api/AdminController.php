@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Employee;
+use App\Models\CompanyProfile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
@@ -28,8 +29,12 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $position = $this->employees->with('verified_by')->paginate(5);
-        return response()->json($position);
+        $employees = $this->employees->with([
+            'verified_by', 'company_profile.industry',
+            'company_profile.business_type',
+            'company_profile.city',
+        ])->paginate(50);
+        return response()->json($employees);
     }
 
     /**

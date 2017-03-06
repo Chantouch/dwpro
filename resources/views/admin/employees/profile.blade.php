@@ -3,8 +3,8 @@
 @section('content')
     <section class="content-header">
         <h1 class="pull-left">Verification status
-            <small> | @if($employer->verified_by==0) Not @endif Verified | Enrollment No:
-                <strong> {{ $employer->employer_enrollment }} </strong></small>
+            <small> | @if($employee->verified_by==0) Not @endif Verified | Enrollment No:
+                <strong> {{ $employee->employer_enrollment }} </strong></small>
         </h1>
         <h1 class="pull-right">
             <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="#">Back</a>

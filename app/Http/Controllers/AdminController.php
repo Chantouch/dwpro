@@ -32,7 +32,16 @@ class AdminController extends Controller
 
     public function show_employee($id)
     {
-        $employee = $this->employees->with('verified_by')->find($id);
-        return response()->json($employee);
+        $title = "View employee";
+        $employee = $this->employees->with([
+            'verified_by', 'company_profile.industry',
+            'company_profile.business_type',
+            'company_profile.city',
+        ])->find($id);
+        if (!$employee) {
+            return back()->with('error', 'We can not find this employee, please other');
+        }
+//        return response()->json($employee);
+        return view('admin.employees.profile', compact('employee', 'title'));
     }
 }

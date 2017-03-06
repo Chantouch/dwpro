@@ -435,6 +435,7 @@
 <script src="{!! asset('assets/js/jquery.core.js') !!}"></script>
 <script src="{!! asset('assets/js/jquery.app.js') !!}"></script>
 <script src="{!! asset('js/apps.js') !!}"></script>
+<script src="{!! asset('assets/plugins/moment/moment.min.js') !!}"></script>
 @stack('plugins')
 </body>
 </html>

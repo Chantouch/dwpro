@@ -4,18 +4,18 @@
         <!-- Add the bg color to the header using any of the bg-* classes -->
         <div class="widget-user-header bg-aqua-active">
             <div class="widget-user-image">
-                @if($employer->photo == 'default.jpg')
-                    <img class="" src="{!! asset('uploads/employers/' . $employer->photo)!!}"
-                         alt="User Avatar">
-                @else
-                    <img class="" src="{!! asset('uploads/employers/avatar/'. $employer->id .'/'. $employer->photo)!!}"
-                         alt="{!! $employer->contact_name !!}">
-                @endif
+                {{--@if($employee->photo == 'default.jpg')--}}
+                    {{--<img class="" src="{!! asset('uploads/employers/' . $employee->photo)!!}"--}}
+                         {{--alt="User Avatar">--}}
+                {{--@else--}}
+                    {{--<img class="" src="{!! asset('uploads/employers/avatar/'. $employee->id .'/'. $employee->photo)!!}"--}}
+                         {{--alt="{!! $employee->contact_name !!}">--}}
+                {{--@endif--}}
             </div>
             <!-- /.widget-user-image -->
-            <h3 class="widget-user-username">{!! $employer->organization_name !!}</h3>
-            <h5 class="widget-user-desc"> {!! $employer->organization_type !!}
-                / {!! $employer->organization_sector!!}
+            <h3 class="widget-user-username">{!! $employee->company_profile->name !!}</h3>
+            <h5 class="widget-user-desc"> {!! $employee->company_profile->business_type->name !!}
+                / {!! $employee->company_profile->industry->name!!}
             </h5>
         </div>
         <div class="box-footer no-padding">
@@ -29,10 +29,10 @@
                 <li><a href="#">Jobs Available now<span
                                 class="pull-right badge bg-aqua">{!!count($jobs_available)!!}</span></a></li>
 
-                @if($employer->verified_by == 0)
+                @if($employee->verified_by == 0)
                     <li class="approve_employer text-center">
                         <a title="By clicking approve the Employer profile will be marked as verified and the Employer can use all the features of this portal"
-                           href="{!! route('admin.employerVerify', $employer->id) !!}"
+                           href="{!! route('admin.employerVerify', $employee->id) !!}"
                            onclick="return confirm('Are you sure to approve this employer?')"
                            class="show_confirm"> <i class="fa fa-check"></i>&nbsp; Approve Employer
                         </a>
@@ -63,23 +63,23 @@
                     <strong><i class="fa fa-user margin-r-5"></i> Name </strong>
                     &nbsp;&nbsp;&nbsp;
                     <span>
-                                {!!$employer->contact_name!!} ({!! $employer->contact_designation!!})
+                                {!!$employee->contact_name!!} ({!! $employee->contact_designation!!})
                             </span>
                     <hr>
                     <strong><i class="fa fa-phone margin-r-5"></i> Phone</strong>
                     &nbsp;&nbsp;&nbsp;
                     <span>
-                                {!!$employer->contact_mobile_no!!}
+                                {!!$employee->contact_mobile_no!!}
                             </span>
                     <hr>
                     <strong><i class="fa fa-envelope margin-r-5"></i> E-mail</strong>
                     &nbsp;&nbsp;&nbsp;
                     <span>
-                                <a href="mailto:{!!$employer->email!!}" target="_top">{!!$employer->email!!}</a>
+                                <a href="mailto:{!!$employee->email!!}" target="_top">{!!$employee->email!!}</a>
                             </span>
                     <hr>
                     <strong><i class="fa fa-file-text-o margin-r-5"></i> About</strong>
-                    <p>{!! $employer->details !!}</p>
+                    <p>{!! $employee->details !!}</p>
                 </div>
             </div>
             <!-- /.tab-pane -->
@@ -88,62 +88,62 @@
                     <tbody>
                     <tr>
                         <th> Enrollment No</th>
-                        <td> {!! $employer->employer_enrollment !!} </td>
+                        <td> {!! $employee->employer_enrollment !!} </td>
                     </tr>
                     <tr>
                         <th> Name of the Organisation</th>
-                        <td> {!! $employer->organization_name !!} </td>
+                        <td> {!! $employee->organization_name !!} </td>
                     </tr>
                     <tr>
                         <th> Organisation type</th>
-                        <td> {!! $employer->organization_type !!} </td>
+                        <td> {!! $employee->organization_type !!} </td>
                     </tr>
                     <tr>
                         <th> Sector</th>
-                        <td> {!! $employer->organization_sector !!} </td>
+                        <td> {!! $employee->organization_sector !!} </td>
                     </tr>
                     <tr>
                         <th> Industry</th>
                         <td>
-                            @if($employer->industry_id == '' || $employer->industry_id == null)
+                            @if($employee->industry_id == '' || $employee->industry_id == null)
                                 <span>No industry</span>
                             @else
-                                {{ $employer->industry->name }}
+                                {{ $employee->industry->name }}
                             @endif
                         </td>
                     </tr>
                     <tr>
                         <th> City, District</th>
                         <td>
-                            @if($employer->city_id == '' || $employer->city_id == null || $employer->district_id == '' || $employer->district_id == null)
+                            @if($employee->city_id == '' || $employee->city_id == null || $employee->district_id == '' || $employee->district_id == null)
                                 <span>No city and district</span>
                             @else
-                                {!! $employer->city->name !!},&nbsp; {!! $employer->district->name!!}
+                                {!! $employee->city->name !!},&nbsp; {!! $employee->district->name!!}
                             @endif
                         </td>
                     </tr>
                     <tr>
                         <th> Address</th>
-                        <td> {!! $employer->address !!} </td>
+                        <td> {!! $employee->address !!} </td>
                     </tr>
                     <tr>
                         <th> Phone no</th>
-                        <td> ({!! $employer->phone_no_ext!!}) {!! $employer->phone_no_main !!}</td>
+                        <td> ({!! $employee->phone_no_ext!!}) {!! $employee->phone_no_main !!}</td>
                     </tr>
                     <tr>
                         <th> Email</th>
-                        <td> {!! $employer->organisation_email!!} </td>
+                        <td> {!! $employee->organisation_email!!} </td>
                     </tr>
                     <tr>
                         <th> Web address (URL)</th>
-                        <td> {!! $employer->web_address!!} </td>
+                        <td> {!! $employee->web_address!!} </td>
                     </tr>
                     <tr>
                         <th> Verification status</th>
                         <td>
-                            @if($employer->verified_by == 0) {!! $employer->verification_status!!}
+                            @if($employee->verified_by == 0) {!! $employee->verification_status!!}
                             @else
-                                <a href="{!! route('admin.admins_accounts.view', $employer->verified_by) !!}"> {!! $employer->verification_status!!} </a>
+                                <a href="{!! route('admin.admins_accounts.view', $employee->verified_by) !!}"> {!! $employee->verification_status!!} </a>
                             @endif
                         </td>
                     </tr>

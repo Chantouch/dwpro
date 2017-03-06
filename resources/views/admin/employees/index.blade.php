@@ -27,8 +27,9 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
+                                <th>Company</th>
+                                <th>Business Type</th>
+                                <th>Industry</th>
                                 <th>Email</th>
                                 <th>Phone Number</th>
                                 <th>Role</th>
@@ -41,8 +42,16 @@
                             <tbody>
                             <tr v-for="item in items">
                                 <td scope="row">@{{ item.id }}</td>
-                                <td>@{{ item.first_name }}</td>
-                                <td>@{{ item.last_name }}</td>
+                                <td v-if="item.company_profile != null">
+                                    <a :href="'/admin/employees/show-employee/' + item.id">@{{ item.company_profile.name }}</a>
+                                </td>
+                                <td v-if="item.company_profile == null">Null</td>
+                                <td v-if="item.company_profile != null">
+                                    <span v-if="item.company_profile.industry != null">@{{ item.company_profile.industry.name }}</span>
+                                </td>
+                                <td v-if="item.company_profile != null">
+                                    <span v-if="item.company_profile.business_type != null">@{{ item.company_profile.business_type.name }}</span>
+                                </td>
                                 <td>@{{ item.email }}</td>
                                 <td>@{{ item.phone_number }}</td>
                                 <td>@{{ item.role }}</td>
@@ -50,7 +59,7 @@
                                 <td v-else="item.verified_by != null">@{{ item.verified_by.name }}</td>
                                 <td v-if="item.status == 1"><span class="label label-success">Active</span></td>
                                 <td v-else="item.status != 1"><span class="label label-danger">UnActive</span></td>
-                                <td>@{{ item.created_at }}</td>
+                                <td>@{{ item.created_at | dateshow }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <button class="btn btn-default btn-xs waves-effect waves-light">

@@ -129,3 +129,26 @@ $factory->define(\App\Models\Qualification::class, function (\Faker\Generator $f
         'status' => 1
     ];
 });
+
+
+$factory->define(\App\Models\CompanyProfile::class, function (\Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+        'employee_id' => rand(1,50),
+        'industry_id' => mt_rand(1, 500),
+        'description' => $faker->paragraph,
+        'business_type_id' => mt_rand(1, 500),
+        'city_id' => mt_rand(1, 25),
+        'website' => $faker->url,
+        'address' => $faker->address,
+        'company_email' => $faker->safeEmail,
+        'number_employee' => rand(5, 500),
+        'slug' => $faker->slug,
+        'tag_line' => $faker->word,
+        'longitude' => $faker->longitude,
+        'latitude' => $faker->latitude,
+        'confirm_code' => str_random(10),
+        'temp_enroll_no' => str_random(10),
+        'enroll_no' => $faker->randomNumber()
+    ];
+});

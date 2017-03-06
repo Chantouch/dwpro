@@ -53,7 +53,7 @@
                                 <th>Status</th>
                                 <th>Created at</th>
                                 <th>Updated at</th>
-                                <th>Action</th>
+                                <th width="87">Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -191,6 +191,5 @@
 @stop
 
 @push('plugins')
-{{--<script src="{!! asset('assets/plugins/moment/moment.min.js') !!}"></script>--}}
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.js"></script>
+{{--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.js"></script>--}}
 @endpush

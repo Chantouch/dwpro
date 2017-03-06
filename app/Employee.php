@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\CompanyProfile;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -34,5 +35,13 @@ class Employee extends Authenticatable
     public function verified_by()
     {
         return $this->belongsTo(Admin::class, 'verified_by');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function company_profile()
+    {
+        return $this->hasOne(CompanyProfile::class);
     }
 }
