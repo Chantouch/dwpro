@@ -43,7 +43,7 @@
                             <tr v-for="item in items">
                                 <td scope="row">@{{ item.id }}</td>
                                 <td v-if="item.company_profile != null">
-                                    <a :href="'/admin/employees/show-employee/' + item.id">@{{ item.company_profile.name }}</a>
+                                    <a :href="'/admin/employees/show-employee/' + item.hashid">@{{ item.company_profile.name }}</a>
                                 </td>
                                 <td v-if="item.company_profile == null">Null</td>
                                 <td v-if="item.company_profile != null">
@@ -83,7 +83,7 @@
                                         <span aria-hidden="true">«</span>
                                     </a>
                                 </li>
-                                <li v-for="page in pagesNumber" v-bind:class="[ page == isActive ? 'active' : '']">
+                                <li v-for="page in pagesNumber" :class="[ page == isActive ? 'active' : '']">
                                     <a href="#" @click.prevent="changePage(page)">
                                         @{{ page }}
                                     </a>

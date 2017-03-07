@@ -27,7 +27,8 @@
                                 <div class="col-sm-6 text-xs-center">
                                     <div class="form-group">
                                         <label class="control-label m-r-5">Show</label>
-                                        <select id="demo-foo-filter-status" class="form-control input-sm">
+                                        <select id="filter-status" class="form-control input-sm"
+                                                v-model="filter-status">
                                             <option value="">All</option>
                                             <option value="10">10</option>
                                             <option value="20">20</option>

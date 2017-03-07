@@ -13,6 +13,7 @@ class CompanyProfile extends Model
         'longitude', 'latitude', 'confirm_code', 'temp_enroll_no', 'enroll_no'
     ];
 
+    //===============Relationship===========//
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -34,5 +35,15 @@ class CompanyProfile extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+
+    //=========GetAndSetAttributes========//
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imagable');
     }
 }

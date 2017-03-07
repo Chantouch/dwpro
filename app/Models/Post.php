@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Employee;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -14,4 +15,36 @@ class Post extends Model
     ];
 
 
+    //===========Relationship==========//
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function level()
+    {
+        return $this->belongsTo(Level::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function industry()
+    {
+        return $this->belongsTo(Industry::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function qualification()
+    {
+        return $this->belongsTo(Qualification::class);
+    }
 }

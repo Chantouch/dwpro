@@ -5,12 +5,14 @@
         <div class="widget-user-header bg-aqua-active">
             <div class="widget-user-image">
                 {{--@if($employee->photo == 'default.jpg')--}}
-                    {{--<img class="" src="{!! asset('uploads/employers/' . $employee->photo)!!}"--}}
-                         {{--alt="User Avatar">--}}
+                {{--<img class="" src="{!! asset('uploads/employers/' . $employee->photo)!!}"--}}
+                {{--alt="{!! $employee->first_name !!}">--}}
                 {{--@else--}}
-                    {{--<img class="" src="{!! asset('uploads/employers/avatar/'. $employee->id .'/'. $employee->photo)!!}"--}}
-                         {{--alt="{!! $employee->contact_name !!}">--}}
+                {{--<img class="" src="{!! asset('uploads/employers/avatar/'. $employee->id .'/'. $employee->photo)!!}"--}}
+                {{--alt="{!! $employee->contact_name !!}">--}}
                 {{--@endif--}}
+                <img class="img-responsive" src="{!! asset('uploads/employees/default.jpg')!!}"
+                     alt="{!! $employee->first_name !!}">
             </div>
             <!-- /.widget-user-image -->
             <h3 class="widget-user-username">{!! $employee->company_profile->name !!}</h3>
@@ -21,25 +23,24 @@
         <div class="box-footer no-padding">
             <ul class="nav nav-stacked">
                 <li><a href="#">Total no of Jobs Posted <span
-                                class="pull-right badge bg-blue">{!!$total_jobs!!}</span></a></li>
+                                class="pull-right badge bg-blue">{!! count($employee->posts) !!}</span></a></li>
                 <li><a href="#">Jobs Not Verified yet<span
-                                class="pull-right badge bg-red">{!!count($jobs_not_verified)!!}</span></a></li>
+                                class="pull-right badge bg-red">Null</span></a></li>
                 <li><a href="#">Jobs Filled up <span
-                                class="pull-right badge bg-green">{!!count($jobs_filled_up)!!}</span></a></li>
+                                class="pull-right badge bg-green">Null</span></a></li>
                 <li><a href="#">Jobs Available now<span
-                                class="pull-right badge bg-aqua">{!!count($jobs_available)!!}</span></a></li>
+                                class="pull-right badge bg-aqua">Null</span></a></li>
 
                 @if($employee->verified_by == 0)
                     <li class="approve_employer text-center">
                         <a title="By clicking approve the Employer profile will be marked as verified and the Employer can use all the features of this portal"
-                           href="{!! route('admin.employerVerify', $employee->id) !!}"
-                           onclick="return confirm('Are you sure to approve this employer?')"
-                           class="show_confirm"> <i class="fa fa-check"></i>&nbsp; Approve Employer
+                           href="#" onclick="return confirm('Are you sure to approve this employer?')"
+                           class="show_confirm"> <i class="ti-check"></i>&nbsp; Approve Employer
                         </a>
                     </li>
                 @else
-                    <li class="text-center bg-green">
-                        <p style="position: relative;display: block;padding: 10px 15px;">
+                    <li class="text-center">
+                        <p style="position: relative;display: block;padding: 10px 15px;background: yellowgreen;">
                             Profile Approved
                         </p>
                     </li>
@@ -51,224 +52,262 @@
 </div>
 <!-- /.col -->
 <div class="col-md-7 no-padding">
-    <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Contact Person
-                    details</a></li>
-            <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Organisation Details</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane active" id="tab_1">
-                <div class="box-body no-padding" style="padding-top:5px !important;">
-                    <strong><i class="fa fa-user margin-r-5"></i> Name </strong>
-                    &nbsp;&nbsp;&nbsp;
-                    <span>
-                                {!!$employee->contact_name!!} ({!! $employee->contact_designation!!})
-                            </span>
-                    <hr>
-                    <strong><i class="fa fa-phone margin-r-5"></i> Phone</strong>
-                    &nbsp;&nbsp;&nbsp;
-                    <span>
-                                {!!$employee->contact_mobile_no!!}
-                            </span>
-                    <hr>
-                    <strong><i class="fa fa-envelope margin-r-5"></i> E-mail</strong>
-                    &nbsp;&nbsp;&nbsp;
-                    <span>
-                                <a href="mailto:{!!$employee->email!!}" target="_top">{!!$employee->email!!}</a>
-                            </span>
-                    <hr>
-                    <strong><i class="fa fa-file-text-o margin-r-5"></i> About</strong>
-                    <p>{!! $employee->details !!}</p>
-                </div>
-            </div>
-            <!-- /.tab-pane -->
-            <div class="tab-pane no-padding" id="tab_2">
-                <table class="table table-striped table-condensed">
-                    <tbody>
-                    <tr>
-                        <th> Enrollment No</th>
-                        <td> {!! $employee->employer_enrollment !!} </td>
-                    </tr>
-                    <tr>
-                        <th> Name of the Organisation</th>
-                        <td> {!! $employee->organization_name !!} </td>
-                    </tr>
-                    <tr>
-                        <th> Organisation type</th>
-                        <td> {!! $employee->organization_type !!} </td>
-                    </tr>
-                    <tr>
-                        <th> Sector</th>
-                        <td> {!! $employee->organization_sector !!} </td>
-                    </tr>
-                    <tr>
-                        <th> Industry</th>
-                        <td>
-                            @if($employee->industry_id == '' || $employee->industry_id == null)
-                                <span>No industry</span>
-                            @else
-                                {{ $employee->industry->name }}
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th> City, District</th>
-                        <td>
-                            @if($employee->city_id == '' || $employee->city_id == null || $employee->district_id == '' || $employee->district_id == null)
-                                <span>No city and district</span>
-                            @else
-                                {!! $employee->city->name !!},&nbsp; {!! $employee->district->name!!}
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th> Address</th>
-                        <td> {!! $employee->address !!} </td>
-                    </tr>
-                    <tr>
-                        <th> Phone no</th>
-                        <td> ({!! $employee->phone_no_ext!!}) {!! $employee->phone_no_main !!}</td>
-                    </tr>
-                    <tr>
-                        <th> Email</th>
-                        <td> {!! $employee->organisation_email!!} </td>
-                    </tr>
-                    <tr>
-                        <th> Web address (URL)</th>
-                        <td> {!! $employee->web_address!!} </td>
-                    </tr>
-                    <tr>
-                        <th> Verification status</th>
-                        <td>
-                            @if($employee->verified_by == 0) {!! $employee->verification_status!!}
-                            @else
-                                <a href="{!! route('admin.admins_accounts.view', $employee->verified_by) !!}"> {!! $employee->verification_status!!} </a>
-                            @endif
-                        </td>
-                    </tr>
-
-                    </tbody>
-                </table>
-            </div>
-            <!-- /.tab-pane -->
+    <ul class="nav nav-tabs tabs">
+        <li class="active tab">
+            <a href="#contact_person_details" data-toggle="tab" aria-expanded="false">
+                <span class="visible-xs"><i class="fa fa-home"></i></span>
+                <span class="hidden-xs">Contact Person Details</span>
+            </a>
+        </li>
+        <li class="tab">
+            <a href="#company_details" data-toggle="tab" aria-expanded="false">
+                <span class="visible-xs"><i class="fa fa-user"></i></span>
+                <span class="hidden-xs">Company Details</span>
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="contact_person_details">
+            <strong><i class="fa fa-user margin-r-5"></i> Name </strong>
+            &nbsp;&nbsp;&nbsp;
+            <span>
+                {!! $employee->first_name,' ', $employee->last_name !!}
+            </span>
+            <hr>
+            <strong><i class="fa fa-phone margin-r-5"></i> Phone</strong>
+            &nbsp;&nbsp;&nbsp;
+            <span>
+                {!! $employee->phone_number !!}
+            </span>
+            <hr>
+            <strong><i class="fa fa-envelope margin-r-5"></i> E-mail</strong>
+            &nbsp;&nbsp;&nbsp;
+            <span>
+                <a href="mailto:{!!$employee->email!!}" target="_top">{!!$employee->email!!}</a>
+            </span>
+            <hr>
+            <strong><i class="fa fa-file-text-o margin-r-5"></i> About</strong>
+            <p>{!! $employee->company_profile->description !!}</p>
         </div>
-        <!-- /.tab-content -->
+        <div class="tab-pane" id="company_details">
+            <table class="table table-striped table-condensed">
+                <tbody>
+                <tr>
+                    <th>Enrollment No</th>
+                    <td> {!! $employee->company_profile->enroll_no !!} </td>
+                </tr>
+                <tr>
+                    <th>Name of the Organisation</th>
+                    <td> {!! $employee->company_profile->name !!} </td>
+                </tr>
+                <tr>
+                    <th>Organisation type</th>
+                    <td> {!! $employee->company_profile->business_type->name !!} </td>
+                </tr>
+                <tr>
+                    <th>Industry</th>
+                    <td>
+                        @if($employee->company_profile->industry_id == '' || $employee->company_profile->industry_id == null)
+                            <span>No industry</span>
+                        @else
+                            {{ $employee->company_profile->industry->name }}
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th>City, District</th>
+                    <td>
+                        @if($employee->company_profile->city_id == '' || $employee->company_profile->city_id == null)
+                            <span>No city and district</span>
+                        @else
+                            {!! $employee->company_profile->city->name !!}
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th>Address</th>
+                    <td> {!! $employee->company_profile->address !!} </td>
+                </tr>
+                <tr>
+                    <th>Phone no</th>
+                    <td> {!! $employee->company_profile->phone_number !!}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>
+                        <a href="mailto:{!! $employee->company_profile->company_email!!}">{!! $employee->company_profile->company_email!!}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Web address (URL)</th>
+                    <td><a href="{!! $employee->company_profile->website!!}"
+                           target="_blank">{!! $employee->company_profile->website!!}</a></td>
+                </tr>
+                <tr>
+                    <th>Verification status</th>
+                    <td>
+                        @if($employee->verified_by == null) {!! $employee->verification_status!!}
+                        @else
+                            <a href="#"> {!! $employee->verification_status!!} </a>
+                        @endif
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <!-- About Me Box -->
-</div>
-<!-- /.col -->
+</div><!-- /.col -->
 <div class="col-md-12">
-    <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#not_verified" data-toggle="tab"> Jobs needs verification</a></li>
-            <li><a href="#jobs_available" data-toggle="tab">Jobs available now</a></li>
-            <li><a href="#jobs_filled_up" data-toggle="tab">Jobs filled up</a></li>
-        </ul>
-        <div class="tab-content no-padding">
-            <div class="active tab-pane" id="not_verified">
-                @if(count($jobs_not_verified)!=0)
-                    <table class="table table-condensed">
+    <ul class="nav nav-tabs tabs tabs-top">
+        <li class="active tab">
+            <a href="#all_jobs" data-toggle="tab" aria-expanded="false">
+                <span class="visible-xs"><i class="fa fa-home"></i></span>
+                <span class="hidden-xs">All Jobs</span>
+            </a>
+        </li>
+        <li class="tab">
+            <a href="#jobs_need_verification" data-toggle="tab" aria-expanded="false">
+                <span class="visible-xs"><i class="fa fa-home"></i></span>
+                <span class="hidden-xs">Jobs Need Verification</span>
+            </a>
+        </li>
+        <li class="tab">
+            <a href="#jobs_available_now" data-toggle="tab" aria-expanded="false">
+                <span class="visible-xs"><i class="fa fa-user"></i></span>
+                <span class="hidden-xs">Jobs Available Now</span>
+            </a>
+        </li>
+        <li class="tab">
+            <a href="#jobs_filled_up" data-toggle="tab" aria-expanded="true">
+                <span class="visible-xs"><i class="fa fa-envelope-o"></i></span>
+                <span class="hidden-xs">Jobs Filled Up</span>
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="all_jobs">
+            <table class="table table-bordered">
+                @if(!empty($employee->posts))
+                    <thead>
+                    <tr>
+                        <th>Job ID</th>
+                        <th>Level</th>
+                        <th>No. of pos.</th>
+                        <th>Industry</th>
+                        <th>Qualification</th>
+                        <th>Salary</th>
+                        <th>Create At</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($employee->posts as $post)
                         <tr>
-                            <th>Job ID</th>
-                            <th>Position</th>
-                            <th> No. of post.</th>
-                            <th>Industry</th>
-                            <th>Type</th>
-                            <th> Qualification</th>
-                            <th> Salary Offered</th>
+                            <td>
+                                <a href="#">
+                                    {!! $post->name !!}
+                                </a>
+                            </td>
+                            <td>{!! $post->level->name !!}</td>
+                            <td>{!! $post->hire_number !!}</td>
+                            <td>{!! $post->industry->name !!}</td>
+                            <td>{!! $post->qualification->name !!}</td>
+                            <td>{!! $post->salary !!}</td>
+                            <td>{!! $post->created_at !!}</td>
                         </tr>
-                        @foreach($jobs_not_verified as $item)
-                            <tr>
-                                <td>
-                                    <a href="{!!Hashids::encode($item->id)!!}">
-                                        #{!! $item->emp_job_id !!}
-                                    </a>
-                                </td>
-                                <td> {!! $item->post_name !!} </td>
-                                <td> {!! $item->no_of_post !!} </td>
-                                <td> {!! $item->industry->name !!} </td>
-                                <td> {!! $item->job_type !!} </td>
-                                <td> {!! $item->qualification->name !!} </td>
-                                <td> {!! $item->salary_offered_min !!} -
-                                    {!! $item->salary_offered_max !!}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </table>
-                @else
-                    <p class="text-center" style="padding:10px;"> No records available to verified.</p>
+                    </tbody>
+                    @endforeach
                 @endif
-            </div><!-- /.tab-pane -->
-            <div class="tab-pane" id="jobs_available">
-                @if(count($jobs_available)!=0)
-                    <table class="table table-condensed">
-                        <tr>
-                            <th>Job ID</th>
-                            <th>Position</th>
-                            <th> No. of post.</th>
-                            <th>Industry</th>
-                            <th>Type</th>
-                            <th> Qualification</th>
-                            <th> Salary Offered</th>
-                        </tr>
-                        @foreach($jobs_available as $item)
-                            <tr>
-                                <td>
-                                    <a href="#">
-                                        #{!! $item->emp_job_id !!}
-                                    </a>
-                                </td>
-                                <td> {!! $item->post_name !!} </td>
-                                <td> {!! $item->no_of_post !!} </td>
-                                <td> {!! $item->industry->name !!} </td>
-                                <td> {!! $item->job_type !!} </td>
-                                <td> {!! $item->qualification->name !!} </td>
-                                <td> {!! $item->salary_offered_min !!} -
-                                    {!! $item->salary_offered_max !!}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </table>
-                @else
-                    <p class="text-center" style="padding:10px;"> No records available for job available</p>
-                @endif
-            </div><!-- /.tab-pane -->
-            <div class="tab-pane" id="jobs_filled_up">
-                @if(count($jobs_filled_up)!=0)
-                    <table class="table table-condensed">
-                        <tr>
-                            <th>Job ID</th>
-                            <th>Position</th>
-                            <th> No. of post.</th>
-                            <th>Industry</th>
-                            <th>Type</th>
-                            <th> Qualification</th>
-                            <th> Salary Offered</th>
-                        </tr>
-                        @foreach($jobs_filled_up as $item)
-                            <tr>
-                                <td>
-                                    <a href="#">
-                                        #{!! $item->emp_job_id !!}
-                                    </a>
-                                </td>
-                                <td> {!! $item->post_name !!} </td>
-                                <td> {!! $item->no_of_post !!} </td>
-                                <td> {!! $item->industry->name !!} </td>
-                                <td> {!! $item->job_type !!} </td>
-                                <td> {!! $item->qualification->name !!} </td>
-                                <td> {!! $item->salary_offered_min !!} -
-                                    {!! $item->salary_offered_max !!}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </table>
-                @else
-                    <p class="text-center" style="padding:10px;"> No records available to filled up</p>
-                @endif
-            </div><!-- /.tab-pane -->
-
-        </div><!-- /.tab-content -->
-    </div><!-- /.nav-tabs-custom -->
+            </table>
+        </div>
+        <div class="tab-pane" id="jobs_need_verification">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Job ID</th>
+                    <th>Position</th>
+                    <th>No. of pos.</th>
+                    <th>Industry</th>
+                    <th>Type</th>
+                    <th>Qualification</th>
+                    <th>Salary</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <a href="#">
+                            #3424
+                        </a>
+                    </td>
+                    <td>Test</td>
+                    <td>Test</td>
+                    <td>Test</td>
+                    <td>Test</td>
+                    <td>Test</td>
+                    <td>Test</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane" id="jobs_available_now">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Job ID</th>
+                    <th>Position</th>
+                    <th>No. of pos.</th>
+                    <th>Industry</th>
+                    <th>Type</th>
+                    <th>Qualification</th>
+                    <th>Salary</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <a href="#">
+                            #3424
+                        </a>
+                    </td>
+                    <td>Test</td>
+                    <td>Test</td>
+                    <td>Test</td>
+                    <td>Test</td>
+                    <td>Test</td>
+                    <td>Test</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane" id="jobs_filled_up">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Job ID</th>
+                    <th>Position</th>
+                    <th>No. of pos.</th>
+                    <th>Industry</th>
+                    <th>Type</th>
+                    <th>Qualification</th>
+                    <th>Salary</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <a href="#">
+                            #3424
+                        </a>
+                    </td>
+                    <td>Test</td>
+                    <td>Test</td>
+                    <td>Test</td>
+                    <td>Test</td>
+                    <td>Test</td>
+                    <td>Test</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div><!-- /.col -->

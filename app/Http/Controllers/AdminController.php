@@ -4,19 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use Illuminate\Http\Request;
+use Vinkla\Hashids\HashidsManager;
 
 class AdminController extends Controller
 {
     public $employees;
+    protected $hashid;
 
     /**
      * AdminController constructor.
      * @param Employee $employees
+     * @param HashidsManager $hashid
      */
-    public function __construct(Employee $employees)
+    public function __construct(Employee $employees, HashidsManager $hashid)
     {
         $this->middleware('auth:admin');
         $this->employees = $employees;
+        $this->hashid = $hashid;
     }
 
     public function index()
@@ -33,15 +37,19 @@ class AdminController extends Controller
     public function show_employee($id)
     {
         $title = "View employee";
+        $decoded = $this->hashid->decode($id);
+        $id = @$decoded[0];
+        if ($id === null) {
+            return back()->with('error', 'We can not find employee with that id, please try the other');
+        }
         $employee = $this->employees->with([
             'verified_by', 'company_profile.industry',
             'company_profile.business_type',
-            'company_profile.city',
+            'company_profile.city', 'posts'
         ])->find($id);
         if (!$employee) {
             return back()->with('error', 'We can not find this employee, please other');
         }
-//        return response()->json($employee);
         return view('admin.employees.profile', compact('employee', 'title'));
     }
 }

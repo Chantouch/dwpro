@@ -16,8 +16,8 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
+            $table->string('slug')->nullable();
             $table->integer('hire_number')->nullable();
-            $table->longText('description')->nullable();
             $table->integer('industry_id', false, true)->unsigned()->nullable();
             $table->integer('function_id', false, true)->unsigned()->nullable();
             $table->integer('city_id', false, true)->unsigned()->nullable();

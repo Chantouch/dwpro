@@ -14,7 +14,9 @@ class EmployeeTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        factory(Employee::class, 50)->create();
+        factory(Employee::class, 50)->create()->each(function ($post) {
+            $post->posts()->save(factory(\App\Models\Post::class)->make());
+        });
         Model::reguard();
     }
 }

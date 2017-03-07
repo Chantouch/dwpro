@@ -32,7 +32,7 @@ class AdminController extends Controller
         $employees = $this->employees->with([
             'verified_by', 'company_profile.industry',
             'company_profile.business_type',
-            'company_profile.city',
+            'company_profile.city', 'posts'
         ])->paginate(50);
         return response()->json($employees);
     }

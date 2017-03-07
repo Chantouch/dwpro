@@ -22,6 +22,7 @@ class CreateCompanyProfilesTable extends Migration
             $table->integer('city_id', false, true)->unsigned();
             $table->string('website')->nullable();
             $table->string('address')->nullable();
+            $table->string('phone_number')->nullable();
             $table->string('company_email')->nullable();
             $table->longText('description')->nullable();
             $table->integer('number_employee')->nullable();

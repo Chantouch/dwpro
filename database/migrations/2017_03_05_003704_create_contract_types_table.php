@@ -17,6 +17,7 @@ class CreateContractTypesTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->longText('description')->nullable();
+            $table->string('slug')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
