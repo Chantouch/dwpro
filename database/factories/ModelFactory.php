@@ -172,6 +172,7 @@ $factory->define(\App\Models\Post::class, function (\Faker\Generator $faker) {
     $rand_keys_marital = array_rand($marital_status, 2);
     return [
         'name' => $faker->name,
+        'post_id' => $faker->unique()->numberBetween(1, 50),
         'job_description' => $faker->paragraph,
         'slug' => $faker->slug,
         'status' => mt_rand(0, 1),

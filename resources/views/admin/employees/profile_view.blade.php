@@ -191,6 +191,7 @@
                     <thead>
                     <tr>
                         <th>Job ID</th>
+                        <th>Title</th>
                         <th>Level</th>
                         <th>No. of pos.</th>
                         <th>Industry</th>
@@ -204,9 +205,10 @@
                         <tr>
                             <td>
                                 <a href="#">
-                                    {!! $post->name !!}
+                                    #{!! $post->post_id !!}
                                 </a>
                             </td>
+                            <td>{!! $post->name !!}</td>
                             <td>{!! $post->level->name !!}</td>
                             <td>{!! $post->hire_number !!}</td>
                             <td>{!! $post->industry->name !!}</td>
