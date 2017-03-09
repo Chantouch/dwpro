@@ -71,8 +71,8 @@ class Employee extends Authenticatable
     public function getVerificationStatusAttribute()
     {
         $name = "";
-        if ($this->verified_by() == null) {
-            return "Not Verified";
+        if ($this->verified_by === null) {
+            return "Need Verified";
         } else {
             try {
                 $verified = Admin::find($this->verified_by);

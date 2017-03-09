@@ -25,6 +25,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PositionTableSeeder::class);
         $this->call(QualificationTableSeeder::class);
         $this->call(LevelTableSeeder::class);
-        $this->call(CompanyProfileTableSeeder::class);
+        //$this->call(CompanyProfileTableSeeder::class);
     }
 }

@@ -42,6 +42,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::prefix('employees')->name('admin.employees.')->middleware('auth:admin')->group(function () {
         Route::get('manage', 'AdminController@employees')->name('manage');
         Route::get('show-employee/{id}', 'AdminController@show_employee')->name('show-employee');
+        Route::get('verify-employee/{id}', 'AdminController@verify_employee')->name('verify-employee');
     });
 });
 

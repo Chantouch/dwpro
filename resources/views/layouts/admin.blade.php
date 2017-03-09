@@ -282,6 +282,18 @@
                                 </li>
                             </ol>
                         </div>
+                        <div class="col-sm-12">
+                            @if (session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+                            @if (session('error'))
+                                <div class="alert alert-danger">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
+                        </div>
                         @yield('content')
                     </div>
                 </div> <!-- container -->
@@ -429,9 +441,9 @@
 <script type="text/javascript" src="{!! asset('assets/plugins/toastr/toastr.min.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('js/vuejs/vue.js') !!}"></script>
 <script src="{!! asset('js/vuejs/vue-resource.min.js') !!}"></script>
+@stack('src-scripts')
 <script src="{!! asset('js/vuejs/vue-axios.min.js') !!}"></script>
 @yield('scripts')
-@stack('src-scripts')
 <script src="{!! asset('assets/js/jquery.core.js') !!}"></script>
 <script src="{!! asset('assets/js/jquery.app.js') !!}"></script>
 <script src="{!! asset('js/apps.js') !!}"></script>

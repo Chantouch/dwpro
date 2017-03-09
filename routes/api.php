@@ -33,6 +33,11 @@ Route::group(['middleware' => 'api'], function () {
         });
         Route::prefix('employees')->name('admin.employees.')->group(function () {
             Route::resource('manage', 'Api\AdminController');
+            Route::get('jobs/{id}', 'Api\AdminController@employee_jobs')->name('jobs.all');
+            Route::get('jobs-count/{id}/{count}', 'Api\AdminController@employee_jobs')->name('jobs.count-all');
+            Route::get('jobs-need-verify/{id}', 'Api\AdminController@get_need_verify_job')->name('jobs_need_verify');
+            Route::get('get-jobs-available/{id}', 'Api\AdminController@get_jobs_available')->name('get_jobs_available');
+            Route::patch('update-job-status/{id}', 'Api\AdminController@update_job_status')->name('update_job_status');
         });
     });
 });
