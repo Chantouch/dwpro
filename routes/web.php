@@ -41,8 +41,14 @@ Route::group(['prefix' => 'admin'], function () {
     });
     Route::prefix('employees')->name('admin.employees.')->middleware('auth:admin')->group(function () {
         Route::get('manage', 'AdminController@employees')->name('manage');
+        Route::get('un-verify-employee', 'AdminController@show_un_verify_emp')->name('show_un_verify_emp');
+        Route::get('un-active-employee', 'AdminController@show_un_active_emp')->name('show_un_active_emp');
         Route::get('show-employee/{id}', 'AdminController@show_employee')->name('show-employee');
         Route::get('verify-employee/{id}', 'AdminController@verify_employee')->name('verify-employee');
+    });
+
+    Route::prefix('candidates')->name('admin.candidates.')->middleware('auth:admin')->group(function () {
+        Route::get('/', 'Admin\CandidateController@index')->name('index');
     });
 });
 

@@ -20,7 +20,7 @@
             <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="#">Back</a>
         </h1>
     </section>
-    <div class="row" id="verify-job-status">
+    <div class="row" id="verify_job_status">
         <div class="col-sm-12">
             <div class="card-box">
                 <div class="row">

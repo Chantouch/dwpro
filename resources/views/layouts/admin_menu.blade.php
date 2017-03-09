@@ -1,7 +1,7 @@
 <ul>
     <li class="text-muted menu-title">Navigation</li>
     <li class="has_sub">
-        <a href="#" class="waves-effect waves-light"><i class="ti-home"></i>
+        <a href="javascript:void (0)" class="waves-effect waves-light"><i class="ti-home"></i>
             <span> Dashboard </span>
         </a>
         <ul class="list-unstyled">
@@ -10,7 +10,7 @@
     </li>
 
     <li class="has_sub">
-        <a href="#" class="waves-effect waves-light {!! Request::is('admin/modules*') ? 'active' : '' !!}">
+        <a href="javascript:void (0)" class="waves-effect waves-light {!! Request::is('admin/modules*') ? 'active' : '' !!}">
             <i class="ti-home"></i> <span>Modules</span>
         </a>
         <ul class="list-unstyled">
@@ -47,8 +47,10 @@
         </ul>
     </li>
 
+
+    {{--Employee section menu--}}
     <li class="has_sub">
-        <a href="#" class="waves-effect waves-light {!! Request::is('admin/employees*') ? 'active' : '' !!}">
+        <a href="javascript:void (0)" class="waves-effect waves-light {!! Request::is('admin/employees*') ? 'active' : '' !!}">
             <i class="ti-home"></i>
             <span>Employees</span>
         </a>
@@ -56,8 +58,24 @@
             <li class="{!! Request::is('admin/employees/manage') ? 'active' : ''!!}">
                 <a href="{!! route('admin.employees.manage') !!}">All</a>
             </li>
-            <li>
-                <a href="#">UnActive</a>
+            <li class="{!! Request::is('admin/employees/un-verify-employee') ? 'active' : ''!!}">
+                <a href="{!! route('admin.employees.show_un_verify_emp') !!}">UnVerify</a>
+            </li>
+            <li class="{!! Request::is('admin/employees/un-active-employee') ? 'active' : ''!!}">
+                <a href="{!! route('admin.employees.show_un_active_emp') !!}">UnActive</a>
+            </li>
+        </ul>
+    </li>
+
+    {{--Candidate Section--}}
+    <li class="has_sub">
+        <a href="javascript:void (0)" class="waves-effect waves-light {!! Request::is('admin/candidate*') ? 'active' : '' !!}">
+            <i class="ti-home"></i>
+            <span>Candidates</span>
+        </a>
+        <ul class="list-unstyled">
+            <li class="{!! Request::is('admin/candidates') ? 'active' : ''!!}">
+                <a href="{!! route('admin.candidates.index') !!}">All</a>
             </li>
         </ul>
     </li>

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\UserProfile;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -15,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password','phone_number'
+        'first_name', 'last_name', 'email', 'password', 'phone_number', 'verified_by', 'status', 'data_of_birth'
     ];
 
     /**
@@ -26,4 +27,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function verified_by()
+    {
+        return $this->belongsTo(Admin::class, 'verified_by');
+    }
 }

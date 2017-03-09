@@ -4,7 +4,7 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
 @stop
 @section('content')
-    <div class="row" id="employees">
+    <div class="row" id="un_verify">
         <div class="col-sm-12">
             <div class="card-box">
                 <div class="row">
@@ -40,7 +40,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="item in items">
+                            <tr v-for="item in un_verified">
                                 <td scope="row">@{{ item.id }}</td>
                                 <td v-if="item.company_profile != null">
                                     <a :href="'/admin/employees/show-employee/' + item.hashid">@{{ item.company_profile.name }}</a>
@@ -178,5 +178,5 @@
 @section('scripts')
     <script src="{!! asset('assets/plugins/notifyjs/dist/notify.min.js') !!}"></script>
     <script src="{!! asset('assets/plugins/notifications/notify-metro.js') !!}"></script>
-    <script src="{!! asset('js/controller/employees/employee.js') !!}"></script>
+    <script src="{!! asset('js/controller/admin/employee/un-verify.js') !!}"></script>
 @stop

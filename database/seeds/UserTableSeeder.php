@@ -14,7 +14,9 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        factory(User::class, 50)->create();
+        factory(User::class, 150)->create()->each(function ($user) {
+            $user->profile()->save(factory(\App\Models\UserProfile::class)->make());
+        });
         Model::reguard();
     }
 }

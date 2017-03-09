@@ -94,12 +94,33 @@ class AdminController extends Controller
             $employee->company_profile->temp_enroll_no = null;
             $employee->verified_by = Auth::guard('admin')->id();
             if ($employee->save() && $employee->company_profile->save()) {
-                return back()->with('success', 'The Employee ' . $employee->company_profile->name . 'has been successfully approved');
+                return response()->json($employee);
             } else {
-                return back()->with('error', 'The employee' . $employee->company_profile->name . 'hasn\'t been successfully approved');
+                return response()->json([
+                    'message' => 'We can not process your request right now.',
+                ], 404);
             }
         } catch (ModelNotFoundException $exception) {
-            return redirect()->back()->with('error', 'The employer has not found!. 404');
+            return response()->json([
+                'message' => 'We can not process your request right now.',
+            ], 404);
         }
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show_un_verify_emp()
+    {
+        $title = "Un Verify Employee";
+        return view('admin.employees.un-verify', compact('title'));
+    }
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show_un_active_emp()
+    {
+        $title = "Un Verify Employee";
+        return view('admin.employees.un-active', compact('title'));
     }
 }

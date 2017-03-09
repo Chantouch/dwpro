@@ -79,9 +79,9 @@
                             <input type="radio" id="status1" value="0" name="status" v-model="fillItem.status">
                             <label for="status1"> Disabled </label>
                         </div>
-                        <div class="radio radio-warning radio-inline">
+                        <div class="radio radio-info radio-inline">
                             <input type="radio" id="status3" value="2" name="status" v-model="fillItem.status">
-                            <label for="status3"> Warning </label>
+                            <label for="status3"> Filled Up </label>
                         </div>
                         <div class="radio radio-danger radio-inline">
                             <input type="radio" id="status4" value="3" name="status" v-model="fillItem.status">

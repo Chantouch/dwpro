@@ -21,6 +21,20 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'phone_number' => $faker->phoneNumber,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(30),
+        'slug' => $faker->slug,
+        'data_of_birth' => $faker->date(),
+        'verified_by' => mt_rand(0, 5),
+        'status' => mt_rand(0, 1)
+    ];
+});
+
+
+$factory->define(\App\Models\UserProfile::class, function (\Faker\Generator $faker) {
+    return [
+        'bio' => $faker->paragraph,
+        'cover_letter' => $faker->paragraph,
+        'address' => $faker->address,
+        'user_id' => mt_rand(1, 5)
     ];
 });
 

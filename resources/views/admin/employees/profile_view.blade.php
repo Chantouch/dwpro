@@ -22,30 +22,26 @@
         </div>
         <div class="box-footer no-padding">
             <ul class="nav nav-stacked">
-                <li><a href="#">Total no of Jobs Posted <span
-                                class="pull-right badge bg-blue">{!! count($employee->posts) !!}</span></a></li>
-                <li><a href="#">Jobs Not Verified yet<span
-                                class="pull-right badge bg-red">{!! count($jobs_need_verify) !!}</span></a></li>
-                <li><a href="#">Jobs Filled up <span
-                                class="pull-right badge bg-green">{!! count($jobs_filled_up) !!}</span></a></li>
-                <li><a href="#">Jobs Available now<span
-                                class="pull-right badge bg-aqua">{!! count($jobs_available) !!}</span></a></li>
-
-                @if($employee->verified_by == null)
-                    <li class="approve_employer text-center">
-                        <a title="By clicking approve the Employer profile will be marked as verified and the Employer can use all the features of this portal"
-                           href="{!! route('admin.employees.verify-employee', $employee->hashid) !!}"
-                           onclick="return confirm('Are you sure to approve this employer?')"
-                           class="show_confirm"> <i class="ti-check"></i>&nbsp; Approve Employer
-                        </a>
-                    </li>
-                @else
-                    <li class="text-center">
-                        <p style="position: relative;display: block;padding: 10px 15px;background: yellowgreen;">
-                            Profile Approved
-                        </p>
-                    </li>
-                @endif
+                <li><a href="javascript:void (0)">Total no of Jobs Posted <span
+                                class="pull-right badge bg-blue">@{{ count_jobs.all }}</span></a></li>
+                <li><a href="javascript:void (0)">Jobs Not Verified yet<span
+                                class="pull-right badge bg-red">@{{ count_jobs.need_verify }}</span></a></li>
+                <li><a href="javascript:void (0)">Jobs Filled up <span
+                                class="pull-right badge bg-green">@{{ count_jobs.filled_up }}</span></a></li>
+                <li><a href="javascript:void (0)">Jobs Available now<span
+                                class="pull-right badge bg-aqua">@{{ count_jobs.available }}</span></a></li>
+                <li class="text-center" v-if="employee.verified_by == ''">
+                    <a title="By clicking approve the Employer profile will be marked as verified and the Employer can use all the features of this portal"
+                       @click.prevent="verifyEmployee(employee.id)"
+                       class="show_confirm"> <i class="ti-check"></i>&nbsp; Approve Employer
+                    </a>
+                </li>
+                {{--@else--}}
+                <li class="text-center" v-else="">
+                    <p style="position: relative;display: block;padding: 10px 15px;background: yellowgreen;">
+                        Profile Approved
+                    </p>
+                </li>
             </ul>
         </div>
     </div>
@@ -53,6 +49,7 @@
 </div>
 <!-- /.col -->
 <input type="hidden" value="{!! $employee->hashid !!}" name="hashid" id="hashid">
+<input type="hidden" value="{!! $employee->verified_by !!}" name="verified_by" id="verified_by">
 <div class="col-md-7 no-padding">
     <ul class="nav nav-tabs tabs">
         <li class="active tab">
@@ -205,7 +202,7 @@
                 <tbody>
                 <tr v-for="post in all_jobs">
                     <td>
-                        <a href="#" @click.prevent="editItem(post)">
+                        <a href="javascript:void (0)" @click.prevent="editItem(post)">
                             #@{{ post.post_id }}
                         </a>
                     </td>
@@ -220,9 +217,9 @@
                 </tr>
                 </tbody>
                 {{--<tr v-if="!all_jobs.length">--}}
-                    {{--<td colspan="12">--}}
-                        {{--<p class="text-center" style="padding:10px;"> No records available.</p>--}}
-                    {{--</td>--}}
+                {{--<td colspan="12">--}}
+                {{--<p class="text-center" style="padding:10px;"> No records available.</p>--}}
+                {{--</td>--}}
                 {{--</tr>--}}
             </table>
             @include('vendor.pagination.page-component')
@@ -245,7 +242,7 @@
                 <tbody>
                 <tr v-for="post in items">
                     <td>
-                        <a href="#" @click.prevent="editItem(post)">
+                        <a href="javascript:void (0)" @click.prevent="editItem(post)">
                             #@{{ post.post_id }}
                         </a>
                     </td>
@@ -284,7 +281,7 @@
                 <tbody>
                 <tr v-for="post in jobs_available">
                     <td>
-                        <a href="#" @click.prevent="editItem(post)">
+                        <a href="javascript:void (0)" @click.prevent="editItem(post)">
                             #@{{ post.post_id }}
                         </a>
                     </td>
@@ -307,44 +304,41 @@
         </div>
         <div class="tab-pane" id="jobs_filled_up">
             <table class="table table-bordered">
-                @if(count($jobs_filled_up_list))
-                    <thead>
-                    <tr>
-                        <th>Job ID</th>
-                        <th>Title</th>
-                        <th>Level</th>
-                        <th>No. of pos.</th>
-                        <th>Industry</th>
-                        <th>Qualification</th>
-                        <th>Salary</th>
-                        <th>Create At</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($jobs_filled_up_list as $post)
-                        <tr>
-                            <td>
-                                <a href="#">
-                                    #{!! $post->post_id !!}
-                                </a>
-                            </td>
-                            <td>{!! $post->name !!}</td>
-                            <td>{!! $post->level->name !!}</td>
-                            <td>{!! $post->hire_number !!}</td>
-                            <td>{!! $post->industry->name !!}</td>
-                            <td>{!! $post->qualification->name !!}</td>
-                            <td>{!! $post->salary !!}</td>
-                            <td>{!! $post->created_at !!}</td>
-                        </tr>
-                    </tbody>
-                    @endforeach
-                @else
-                    <tr>
-                        <td colspan="12">
-                            <p class="text-center" style="padding:10px;"> No records available.</p>
-                        </td>
-                    </tr>
-                @endif
+                <thead v-if="jobs_filled_up.length">
+                <tr>
+                    <th>Job ID</th>
+                    <th>Title</th>
+                    <th>Level</th>
+                    <th>No. of pos.</th>
+                    <th>Industry</th>
+                    <th>Qualification</th>
+                    <th>Salary</th>
+                    <th>Created At</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="post in jobs_filled_up">
+                    <td>
+                        <a href="javascript:void (0)" @click.prevent="editItem(post)">
+                            #@{{ post.post_id }}
+                        </a>
+                    </td>
+                    <td>@{{ post.name }}</td>
+                    <td>@{{ post.level.name }}</td>
+                    <td>@{{ post.hire_number }}</td>
+                    <td>@{{ post.industry.name }}</td>
+                    <td>@{{ post.qualification.name }}</td>
+                    <td>@{{ post.salary}}</td>
+                    <td>@{{ post.created_at | dateshow }}</td>
+                    <td>@{{ post.status | status}}</td>
+                </tr>
+                </tbody>
+                <tr v-if="!jobs_filled_up.length">
+                    <td colspan="12">
+                        <p class="text-center" style="padding:10px;"> No records available.</p>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>

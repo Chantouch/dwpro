@@ -4,7 +4,7 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
 @stop
 @section('content')
-    <div class="row" id="employees">
+    <div class="row" id="candidates">
         <div class="col-sm-12">
             <div class="card-box">
                 <div class="row">
@@ -27,11 +27,8 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Company</th>
-                                <th>Business Type</th>
-                                <th>Industry</th>
+                                <th>Full Name</th>
                                 <th>Email</th>
-                                <th>Contact Name</th>
                                 <th>Phone Number</th>
                                 <th>Verified Status</th>
                                 <th>Status</th>
@@ -40,35 +37,25 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="item in items">
-                                <td scope="row">@{{ item.id }}</td>
-                                <td v-if="item.company_profile != null">
-                                    <a :href="'/admin/employees/show-employee/' + item.hashid">@{{ item.company_profile.name }}</a>
-                                </td>
-                                <td v-if="item.company_profile == null">Null</td>
-                                <td v-if="item.company_profile != null">
-                                    <span v-if="item.company_profile.industry != null">@{{ item.company_profile.industry.name }}</span>
-                                </td>
-                                <td v-if="item.company_profile != null">
-                                    <span v-if="item.company_profile.business_type != null">@{{ item.company_profile.business_type.name }}</span>
-                                </td>
-                                <td>@{{ item.email }}</td>
-                                <td>@{{ item.first_name + ' ' + item.last_name }}</td>
-                                <td>@{{ item.phone_number }}</td>
-                                <td v-if="item.verified_by == null">N/A</td>
-                                <td v-else="item.verified_by != null">@{{ item.verified_by.name }}</td>
-                                <td v-if="item.status == 1"><span class="label label-success">Active</span></td>
-                                <td v-else="item.status != 1"><span class="label label-danger">UnActive</span></td>
-                                <td>@{{ item.created_at | dateshow }}</td>
+                            <tr v-for="candidate in candidates">
+                                <td scope="row">@{{ candidate.id }}</td>
+                                <td>@{{ candidate.email }}</td>
+                                <td>@{{ candidate.first_name + ' ' + candidate.last_name }}</td>
+                                <td>@{{ candidate.phone_number }}</td>
+                                <td v-if="candidate.verified_by == null">N/A</td>
+                                <td v-else="candidate.verified_by != null">@{{ candidate.verified_by.name }}</td>
+                                <td v-if="candidate.status == 1"><span class="label label-success">Active</span></td>
+                                <td v-else="candidate.status != 1"><span class="label label-danger">UnActive</span></td>
+                                <td>@{{ candidate.created_at | dateshow }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <button class="btn btn-default btn-xs waves-effect waves-light">
                                             <i class="glyphicon glyphicon-eye-open"></i></button>
                                         <button class="btn btn-default btn-xs waves-effect waves-light"
-                                                @click.prevent="editItem(item)">
+                                                @click.prevent="editItem(candidate)">
                                             <i class="glyphicon glyphicon-edit"></i></button>
                                         <button type="submit" class="btn btn-danger btn-xs waves-effect waves-light"
-                                                @click.prevent="deleteItem(item)">
+                                                @click.prevent="deleteItem(candidate)">
                                             <i class="glyphicon glyphicon-trash"></i></button>
                                     </div>
                                 </td>
@@ -178,5 +165,5 @@
 @section('scripts')
     <script src="{!! asset('assets/plugins/notifyjs/dist/notify.min.js') !!}"></script>
     <script src="{!! asset('assets/plugins/notifications/notify-metro.js') !!}"></script>
-    <script src="{!! asset('js/controller/employees/employee.js') !!}"></script>
+    <script src="{!! asset('js/controller/admin/candidate/index.js') !!}"></script>
 @stop

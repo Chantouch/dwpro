@@ -2,8 +2,9 @@
  * Created by Chantouch on 3/3/2017.
  */
 let hashid = $('#hashid').val();
+let verified_by = $('#verified_by').val();
 const contract = new Vue({
-    el: '#verify-job-status',
+    el: '#verify_job_status',
     data(){
         return {
             prop: {
@@ -60,11 +61,18 @@ const contract = new Vue({
             formErrors: {},
             formErrorsUpdate: {},
             employee: {
-                id: hashid
+                id: hashid,
+                verified_by: verified_by,
             },
             jobs_available: [],
+            jobs_filled_up: [],
             all_jobs: [],
-            count_all_jobs: []
+            count_jobs: {
+                all: [],
+                available: [],
+                need_verify: [],
+                filled_up: [],
+            },
         }
     },
     computed: {
@@ -91,9 +99,15 @@ const contract = new Vue({
         }
     },
     created(){
-        this.fetchJobsNeedVerify(this.employee.id);
-        this.fetchJobsAvailable(this.employee.id);
-        this.fetchAllJobs(this.employee.id, this.pagination.current_page);
+        let id = this.employee.id;
+        this.fetchAllJobs(id, this.pagination.current_page);
+        this.fetchJobsNeedVerify(id);
+        this.fetchJobsAvailable(id);
+        this.fetchJobsFilledUp(id);
+        this.countALLJob(id);
+        this.countAvailableJob(id);
+        this.countJobNeedVerify(id);
+        this.countJobFilledUp(id);
     },
     methods: {
         fetchJobsNeedVerify (emp_id)
@@ -112,6 +126,13 @@ const contract = new Vue({
             });
         },
 
+        fetchJobsFilledUp(emp_id){
+            this.$http.get('/api/admin/employees/get-job-filled-up/' + emp_id).then((response) => {
+                //console.log(response.data);
+                this.jobs_filled_up = response.data;
+            });
+        },
+
         fetchAllJobs(emp_id, page){
             this.$http.get('/api/admin/employees/jobs/' + emp_id + '?page=' + page).then((response) => {
                 this.all_jobs = response.data.data;
@@ -120,10 +141,44 @@ const contract = new Vue({
             });
         },
 
-        countALLJob(){
-            this.$http.get('/api/admin/employees/jobs/ND/ND').then((response) => {
-                this.count_all_jobs = response.data;
+        countALLJob(id){
+            this.$http.get('/api/admin/employees/count-all-jobs/' + id).then((response) => {
+                this.count_jobs.all = response.data.data;
+                //console.log(response)
             });
+        },
+
+        countAvailableJob(id){
+            this.$http.get('/api/admin/employees/count-jobs-available/' + id).then((response) => {
+                this.count_jobs.available = response.data.data;
+                //console.log(response)
+            });
+        },
+
+        countJobNeedVerify(id){
+            this.$http.get('/api/admin/employees/count-jobs-need-verified/' + id).then((response) => {
+                this.count_jobs.need_verify = response.data.data;
+                //console.log(response)
+            });
+        },
+
+        countJobFilledUp(id){
+            this.$http.get('/api/admin/employees/count-jobs-filled-up/' + id).then((response) => {
+                this.count_jobs.filled_up = response.data.data;
+                //console.log(response)
+            });
+        },
+
+        verifyEmployee(id){
+            let con = confirm("Are you sure to confirm this employee???");
+            if (con) {
+                this.$http.get('/admin/employees/verify-employee/' + id).then((response) => {
+                    this.employee.verified_by = response.data.verified_by;
+                    toastr.success("The Employee approved successfully.", "Success Alert", {timeOut: 5000});
+                }).catch((response) => {
+                    console.log(response);
+                });
+            }
         },
 
         createItem(){
@@ -209,6 +264,11 @@ const contract = new Vue({
                 this.fetchJobsNeedVerify(emp_id);
                 this.fetchJobsAvailable(emp_id);
                 this.fetchAllJobs(emp_id);
+                this.fetchJobsFilledUp(emp_id);
+                this.countALLJob(emp_id);
+                this.countAvailableJob(emp_id);
+                this.countJobNeedVerify(emp_id);
+                this.countJobFilledUp(emp_id);
                 this.newItem = {
                     gender: '',
                     id: '',

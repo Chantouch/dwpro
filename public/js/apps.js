@@ -24,7 +24,7 @@ Vue.filter('status', function (value) {
     } else if (value == 1) {
         return 'Enabled';
     } else if (value == '2') {
-        return 'Warning';
+        return 'Filled Up';
     } else {
         return 'Suspend';
     }
