@@ -265,13 +265,22 @@ class AdminController extends Controller
     }
 
     ///Candidate Section
-
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function get_candidate_list()
     {
         $candidates = $this->candidate->with([
             'verified_by'
         ])->paginate(10);
         return response()->json($candidates);
+    }
+
+
+    public function get_un_active_candidate()
+    {
+        $un_active = User::with(['verified_by'])->where('status', 0)->paginate(10);
+        return response()->json($un_active);
     }
 
     /**

@@ -37,8 +37,8 @@
                                 <tr v-for="item in items">
                                     <td scope="row">@{{ item.id }}</td>
                                     <td>@{{ item.name }}</td>
-                                    <td>@{{ item.description }}</td>
-                                    <td>@{{ item.status }}</td>
+                                    <td>@{{ item.description | truncate }}</td>
+                                    <td>@{{ item.status | status }}</td>
                                     <td>
                                         <div class="btn-group">
                                             <button class="btn btn-default btn-xs waves-effect waves-light">

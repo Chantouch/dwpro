@@ -5,7 +5,7 @@ Vue.http.headers.common['X-CSRF-TOKEN'] = $("#token").attr("content");
 
 // Filter for cutting off strings that are too long.
 Vue.filter('truncate', function (value) {
-    let length = 100;
+    let length = 70;
     if (value.length <= length) {
         return value;
     }

@@ -54,6 +54,7 @@ Route::group(['middleware' => 'api'], function () {
 
         Route::prefix('candidates')->name('admin.candidates.')->group(function () {
             Route::get('/', 'Api\AdminController@get_candidate_list')->name('get_candidate_list');
+            Route::get('get-un-active-candidate', 'Api\AdminController@get_un_active_candidate')->name('get_un_active_candidate');
         });
     });
 });

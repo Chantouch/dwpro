@@ -49,6 +49,8 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::prefix('candidates')->name('admin.candidates.')->middleware('auth:admin')->group(function () {
         Route::get('/', 'Admin\CandidateController@index')->name('index');
+        Route::get('un-active', 'Admin\CandidateController@get_un_active')->name('get_un_active');
+        Route::get('un-active/{id}/show', 'Admin\CandidateController@show')->name('get_un_active.show');
     });
 });
 

@@ -25,9 +25,35 @@ class CandidateController extends Controller
         $this->middleware('auth:admin');
     }
 
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $title = "Candidate List";
         return view('admin.candidates.index', compact('title'));
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function get_un_active()
+    {
+        $title = "Candidate List";
+        return view('admin.candidates.un-active', compact('title'));
+    }
+
+    public function show($id)
+    {
+        $decoded = $this->hashid->decode($id);
+        $id = $decoded[0];
+        if (!$id){
+            return back()->with('error', 'We can not find this candidate, Please try other candidate');
+        }
+        $candidate = User::with('verified_by')->find($id);
+
+        return response()->json($candidate);
+    }
+
 }

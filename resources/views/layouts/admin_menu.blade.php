@@ -10,7 +10,8 @@
     </li>
 
     <li class="has_sub">
-        <a href="javascript:void (0)" class="waves-effect waves-light {!! Request::is('admin/modules*') ? 'active' : '' !!}">
+        <a href="javascript:void (0)"
+           class="waves-effect waves-light {!! Request::is('admin/modules*') ? 'active' : '' !!}">
             <i class="ti-home"></i> <span>Modules</span>
         </a>
         <ul class="list-unstyled">
@@ -50,7 +51,8 @@
 
     {{--Employee section menu--}}
     <li class="has_sub">
-        <a href="javascript:void (0)" class="waves-effect waves-light {!! Request::is('admin/employees*') ? 'active' : '' !!}">
+        <a href="javascript:void (0)"
+           class="waves-effect waves-light {!! Request::is('admin/employees*') ? 'active' : '' !!}">
             <i class="ti-home"></i>
             <span>Employees</span>
         </a>
@@ -69,13 +71,18 @@
 
     {{--Candidate Section--}}
     <li class="has_sub">
-        <a href="javascript:void (0)" class="waves-effect waves-light {!! Request::is('admin/candidate*') ? 'active' : '' !!}">
+        <a href="javascript:void (0)"
+           class="waves-effect waves-light {!! Request::is('admin/candidate*') ? 'active' : '' !!}">
             <i class="ti-home"></i>
             <span>Candidates</span>
         </a>
         <ul class="list-unstyled">
             <li class="{!! Request::is('admin/candidates') ? 'active' : ''!!}">
                 <a href="{!! route('admin.candidates.index') !!}">All</a>
+            </li>
+
+            <li class="{!! Request::is('admin/candidates/un-active') ? 'active' : ''!!}">
+                <a href="{!! route('admin.candidates.get_un_active') !!}">Un Active</a>
             </li>
         </ul>
     </li>
