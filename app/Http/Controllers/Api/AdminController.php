@@ -276,11 +276,22 @@ class AdminController extends Controller
         return response()->json($candidates);
     }
 
-
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function get_un_active_candidate()
     {
         $un_active = User::with(['verified_by'])->where('status', 0)->paginate(10);
         return response()->json($un_active);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function get_un_verify_candidate()
+    {
+        $un_verify = User::with(['verified_by'])->where('verified_by', null)->paginate(10);
+        return response()->json($un_verify);
     }
 
     /**

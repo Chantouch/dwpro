@@ -51,6 +51,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/', 'Admin\CandidateController@index')->name('index');
         Route::get('un-active', 'Admin\CandidateController@get_un_active')->name('get_un_active');
         Route::get('un-active/{id}/show', 'Admin\CandidateController@show')->name('get_un_active.show');
+        Route::get('un-verify', 'Admin\CandidateController@get_un_verify')->name('get_un_verify');
     });
 });
 

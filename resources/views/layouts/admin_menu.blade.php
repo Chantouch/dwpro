@@ -84,6 +84,10 @@
             <li class="{!! Request::is('admin/candidates/un-active') ? 'active' : ''!!}">
                 <a href="{!! route('admin.candidates.get_un_active') !!}">Un Active</a>
             </li>
+
+            <li class="{!! Request::is('admin/candidates/un-verify') ? 'active' : ''!!}">
+                <a href="{!! route('admin.candidates.get_un_verify') !!}">Un Verify</a>
+            </li>
         </ul>
     </li>
 </ul>

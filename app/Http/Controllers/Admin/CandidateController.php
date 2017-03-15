@@ -56,4 +56,14 @@ class CandidateController extends Controller
         return response()->json($candidate);
     }
 
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function get_un_verify()
+    {
+        $title = "Candidate List";
+        return view('admin.candidates.un-verify', compact('title'));
+    }
+
 }
