@@ -42,7 +42,7 @@ class CreatePostsTable extends Migration
             $table->timestamps();
 
             $table->foreign('industry_id')->references('id')->on('industries')->onDelete('cascade');
-            $table->foreign('function_id')->references('id')->on('functions')->onDelete('cascade');
+            $table->foreign('functions_id')->references('id')->on('functions')->onDelete('cascade');
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
             $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
             $table->foreign('qualification_id')->references('id')->on('qualifications')->onDelete('cascade');
