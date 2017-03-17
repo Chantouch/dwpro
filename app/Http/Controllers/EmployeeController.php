@@ -14,6 +14,7 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        return view('employee-home');
+        $title = "Employee Dashboard";
+        return view('employee.dashboard', compact('title'));
     }
 }

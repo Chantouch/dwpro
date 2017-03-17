@@ -20,6 +20,8 @@ class CreateAdminsTable extends Migration
             $table->string('role')->default('admin')->nullable();
             $table->tinyInteger('is_admin')->default(1);
             $table->string('slug')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('avatar_path')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

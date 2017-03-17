@@ -40,7 +40,7 @@
                             <tr v-for="candidate in candidates_un_verify">
                                 <td scope="row">@{{ candidate.id }}</td>
                                 <td>
-                                    <a :href="'/admin/candidates/un-active/' + candidate.hashid + '/show'">@{{ candidate.first_name + ' ' + candidate.last_name }}</a>
+                                    <a :href="'/admin/candidates/un-verify/' + candidate.hashid + '/show'">@{{ candidate.first_name + ' ' + candidate.last_name }}</a>
                                 </td>
                                 <td>@{{ candidate.email }}</td>
                                 <td>@{{ candidate.phone_number }}</td>

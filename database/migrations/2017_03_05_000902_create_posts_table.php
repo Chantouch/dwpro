@@ -20,7 +20,7 @@ class CreatePostsTable extends Migration
             $table->string('slug')->nullable();
             $table->integer('hire_number')->nullable();
             $table->integer('industry_id', false, true)->unsigned()->nullable();
-            $table->integer('function_id', false, true)->unsigned()->nullable();
+            $table->integer('functions_id', false, true)->unsigned()->nullable();
             $table->integer('city_id', false, true)->unsigned()->nullable();
             $table->decimal('salary')->nullable()->nullable();
             $table->longText('job_description')->nullable();

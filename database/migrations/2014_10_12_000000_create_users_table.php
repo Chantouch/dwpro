@@ -24,6 +24,10 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->date('data_of_birth')->nullable();
+            $table->string('enroll_id')->nullable();
+            $table->string('enroll_temp')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('avatar_path')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

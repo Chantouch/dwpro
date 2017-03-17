@@ -51,16 +51,26 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/', 'Admin\CandidateController@index')->name('index');
         Route::get('un-active', 'Admin\CandidateController@get_un_active')->name('get_un_active');
         Route::get('un-active/{id}/show', 'Admin\CandidateController@show')->name('get_un_active.show');
+        Route::get('change_status/{id}', 'Admin\CandidateController@change_status')->name('change_status');
         Route::get('un-verify', 'Admin\CandidateController@get_un_verify')->name('get_un_verify');
+        Route::get('un-verify/{id}/show', 'Admin\CandidateController@show_un_verify')->name('show_un_verify');
+        Route::get('verify/{id}', 'Admin\CandidateController@verify_candidate')->name('verify_candidate');
     });
 });
 
 Route::resource('posts', 'Employee\PostController');
 
 //Employee Route
-Route::prefix('employee')->group(function () {
-    Route::get('login', 'Auth\EmployeeLoginController@showLoginForm')->name('employee.login');
-    Route::post('login', 'Auth\EmployeeLoginController@login')->name('employee.login.post');
-    Route::post('logout', 'Auth\EmployeeLoginController@logout')->name('employee.logout');
-    Route::get('home', 'EmployeeController@index')->name('employee.home');
+Route::prefix('employee')->name('employee.')->group(function () {
+
+    Route::get('login', 'Auth\EmployeeLoginController@showLoginForm')->name('login');
+    Route::post('login', 'Auth\EmployeeLoginController@login')->name('login.post');
+    Route::post('logout', 'Auth\EmployeeLoginController@logout')->name('logout');
+
+    Route::get('home', 'EmployeeController@index')->name('home');
+
+    Route::get('posts/all', 'Employee\EmployeeController@posts')->name('posts.json');
+    //Test api.
+    //Route::get('posts', 'Employee\EmployeeController@posts')->name('posts');
+    Route::resource('posts', 'Employee\PostController');
 });

@@ -205,13 +205,13 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="hidden-xs">
-                                <a href="#" id="btn-fullscreen" class="waves-effect"><i
-                                            class="icon-size-fullscreen"></i></a>
-                            </li>
-                            <li class="hidden-xs">
-                                <a href="#" class="right-bar-toggle waves-effect"><i class="icon-settings"></i></a>
-                            </li>
+                            {{--<li class="hidden-xs">--}}
+                                {{--<a href="#" id="btn-fullscreen" class="waves-effect"><i--}}
+                                            {{--class="icon-size-fullscreen"></i></a>--}}
+                            {{--</li>--}}
+                            {{--<li class="hidden-xs">--}}
+                                {{--<a href="#" class="right-bar-toggle waves-effect"><i class="icon-settings"></i></a>--}}
+                            {{--</li>--}}
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle profile waves-effect" data-toggle="dropdown"
                                    aria-expanded="true"><img src="{!! asset('assets/images/users/avatar-1.jpg') !!}"
@@ -251,7 +251,7 @@
             <div class="sidebar-inner slimscrollleft">
                 <!--- Divider -->
                 <div id="sidebar-menu">
-                    @include('layouts.admin_menu')
+                    @include('layouts.emp_menu')
                     <div class="clearfix"></div>
                 </div>
                 <div class="clearfix"></div>
@@ -269,13 +269,13 @@
                     <!-- Page-Title -->
                     <div class="row">
                         <div class="col-sm-12">
-                            <h4 class="page-title">
-                                @if(isset($title))
-                                    {!! $title !!}
-                                @else
-                                    Default Title
-                                @endif
-                            </h4>
+                            {{--<h4 class="page-title">--}}
+                                {{--@if(isset($title))--}}
+                                    {{--{!! $title !!}--}}
+                                {{--@else--}}
+                                    {{--Default Title--}}
+                                {{--@endif--}}
+                            {{--</h4>--}}
                             {{--<ol class="breadcrumb">--}}
                             {{--<li>--}}
                             {{--<a href="#">Ubold</a>--}}
@@ -309,12 +309,11 @@
             <footer class="footer">
                 2015 © Ubold.
             </footer>
-
         </div>
+
         <!-- ============================================================== -->
         <!-- End Right content here -->
         <!-- ============================================================== -->
-
 
         <!-- Right Sidebar -->
     {{--<div class="side-bar right-bar nicescroll">--}}

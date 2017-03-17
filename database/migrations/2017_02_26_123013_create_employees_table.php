@@ -24,6 +24,8 @@ class CreateEmployeesTable extends Migration
             $table->tinyInteger('status')->default(1);
             $table->string('password');
             $table->integer('verified_by', false,true)->unsigned()->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('avatar_path')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

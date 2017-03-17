@@ -59,3 +59,9 @@ Route::group(['middleware' => 'api'], function () {
         });
     });
 });
+
+Route::prefix('employee')->name('employee.')->group(function () {
+    Route::prefix('posts')->name('posts.')->group(function () {
+        Route::get('all', 'Api\Employee\PostController@all_posts')->name('all');
+    });
+});

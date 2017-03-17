@@ -24,7 +24,9 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'slug' => $faker->slug,
         'data_of_birth' => $faker->date(),
         'verified_by' => mt_rand(0, 5),
-        'status' => mt_rand(0, 1)
+        'status' => mt_rand(0, 1),
+        'avatar' => $faker->image(),
+        'avatar_path' => $faker->imageUrl()
     ];
 });
 
@@ -50,6 +52,8 @@ $factory->define(\App\Employee::class, function (\Faker\Generator $faker) {
         'role' => 'employee',
         'verified_by' => mt_rand(1, 5),
         'slug' => $faker->slug,
+        'avatar' => $faker->image(),
+        'avatar_path' => $faker->imageUrl()
     ];
 });
 
@@ -61,7 +65,9 @@ $factory->define(\App\Admin::class, function (\Faker\Generator $faker) {
         'password' => $password ?: $password = bcrypt('password'),
         'remember_token' => str_random(30),
         'role' => 'admin',
-        'slug' => $faker->slug
+        'slug' => $faker->slug,
+        'avatar' => $faker->image(),
+        'avatar_path' => $faker->imageUrl()
     ];
 });
 
@@ -71,6 +77,15 @@ $factory->define(\App\Models\BusinessType::class, function (\Faker\Generator $fa
         'description' => $faker->paragraph,
         'slug' => $faker->slug,
         'status' => 1
+    ];
+});
+
+$factory->define(\App\Models\Contact::class, function (\Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+        'description' => $faker->paragraph,
+        'status' => 1,
+        'employee_id' => mt_rand(1, 50)
     ];
 });
 

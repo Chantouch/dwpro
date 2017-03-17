@@ -93,6 +93,7 @@ class AdminController extends Controller
             $employee->company_profile->enroll_no = str_replace('TEMP_', '', $employee->company_profile->temp_enroll_no);
             $employee->company_profile->temp_enroll_no = null;
             $employee->verified_by = Auth::guard('admin')->id();
+            $employee->status = 1;
             if ($employee->save() && $employee->company_profile->save()) {
                 return response()->json($employee);
             } else {

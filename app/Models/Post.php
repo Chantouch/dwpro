@@ -15,6 +15,23 @@ class Post extends Model
     ];
 
 
+    //----------Validation-------------//
+
+    public static function rules()
+    {
+        return [
+            'name' => 'required|min:3',
+        ];
+    }
+
+    public static function messages()
+    {
+        return [
+            'name.required' => 'Please fill name!',
+        ];
+    }
+
+
     //===========Relationship==========//
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -46,5 +63,37 @@ class Post extends Model
     public function qualification()
     {
         return $this->belongsTo(Qualification::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function contract_type()
+    {
+        return $this->belongsTo(ContractType::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function functions()
+    {
+        return $this->belongsTo(Functions::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function contact()
+    {
+        return $this->belongsTo(Contact::class);
     }
 }

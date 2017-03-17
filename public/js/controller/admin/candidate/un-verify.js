@@ -71,7 +71,6 @@ const business = new Vue({
         {
             this.$http.get('/api/admin/candidates/get-un-verify-candidate?page=' + page).then((response) => {
                 this.candidates_un_verify = response.data.data;
-                console.log(response);
                 this.pagination = response.data;
             });
         },
