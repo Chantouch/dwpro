@@ -18,6 +18,15 @@
             <li class="{!! Request::is('employee/posts')? 'active' : '' !!}">
                 <a href="{!! route('employee.posts.index') !!}">All Posts</a>
             </li>
+            <li class="{!! Request::is('employee/posts/active')? 'active' : '' !!}">
+                <a href="{!! route('employee.posts.active') !!}">Active</a>
+            </li>
+            <li class="{!! Request::is('employee/posts/unpublished')? 'active' : '' !!}">
+                <a href="{!! route('employee.posts.unpublished') !!}">Unpublished</a>
+            </li>
+            <li class="{!! Request::is('employee/posts/expired')? 'active' : '' !!}">
+                <a href="{!! route('employee.posts.expired') !!}">Expired</a>
+            </li>
         </ul>
     </li>
 </ul>

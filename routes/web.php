@@ -72,5 +72,8 @@ Route::prefix('employee')->name('employee.')->group(function () {
     Route::get('posts/all', 'Employee\EmployeeController@posts')->name('posts.json');
     //Test api.
     //Route::get('posts', 'Employee\EmployeeController@posts')->name('posts');
+    Route::get('posts/active', 'Employee\PostController@status_active')->name('posts.active');
+    Route::get('posts/expired', 'Employee\PostController@status_expired')->name('posts.expired');
+    Route::get('posts/unpublished', 'Employee\PostController@unpublished')->name('posts.unpublished');
     Route::resource('posts', 'Employee\PostController');
 });

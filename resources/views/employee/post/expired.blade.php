@@ -1,5 +1,5 @@
 @extends('layouts.employee')
-@section('title', 'Posts List')
+@section('title', 'Post in active list')
 @section('styles')
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
 @stop
@@ -9,9 +9,9 @@
             <div class="card-box">
                 <div class="row">
                     <div class="col-md-6">
-                        <h4 class="m-t-0 header-title"><b>All Posted Jobs</b></h4>
+                        <h4 class="m-t-0 header-title"><b>All Active Jobs</b></h4>
                         <p class="text-muted font-13">
-                            Included all jobs will be visible here.
+                            All active jobs will be visible here.
                         </p>
                     </div>
                     <div class="col-md-6">

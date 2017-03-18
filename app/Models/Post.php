@@ -4,11 +4,13 @@ namespace App\Models;
 
 use App\Employee;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
+    //use SoftDeletes;
     public $fillable = [
-        'name', 'description', 'status', 'hire_number', 'industry_id', 'function_id',
+        'name', 'status', 'hire_number', 'industry_id', 'functions_id',
         'city_id', 'salary', 'job_description', 'level_id', 'contract_type_id', 'year_experience',
         'qualification_id', 'field_of_study', 'gender', 'age_from', 'age_to', 'marital_status',
         'requirement_des', 'contact_id', 'employee_id', 'status', 'closing_date', 'published_date'
@@ -95,5 +97,14 @@ class Post extends Model
     public function contact()
     {
         return $this->belongsTo(Contact::class);
+    }
+
+    //----------PivotTable-----------//
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function languages()
+    {
+        return $this->belongsToMany(Language::class, 'posts_languages', 'post_id', 'language_id')->withPivot('post_id', 'language_id')->withTimestamps();
     }
 }

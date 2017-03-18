@@ -208,7 +208,7 @@ $factory->define(\App\Models\Post::class, function (\Faker\Generator $faker) {
         'age_from' => mt_rand(18, 30),
         'age_to' => mt_rand(31, 60),
         'city_id' => mt_rand(1, 25),
-        'closing_data' => $faker->date(),
+        'closing_date' => $faker->date(),
         'contact_id' => mt_rand(1, 50),
         'contract_type_id' => mt_rand(1, 50),
         'employee_id' => mt_rand(1, 50),

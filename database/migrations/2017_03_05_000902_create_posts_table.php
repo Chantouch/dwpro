@@ -37,7 +37,7 @@ class CreatePostsTable extends Migration
             $table->integer('contact_id', false, true)->unsigned()->nullable();
             $table->integer('employee_id', false, true)->unsigned()->nullable();
             $table->tinyInteger('status')->default(1);
-            $table->date('closing_data')->nullable();
+            $table->date('closing_date')->nullable();
             $table->date('published_date')->nullable();
             $table->timestamps();
 
