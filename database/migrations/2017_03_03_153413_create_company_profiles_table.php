@@ -24,7 +24,9 @@ class CreateCompanyProfilesTable extends Migration
             $table->string('address')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('company_email')->nullable();
-            $table->longText('description')->nullable();
+            $table->string('logo_photo')->nullable();
+            $table->string('photo_path')->nullable();
+            $table->string('cover_photo')->nullable();
             $table->integer('number_employee')->nullable();
             $table->string('slug')->nullable();
             $table->string('tag_line')->nullable();
@@ -33,6 +35,10 @@ class CreateCompanyProfilesTable extends Migration
             $table->string('confirm_code')->nullable();
             $table->string('temp_enroll_no')->nullable();
             $table->string('enroll_no')->nullable();
+            $table->tinyInteger('currently_hiring')->default(1);
+            $table->longText('about_us')->nullable();
+            $table->longText('how_we_work')->nullable();
+            $table->longText('looking_for')->nullable();
             $table->timestamps();
             $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');

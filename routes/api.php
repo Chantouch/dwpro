@@ -57,6 +57,10 @@ Route::group(['middleware' => 'api'], function () {
             Route::get('get-un-active-candidate', 'Api\AdminController@get_un_active_candidate')->name('get_un_active_candidate');
             Route::get('get-un-verify-candidate', 'Api\AdminController@get_un_verify_candidate')->name('get_un_verify_candidate');
         });
+        Route::get('list-industry', 'Api\IndustryController@get_list')->name('get_list');
+        Route::get('list-business-type', 'Api\BusinessTypeController@list_business_type')->name('list_business_type');
+        Route::get('list-department', 'Api\DepartmentController@list_department')->name('list_department');
+        Route::get('list-position', 'Api\PositionController@list_position')->name('list_position');
     });
 });
 

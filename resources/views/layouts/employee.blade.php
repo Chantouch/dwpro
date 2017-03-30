@@ -7,13 +7,15 @@
     <link rel="shortcut icon" href="{!! asset('assets/images/favicon_1.ico') !!}">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}" id="token">
-    <title>{{ config('app.name', 'Digital Work Pro') }} | @yield('title')</title>
+    <title>@yield('title') &#8226; {{ config('app.name', 'Digital Work Pro') }}&#8482;</title>
     <!-- Styles -->
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
+
+    @yield('css-plugins')
 
     <link href="{!! asset('assets/css/bootstrap.min.css') !!}" rel="stylesheet" type="text/css"/>
     <link href="{!! asset('assets/css/core.css') !!}" rel="stylesheet" type="text/css"/>
@@ -22,6 +24,7 @@
     <link href="{!! asset('assets/css/pages.css') !!}" rel="stylesheet" type="text/css"/>
     <link href="{!! asset('assets/css/responsive.css') !!}" rel="stylesheet" type="text/css"/>
     <link href="{!! asset('assets/plugins/toastr/toastr.min.css') !!}" rel="stylesheet">
+    <link href="{!! asset('css/apps.css') !!}" rel="stylesheet">
 
     <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -222,13 +225,13 @@
                                     <li><a href="javascript:void(0)"><i class="ti-settings m-r-5"></i> Settings</a></li>
                                     <li><a href="javascript:void(0)"><i class="ti-lock m-r-5"></i> Lock screen</a></li>
                                     <li>
-                                        @if(Auth::guard('admin')->check())
-                                            <a href="{{ route('admin.logout') }}"
+                                        @if(Auth::guard('employee')->check())
+                                            <a href="{{ route('employee.logout') }}"
                                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                                 <i class="ti-power-off m-r-5"></i> Logout
                                             </a>
-                                            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
+                                            <form id="logout-form" action="{{ route('employee.logout') }}" method="POST"
                                                   style="display: none;">
                                                 {{ csrf_field() }}
                                             </form>

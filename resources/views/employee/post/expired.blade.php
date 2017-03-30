@@ -44,8 +44,8 @@
                                     <td>{!! $post->name !!}</td>
                                     <td>{!! $post->level->name !!}</td>
                                     <td>{!! $post->hire_number !!}</td>
-                                    <td>{!! $post->industry->name !!}</td>
-                                    <td>{!! $post->qualification->name !!}</td>
+                                    <td>{!! Helper::relationship($post->industry) !!}</td>
+                                    <td>{!! Helper::relationship($post->qualification) !!}</td>
                                     <td>{!! $post->salary !!}</td>
                                     <td>{!! $post->created_at->diffForHumans() !!}</td>
                                     <td>{!! Helper::status($post->status) !!}</td>

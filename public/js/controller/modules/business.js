@@ -31,6 +31,30 @@ const business = new Vue({
             business_types: [],
             formErrors: {},
             formErrorsUpdate: {},
+
+            model: {},
+            columns: {},
+            query: {
+                page: 1,
+                column: 'id',
+                direction: 'desc',
+                per_page: 15,
+                search_column: 'id',
+                search_operator: 'equal',
+                search_input: ''
+            },
+            operators: {
+                equal: '=',
+                not_equal: '<>',
+                less_than: '<',
+                greater_than: '>',
+                less_than_or_equal_to: '<=',
+                greater_than_or_equal_to: '>=',
+                in: 'IN',
+                like: 'LIKE'
+            },
+            source: '/api/admin/modules/business-types',
+
         }
     },
     computed: {
@@ -57,9 +81,48 @@ const business = new Vue({
         }
     },
     created(){
-        this.fetchItems(this.pagination.current_page);
+        //this.fetchItems(this.pagination.current_page);
+        this.fetchIndexData();
     },
     methods: {
+
+        next(){
+            if (this.model.next_page_url) {
+                this.query.page++;
+                this.fetchIndexData();
+            }
+        },
+        prev(){
+            if (this.model.prev_page_url) {
+                this.query.page--;
+                this.fetchIndexData();
+            }
+        },
+        fetchIndexData() {
+            let vm = this;
+            this.$http.get(`${this.source}?column=${this.query.column}&direction=${this.query.direction}&page=${this.query.page}&per_page=${this.query.per_page}&search_column=${this.query.search_column}&search_operator=${this.query.search_operator}&search_input=${this.query.search_input}`)
+                .then(function (response) {
+                    Vue.set(vm.$data, 'model', response.data.model);
+                    Vue.set(vm.$data, 'columns', response.data.columns)
+                })
+                .catch(function (response) {
+                    console.log(response);
+                })
+        },
+        toggleOrder(column){
+            if (column === this.query.column) {
+                //only change direction
+                if (this.query.direction === 'desc') {
+                    this.query.direction = 'asc';
+                } else {
+                    this.query.direction = 'desc'
+                }
+            } else {
+                this.query.column = column;
+                this.query.direction = 'desc';
+            }
+            this.fetchIndexData();
+        },
         fetchItems (page)
         {
             this.$http.get('/api/admin/modules/business-types?page=' + page).then((response) => {

@@ -28,8 +28,12 @@ class BusinessTypeController extends Controller
      */
     public function index()
     {
-        $business_type = $this->business_type->paginate(50);
-        return response()->json($business_type);
+        $business_type = $this->business_type->searchPaginateAndOrder();
+        $column = BusinessType::$columns;
+        return response()->json([
+            'model' => $business_type,
+            'columns' => $column,
+        ]);
     }
 
     /**
@@ -109,5 +113,14 @@ class BusinessTypeController extends Controller
     {
         BusinessType::find($id)->delete();
         return response()->json(['done']);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function list_business_type()
+    {
+        $business = $this->business_type->all();
+        return response()->json($business);
     }
 }

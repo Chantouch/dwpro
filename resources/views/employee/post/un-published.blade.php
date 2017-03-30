@@ -23,46 +23,52 @@
                     </div>
                     <div class="col-lg-12">
                         <table class="table table-bordered m-0">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Title</th>
-                                <th>Level</th>
-                                <th>No.Of.Post</th>
-                                <th>Industry</th>
-                                <th>Qualification</th>
-                                <th>Salary</th>
-                                <th>Posted</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($posts as $post)
+                            @if(count($posts))
+                                <thead>
                                 <tr>
-                                    <td scope="row">{!! $post->id !!}</td>
-                                    <td>{!! $post->name !!}</td>
-                                    <td>{!! $post->level->name !!}</td>
-                                    <td>{!! $post->hire_number !!}</td>
-                                    <td>{!! $post->industry->name !!}</td>
-                                    <td>{!! $post->qualification->name !!}</td>
-                                    <td>{!! $post->salary !!}</td>
-                                    <td>{!! $post->created_at->diffForHumans() !!}</td>
-                                    <td>{!! Helper::status($post->status) !!}</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="#" class="btn btn-default btn-xs waves-effect waves-light">
-                                                <i class="glyphicon glyphicon-eye-open"></i></a>
-                                            <a href="#" class="btn btn-default btn-xs waves-effect waves-light">
-                                                <i class="glyphicon glyphicon-edit"></i></a>
-                                            <button type="submit"
-                                                    class="btn btn-danger btn-xs waves-effect waves-light">
-                                                <i class="glyphicon glyphicon-trash"></i></button>
-                                        </div>
-                                    </td>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Level</th>
+                                    <th>No.Of.Post</th>
+                                    <th>Industry</th>
+                                    <th>Qualification</th>
+                                    <th>Salary</th>
+                                    <th>Posted</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
-                            @endforeach
-                            </tbody>
+                                </thead>
+                                <tbody>
+                                @foreach($posts as $post)
+                                    <tr>
+                                        <td scope="row">{!! $post->id !!}</td>
+                                        <td>{!! $post->name !!}</td>
+                                        <td>{!! $post->level->name !!}</td>
+                                        <td>{!! $post->hire_number !!}</td>
+                                        <td>{!! Helper::relationship($post->industry) !!}</td>
+                                        <td>{!! Helper::relationship($post->qualification) !!}</td>
+                                        <td>{!! $post->salary !!}</td>
+                                        <td>{!! $post->created_at->diffForHumans() !!}</td>
+                                        <td>{!! Helper::status($post->status) !!}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="#" class="btn btn-default btn-xs waves-effect waves-light">
+                                                    <i class="glyphicon glyphicon-eye-open"></i></a>
+                                                <a href="#" class="btn btn-default btn-xs waves-effect waves-light">
+                                                    <i class="glyphicon glyphicon-edit"></i></a>
+                                                <button type="submit"
+                                                        class="btn btn-danger btn-xs waves-effect waves-light">
+                                                    <i class="glyphicon glyphicon-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            @else
+                                <tr>
+                                    <span>There is no unpublished job that can be publish for now.</span>
+                                </tr>
+                            @endif
                         </table>
                     </div>
                 </div>

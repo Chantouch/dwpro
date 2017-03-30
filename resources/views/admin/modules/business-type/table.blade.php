@@ -21,15 +21,31 @@
                         <table class="table table-bordered m-0">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Name</th>
+                                <th @click.prevent="toggleOrder('id')">
+                                    <a href="javascript:void (0)">
+                                        <span>#</span>
+                                        <span v-if="'id' === query.column">
+                                            <span v-if="query.direction === 'desc'">&darr;</span>
+                                            <span v-else="">&uarr;</span>
+                                        </span>
+                                    </a>
+                                </th>
+                                <th @click.prevent="toggleOrder('name')">
+                                    <a href="javascript:void (0)">
+                                        <span>Name</span>
+                                        <span v-if="'name' === query.column">
+                                            <span v-if="query.direction === 'desc'">&darr;</span>
+                                            <span v-else="">&uarr;</span>
+                                        </span>
+                                    </a>
+                                </th>
                                 <th>Description</th>
                                 <th>Status</th>
                                 <th width="90">Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="item in business_types">
+                            <tr v-for="item in model.data">
                                 <td scope="row">@{{ item.id }}</td>
                                 <td>@{{ item.name }}</td>
                                 <td>@{{ item.description }}</td>
@@ -49,27 +65,28 @@
                             </tr>
                             </tbody>
                         </table>
-                        <nav>
-                            <ul class="pagination" v-if="pagination.total > pagination.per_page">
-                                <li v-if="pagination.current_page > 1">
-                                    <a href="#" aria-label="Previous"
-                                       @click.prevent="changePage(pagination.current_page - 1)">
-                                        <span aria-hidden="true">«</span>
-                                    </a>
-                                </li>
-                                <li v-for="page in pagesNumber" v-bind:class="[ page == isActive ? 'active' : '']">
-                                    <a href="#" @click.prevent="changePage(page)">
-                                        @{{ page }}
-                                    </a>
-                                </li>
-                                <li v-if="pagination.current_page < pagination.last_page">
-                                    <a href="#" aria-label="Next"
-                                       @click.prevent="changePage(pagination.current_page + 1)">
-                                        <span aria-hidden="true">»</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
+                        <div class="row m-t-10">
+                            <div class="col-sm-6">
+                                <div class="footer-item">
+                                    <span>Displaying @{{model.from}} - @{{model.to}} of @{{model.total}} rows</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="pull-right">
+                                            <span>Rows per page</span>
+                                            <input type="text" v-model="query.per_page" @keyup.enter="fetchIndexData()">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button @click.prevent="prev()">&laquo;</button>
+                                        <input type="text" v-model="query.page" @keyup.enter="fetchIndexData()">
+                                        <button @click.prevent="next()">&raquo;</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

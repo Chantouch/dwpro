@@ -11,13 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index');
 Route::get('/post', 'HomeController@getPost');
 
 //Admin Route
@@ -66,14 +62,32 @@ Route::prefix('employee')->name('employee.')->group(function () {
     Route::get('login', 'Auth\EmployeeLoginController@showLoginForm')->name('login');
     Route::post('login', 'Auth\EmployeeLoginController@login')->name('login.post');
     Route::post('logout', 'Auth\EmployeeLoginController@logout')->name('logout');
+    Route::get('account-settings/change-password', 'Employee\EmployeeController@show_change_password')->name('account-settings.show-change-password');
+    Route::post('account-settings/change/password', 'Employee\EmployeeController@change_password')->name('account-settings.change-password');
 
     Route::get('home', 'EmployeeController@index')->name('home');
-
+    Route::get('account-settings/company-profile', 'Employee\EmployeeController@company_profile')->name('company_profile');
+    Route::get('edit-profile', 'Employee\EmployeeController@edit_profile')->name('edit_profile');
+    Route::patch('update-profile', 'Employee\EmployeeController@update_profile')->name('update_profile');
+    Route::patch('update-profile-about', 'Employee\EmployeeController@update_profile_about')->name('update_profile_about');
     Route::get('posts/all', 'Employee\EmployeeController@posts')->name('posts.json');
     //Test api.
     //Route::get('posts', 'Employee\EmployeeController@posts')->name('posts');
     Route::get('posts/active', 'Employee\PostController@status_active')->name('posts.active');
+    Route::get('posts/drafts', 'Employee\PostController@status_drafts')->name('posts.drafts');
     Route::get('posts/expired', 'Employee\PostController@status_expired')->name('posts.expired');
     Route::get('posts/unpublished', 'Employee\PostController@unpublished')->name('posts.unpublished');
+    Route::get('posts/update_status/disabled/{num}', 'Employee\PostController@update_job_status')->name('update_job.status_filled_up');
+    Route::get('posts/update_status/active/{num}', 'Employee\PostController@update_job_status')->name('update_job.status_active');
+    Route::get('posts/update_status/filled_up/{num}', 'Employee\PostController@update_job_status')->name('update_job.status_disabled');
+
     Route::resource('posts', 'Employee\PostController');
+    Route::get('posts/{id}/{draft}', 'Employee\PostController@edit_draft')->name('posts.edit.draft');
+
+    // Contact
+    Route::get('/contact-list', 'Employee\EmployeeController@contact_form')->name('contacts_data');
+    Route::get('/contact-list/deleted', 'Employee\EmployeeController@get_contact_deleted')->name('get_contact_deleted_list');
+    Route::get('/contact/deleted', 'Employee\ContactController@get_contact_deleted')->name('get_contact_deleted');
+    Route::put('/contact/restore_contact/{id}', 'Employee\ContactController@restore_contact')->name('restore_contact');
+    Route::resource('contacts', 'Employee\ContactController');
 });

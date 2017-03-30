@@ -111,4 +111,13 @@ class DepartmentController extends Controller
         $this->departments->find($id)->delete();
         return response()->json('done');
     }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function list_department()
+    {
+        $department = $this->departments->all();
+        return response()->json($department);
+    }
 }

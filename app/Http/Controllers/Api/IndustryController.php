@@ -97,6 +97,7 @@ class IndustryController extends Controller
     {
         $data = $request->all();
         Industry::find($id)->update($data);
+        return response()->json(['done']);
     }
 
     /**
@@ -109,5 +110,14 @@ class IndustryController extends Controller
     {
         Industry::find($id)->delete();
         return response()->json(['done']);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function get_list()
+    {
+        $industry = $this->industry->all();
+        return response()->json($industry);
     }
 }

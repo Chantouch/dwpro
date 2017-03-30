@@ -84,8 +84,12 @@ $factory->define(\App\Models\Contact::class, function (\Faker\Generator $faker) 
     return [
         'name' => $faker->name,
         'description' => $faker->paragraph,
+        'email' => $faker->safeEmail,
         'status' => 1,
-        'employee_id' => mt_rand(1, 50)
+        'employee_id' => mt_rand(1, 50),
+        'phone_number' => $faker->phoneNumber,
+        'position_id' => mt_rand(1, 500),
+        'department_id' => mt_rand(1, 500)
     ];
 });
 
@@ -176,7 +180,10 @@ $factory->define(\App\Models\CompanyProfile::class, function (\Faker\Generator $
         'name' => $faker->name,
         'employee_id' => mt_rand(1, 50),
         'industry_id' => mt_rand(1, 500),
-        'description' => $faker->paragraph,
+        'how_we_work' => $faker->paragraph,
+        'looking_for' => $faker->paragraph,
+        'about_us' => $faker->paragraph,
+        'currently_hiring' => mt_rand(0, 1),
         'business_type_id' => mt_rand(1, 500),
         'city_id' => mt_rand(1, 25),
         'website' => $faker->url,
@@ -195,10 +202,6 @@ $factory->define(\App\Models\CompanyProfile::class, function (\Faker\Generator $
 });
 
 $factory->define(\App\Models\Post::class, function (\Faker\Generator $faker) {
-    $gender = array('Male', 'Female');
-    $marital_status = array('Single', 'Married');
-    $rand_keys = array_rand($gender, 2);
-    $rand_keys_marital = array_rand($marital_status, 2);
     return [
         'name' => $faker->name,
         'post_id' => $faker->unique()->numberBetween(1, 50),
@@ -214,15 +217,15 @@ $factory->define(\App\Models\Post::class, function (\Faker\Generator $faker) {
         'employee_id' => mt_rand(1, 50),
         'field_of_study' => $faker->word,
         'functions_id' => mt_rand(1, 500),
-        'gender' => 'Female',
+        'gender' => null,
         'hire_number' => mt_rand(1, 10),
         'industry_id' => mt_rand(1, 500),
         'level_id' => mt_rand(1, 500),
-        'marital_status' => 'Single',
+        'marital_status' => null,
         'published_date' => $faker->date(),
         'qualification_id' => mt_rand(1, 500),
         'requirement_des' => $faker->paragraph,
-        'salary' => mt_rand(200, 1500),
-        'year_experience' => mt_rand(0, 10),
+        'salary' => null,
+        'year_experience' => null,
     ];
 });

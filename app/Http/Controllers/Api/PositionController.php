@@ -110,4 +110,13 @@ class PositionController extends Controller
         Position::find($id)->delete();
         return response()->json(['done']);
     }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function list_position()
+    {
+        $position = $this->position->all();
+        return response()->json($position);
+    }
 }

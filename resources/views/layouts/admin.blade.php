@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="{!! asset('assets/images/favicon_1.ico') !!}">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}" id="token">
-    <title>{{ config('app.name', 'Digital Work Pro') }} | @yield('title')</title>
+    <title>@yield('title') &#8226; {{ config('app.name', 'Digital Work Pro') }}&#8482;</title>
     <!-- Styles -->
     <script>
         window.Laravel = {!! json_encode([
@@ -444,7 +444,7 @@
 <script src="{!! asset('assets/js/wow.min.js') !!}"></script>
 <script src="{!! asset('assets/js/jquery.nicescroll.js') !!}"></script>
 <script src="{!! asset('assets/js/jquery.scrollTo.min.js') !!}"></script>
-<script type="text/javascript" src="{!! asset('assets/plugins/toastr/toastr.min.js') !!}"></script>
+<script type="text/javascript" src="{!! asset('assets/plugins/toastr/toastr.            min.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('js/vuejs/vue.js') !!}"></script>
 <script src="{!! asset('js/vuejs/vue-resource.min.js') !!}"></script>
 @stack('src-scripts')

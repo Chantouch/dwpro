@@ -22,17 +22,17 @@ class CreatePostsTable extends Migration
             $table->integer('industry_id', false, true)->unsigned()->nullable();
             $table->integer('functions_id', false, true)->unsigned()->nullable();
             $table->integer('city_id', false, true)->unsigned()->nullable();
-            $table->decimal('salary')->nullable()->nullable();
+            $table->enum('salary', ['0', '1', '2', '3', '4', '5'])->nullable()->nullable();
             $table->longText('job_description')->nullable();
             $table->integer('level_id', false, true)->unsigned()->nullable();
             $table->integer('contract_type_id', false, true)->nullable()->comment('Can be Term like full time,..........');
-            $table->integer('year_experience')->nullable();
+            $table->enum('year_experience', ['0', '1', '2', '3'])->nullable();
             $table->integer('qualification_id', false, true)->unsigned()->nullable();
             $table->string('field_of_study')->nullable();
-            $table->enum('gender', ['', 'Male', 'Female'])->nullable();
+            $table->enum('gender', ['0', '1', '2'])->nullable();
             $table->integer('age_from')->nullable();
             $table->integer('age_to')->nullable();
-            $table->enum('marital_status', ['', 'Single', 'Married'])->nullable();
+            $table->enum('marital_status', ['0', '1', '2'])->nullable();
             $table->longText('requirement_des')->nullable();
             $table->integer('contact_id', false, true)->unsigned()->nullable();
             $table->integer('employee_id', false, true)->unsigned()->nullable();
@@ -40,6 +40,7 @@ class CreatePostsTable extends Migration
             $table->date('closing_date')->nullable();
             $table->date('published_date')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('industry_id')->references('id')->on('industries')->onDelete('cascade');
             $table->foreign('functions_id')->references('id')->on('functions')->onDelete('cascade');
