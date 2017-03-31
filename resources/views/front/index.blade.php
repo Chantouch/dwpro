@@ -9,7 +9,7 @@
 
 @stop
 
-@section('full_content')
+@section('contents')
 
     <div class="main-slider"><!-- start main-headline section -->
         <div class="slider-nav">
@@ -47,8 +47,7 @@
 
         </div>
     </div>
-
-    <div class="headline container"><!-- start headline section -->
+    <div class="headline container">
         <div class="row">
             <div class="col-md-6 align-right">
                 <h4>Easiest Way To Find Your Dream Job</h4>
@@ -69,29 +68,97 @@
             </div>
             <div class="clearfix"></div>
         </div>
-    </div><!-- end headline section -->
-
+    </div>
     <!-- start job finder -->
-    {{--@include('components.search')--}}
+    @include('components.search')
     <!-- end job finder -->
-
-    <div class="recent-job"><!-- Start Recent Job -->
+    <div class="recent-job">
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
                     <h4><i class="glyphicon glyphicon-briefcase"></i> Recent Job</h4>
-
-                    {{--Tab jos--}}
-                    @include('components.tab_jobs')
-                    {{--Tab jos--}}
-
+                    <div id="tab-container" class='tab-container'>
+                        <ul class='etabs clearfix'>
+                            <li class='tab'><a href="#all">All</a></li>
+                            @foreach($contract_terms as $contract_term)
+                                <li class='tab'><a href="#{!! $contract_term->slug !!}">{!! $contract_term->name !!}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <div class='panel-container'>
+                            <div id="all">
+                                @foreach($posts as $post)
+                                    <div class="recent-job-list-home">
+                                        <div class="job-list-logo col-md-1 ">
+                                            <img src="{!! asset('images/upload/company-2-post.png') !!}"
+                                                 class="img-responsive" alt="srjhfghdgh"/>
+                                        </div>
+                                        <div class="col-md-5 job-list-desc">
+                                            <h6>{!! $post->name !!}</h6>
+                                            <p>{!! $post->job_description !!}</p>
+                                        </div>
+                                        <div class="col-md-6 full">
+                                            <div class="job-list-location col-md-5">
+                                                <h6>
+                                                    <i class="fa fa-map-marker"></i>{!! Helper::relationship($post->city) !!}
+                                                </h6>
+                                            </div>
+                                            <div class="job-list-type col-md-4 ">
+                                                <h6>
+                                                    <i class="fa fa-user"></i>{!! Helper::relationship($post->contract_type) !!}
+                                                </h6>
+                                            </div>
+                                            <div class="col-md-3 job-list-button">
+                                                <h6 class="pull-right">
+                                                    <a href="#" class="btn-view-job">View</a>
+                                                </h6>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            @foreach($contract_terms as $contract_term)
+                                <div id="{!! $contract_term->slug !!}">
+                                    @foreach($full_time_posts as $post)
+                                        <div class="recent-job-list-home">
+                                            <div class="job-list-logo col-md-1 ">
+                                                <img src="{!! asset('images/upload/company-2-post.png') !!}"
+                                                     class="img-responsive" alt="srjhfghdgh"/>
+                                            </div>
+                                            <div class="col-md-5 job-list-desc">
+                                                <h6>{!! $post->name !!}</h6>
+                                                <p>{!! $post->job_description !!}</p>
+                                            </div>
+                                            <div class="col-md-6 full">
+                                                <div class="job-list-location col-md-5">
+                                                    <h6>
+                                                        <i class="fa fa-map-marker"></i>{!! Helper::relationship($post->city) !!}
+                                                    </h6>
+                                                </div>
+                                                <div class="job-list-type col-md-4 ">
+                                                    <h6>
+                                                        <i class="fa fa-user"></i>{!! Helper::relationship($post->contract_type) !!}
+                                                    </h6>
+                                                </div>
+                                                <div class="col-md-3 job-list-button">
+                                                    <h6 class="pull-right">
+                                                        <a href="#" class="btn-view-job">View</a>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
                     <div class="spacer-2"></div>
                 </div>
-
                 <div class="col-md-4">
-
                     {{--Opening jobs--}}
-                    {{--@include('components.opening_jobs')--}}
+                    @include('components.opening_jobs')
                     {{--Opening jobs--}}
 
                     <div class="post-resume-title">Post Your Resume</div>
@@ -106,7 +173,6 @@
             </div>
         </div>
     </div><!-- end Recent Job -->
-
     <div class="job-status">
         <div class="container">
             <h1>Jobs Stats Updates</h1>
@@ -130,7 +196,7 @@
                 </div>
 
                 <div class="counter-container col-md-3 col-xs-6">
-                    <div class="counter-value">3535</div>
+                    <div class="counter-value">{!! count($companies) !!}</div>
                     <div class="line"></div>
                     <p>Companies</p>
                 </div>
@@ -141,10 +207,8 @@
                     <p>Applicants</p>
                 </div>
             </div>
-
         </div>
     </div>
-
     <div class="step-to">
         <div class="container">
             <h1 class="wow fadeInDown" data-wow-delay="0.3s">Easiest Way To Use</h1>
@@ -153,7 +217,6 @@
                 enjoy their day. And so I think our job is to try to take the environment, take what the good Lord has
                 given us, and expand upon it or enhance it, without destroying it.
             </p>
-
             <div class="step-spacer"></div>
             <div id="step-image">
                 <div class="step-by-container">
@@ -166,7 +229,6 @@
                         </div>
                         <h5>Register with us</h5>
                     </div>
-
                     <div class="step-by wow fadeInUp" data-wow-delay="0.6s">
                         Second Step
                         <div class="step-by-inner">
@@ -176,7 +238,6 @@
                         </div>
                         <h5>Create your profile</h5>
                     </div>
-
                     <div class="step-by wow fadeInUp" data-wow-delay="0.9s">
                         Third Step
                         <div class="step-by-inner">
@@ -186,7 +247,6 @@
                         </div>
                         <h5>Upload your resume</h5>
                     </div>
-
                     <div class="step-by wow fadeInUp" data-wow-delay="1.2s">
                         Now it's our turn
                         <div class="step-by-inner">
@@ -196,13 +256,11 @@
                         </div>
                         <h5>Now take rest :)</h5>
                     </div>
-
                 </div>
             </div>
             <div class="step-spacer"></div>
         </div>
     </div>
-
     <div class="testimony">
         <div class="container">
             <h1>What People Say About Us</h1>
@@ -412,8 +470,6 @@
             </div>
         </div>
     </div>
-
-
     <div id="company-post">
         <div class="container">
 
@@ -473,13 +529,8 @@
             </div>
         </div>
     </div>
-
-    <!-- ###################### Feature Search ##################### -->
     {{--@include('webfront.jobs.feature-search')--}}
-    <!--End Feature search -->
-
 @stop
-
 @section('page_specific_js')
     <script src="{{ asset('assets/plugins/typeahead/bootstrap3-typeahead.min.js')}}" type="text/javascript"></script>
     <!-- Select2 -->

@@ -7,12 +7,11 @@
         {{--<li class='tab'><a href="#contract">Contract</a></li>--}}
     </ul>
     <div class='panel-container'>
-
         <div id="all"><!-- Tabs section 1 -->
             @if(!empty($posts))
                 @foreach ($posts as $job)
                     <div class="recent-job-list-home"><!-- Tabs content -->
-                        <div class="job-list-logo col-md-1 ">
+                        <div class="job-list-logo col-md-1">
                             {{--@if($job->employer->photo == 'default.jpg')--}}
                             {{--<img src="{!!asset('uploads/employers/'.$job->employer->photo)!!}"--}}
                             {{--class="img-responsive"--}}
@@ -48,14 +47,14 @@
                             </div>
                         </div>
                         <div class="clearfix"></div>
-                    </div><!-- Tabs content -->
+                    </div>
                 @endforeach
             @else
-                <div class="recent-job-list-home"><!-- Tabs content -->
+                <div class="recent-job-list-home">
                     <span>There is no job available here!!</span>
                 </div>
             @endif
-        </div><!-- Tabs section 1 -->
+        </div>
 
         {{--<div id="contract"><!-- Tabs section 2 -->--}}
         {{--@if(!empty($job_contracts))--}}

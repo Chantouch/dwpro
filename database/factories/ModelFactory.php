@@ -213,7 +213,7 @@ $factory->define(\App\Models\Post::class, function (\Faker\Generator $faker) {
         'city_id' => mt_rand(1, 25),
         'closing_date' => $faker->date(),
         'contact_id' => mt_rand(1, 50),
-        'contract_type_id' => mt_rand(1, 50),
+        'contract_type_id' => mt_rand(1, 5),
         'employee_id' => mt_rand(1, 50),
         'field_of_study' => $faker->word,
         'functions_id' => mt_rand(1, 500),

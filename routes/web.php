@@ -13,7 +13,7 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/post', 'HomeController@getPost');
 
 //Admin Route

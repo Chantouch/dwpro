@@ -161,4 +161,13 @@ class Post extends Model
     {
         return Hashids::encode($this->attributes['id']);
     }
+
+
+    //----Scope----//
+    public function scopeWithCandidateName($query, $name)
+    {
+        return $query->whereHas(['contract_type_id' => function ($q) use ($name) {
+            $q->where('contract_type_id', $name);
+        }]);
+    }
 }

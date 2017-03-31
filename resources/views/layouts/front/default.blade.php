@@ -12,7 +12,6 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
-
     <!-- Bootstrap 3.3.4 -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
     <!-- Main Style -->
@@ -30,12 +29,13 @@
     <link href="{{ asset('assets/plugins/owl-carousel/owl.theme.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/plugins/owl-carousel/owl.transitions.css') }}" rel="stylesheet" type="text/css"/>
     <!-- Owl Carousel -->
-
     <!-- Form Slider -->
     <link href="{{ asset('assets/plugins/form-slider/jslider.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/plugins/form-slider/jslider.round.css') }}" rel="stylesheet" type="text/css"/>
     <!-- Form Slider -->
-
+    <link href="{{ asset('css/jcolabs.css') }}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="{!! asset('css/select.css') !!}"/>
+    <link rel="stylesheet" type="text/css" href="{!! asset('css/skin-elastic.css') !!}"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -43,41 +43,33 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     @yield('page_specific_styles')
-
 </head>
 <body>
 <div id="wrapper"><!-- start main wrapper -->
     <div id="header"><!-- start main header -->
-
         @include('layouts.front.header')
-
     </div><!-- end main header -->
-
-    @yield('full_content')
-    <div class="main-page-title"><!-- start main page title -->
-        <div class="container">
-
-            @if (Session::has('alert'))
-                <div class="alert alert-warning alert-dismissable job-alert alert-red">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                        <i class="fa fa-times-circle"></i></button>
-                    {!! Session::get('alert') !!}
-                </div>
-            @endif
-
-            @yield('main_page_container')
-        </div>
-    </div><!-- end main page title -->
-
-    @yield('content')
-
-    <div id="page-content">
-        @yield('page_content')
-    </div>
-
+    @yield('contents')
+    {{--<div class="main-page-title"><!-- start main page title -->--}}
+    {{--<div class="container">--}}
+    {{--@if (Session::has('alert'))--}}
+    {{--<div class="alert alert-warning alert-dismissable job-alert alert-red">--}}
+    {{--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">--}}
+    {{--<i class="fa fa-times-circle"></i></button>--}}
+    {{--{!! Session::get('alert') !!}--}}
+    {{--</div>--}}
+    {{--@endif--}}
+    {{--@yield('main_page_container')--}}
+    {{--</div>--}}
+    {{--</div><!-- end main page title -->--}}
+    {{--@yield('content')--}}
+    {{--<div id="page-content">--}}
+    {{--@yield('page_content')--}}
+    {{--</div>--}}
     <div id="footer"><!-- Footer -->
         @include('layouts.front.footer')
     </div><!-- Footer -->
+
 </div><!-- end main wrapper -->
 <!-- jQuery 2.1.4 -->
 <script src="{{ asset('assets/js/jquery.min.js')}}" type="text/javascript"></script>
@@ -90,11 +82,9 @@
 <script src="{{ asset('assets/plugins/easytabs/jquery.easytabs.min.js')}}" type="text/javascript"></script>
 <script src="{{ asset('assets/plugins/easytabs/modernizr.custom.49511.js')}}" type="text/javascript"></script>
 <!-- Tabs -->
-
 <!-- Owl Carousel -->
 <script src="{{ asset('assets/plugins/owl-carousel/owl.carousel.js')}}" type="text/javascript"></script>
 <!-- Owl Carousel -->
-
 <!-- Form Slider -->
 <script src="{{ asset('assets/plugins/form-slider/jshashtable-2.1_src.js')}}" type="text/javascript"></script>
 <script src="{{ asset('assets/plugins/form-slider/jquery.numberformatter-1.2.3.js')}}" type="text/javascript"></script>
@@ -107,11 +97,11 @@
 <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <!-- Map -->
 <script src="{{ asset('js/dwpro.js')}}" type="text/javascript"></script>
-
 <script src="{{ asset('js/main.js')}}" type="text/javascript"></script>
-
+<script src="{{ asset('js/jcolabs.js')}}" type="text/javascript"></script>
+<script src="{!! asset('js/classie.js') !!}"></script>
+<script src="{!! asset('js/selectFx.js') !!}"></script>
 @yield('page_specific_js')
-
 <script type="text/javascript">
     $(document).ready(function () {
         @yield('page_specific_scripts')
