@@ -12,7 +12,7 @@ class ContractType extends Model
     use SoftDeletes;
     use Sluggable;
     protected $fillable = [
-        'name', 'description', 'status'
+        'name', 'description', 'status', 'slug'
     ];
 
     //----------Sluggable---------//
@@ -42,6 +42,9 @@ class ContractType extends Model
         return $this->name;
     }
 
+    /**
+     * @return mixed
+     */
     public function getHashidAttribute()
     {
         return Hashids::encode($this->attributes['id']);

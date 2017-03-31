@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "cocur/slugify",
-            "version": "v2.4",
+            "version": "v2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cocur/slugify.git",
-                "reference": "f11f22d4e60c408187c3efd8ac201c022a93cc3f"
+                "reference": "e8167e9a3236044afebd6e8ab13ebeb3ec9ca145"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cocur/slugify/zipball/f11f22d4e60c408187c3efd8ac201c022a93cc3f",
-                "reference": "f11f22d4e60c408187c3efd8ac201c022a93cc3f",
+                "url": "https://api.github.com/repos/cocur/slugify/zipball/e8167e9a3236044afebd6e8ab13ebeb3ec9ca145",
+                "reference": "e8167e9a3236044afebd6e8ab13ebeb3ec9ca145",
                 "shasum": ""
             },
             "require": {
@@ -37,7 +37,7 @@
                 "symfony/config": "~2.4|~3.0",
                 "symfony/dependency-injection": "~2.4|~3.0",
                 "symfony/http-kernel": "~2.4|~3.0",
-                "twig/twig": "~1.12",
+                "twig/twig": "~1.26|~2.0",
                 "zendframework/zend-modulemanager": "~2.2",
                 "zendframework/zend-servicemanager": "~2.2",
                 "zendframework/zend-view": "~2.2"
@@ -68,7 +68,7 @@
                 "slug",
                 "slugify"
             ],
-            "time": "2017-02-09T19:27:52+00:00"
+            "time": "2017-03-23T21:52:55+00:00"
         },
         {
             "name": "cviebrock/eloquent-sluggable",
@@ -224,16 +224,16 @@
         },
         {
             "name": "erusev/parsedown",
-            "version": "1.6.1",
+            "version": "1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/erusev/parsedown.git",
-                "reference": "20ff8bbb57205368b4b42d094642a3e52dac85fb"
+                "reference": "1bf24f7334fe16c88bf9d467863309ceaf285b01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/erusev/parsedown/zipball/20ff8bbb57205368b4b42d094642a3e52dac85fb",
-                "reference": "20ff8bbb57205368b4b42d094642a3e52dac85fb",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/1bf24f7334fe16c88bf9d467863309ceaf285b01",
+                "reference": "1bf24f7334fe16c88bf9d467863309ceaf285b01",
                 "shasum": ""
             },
             "require": {
@@ -262,7 +262,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2016-11-02T15:56:58+00:00"
+            "time": "2017-03-29T16:04:15+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -421,16 +421,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.4.1",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "0d6c7ca039329247e4f0f8f8f6506810e8248855"
+                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/0d6c7ca039329247e4f0f8f8f6506810e8248855",
-                "reference": "0d6c7ca039329247e4f0f8f8f6506810e8248855",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
+                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
                 "shasum": ""
             },
             "require": {
@@ -482,7 +482,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-02-27T10:51:17+00:00"
+            "time": "2017-03-20T17:10:46+00:00"
         },
         {
             "name": "guzzlehttp/ringphp",
@@ -842,16 +842,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.4.15",
+            "version": "v5.4.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "ecc6468b8af30b77566a8519ce8898740ef691d7"
+                "reference": "6cf379ec34d08bcdc9c7183e369a8fdf04ade80d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/ecc6468b8af30b77566a8519ce8898740ef691d7",
-                "reference": "ecc6468b8af30b77566a8519ce8898740ef691d7",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/6cf379ec34d08bcdc9c7183e369a8fdf04ade80d",
+                "reference": "6cf379ec34d08bcdc9c7183e369a8fdf04ade80d",
                 "shasum": ""
             },
             "require": {
@@ -967,7 +967,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-03-02T14:41:40+00:00"
+            "time": "2017-03-21T19:34:41+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -1083,16 +1083,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.36",
+            "version": "1.0.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "d9c1698582dfbfbd092ec9c5c3325f862cdb3297"
+                "reference": "78b5cc4feb61a882302df4fbaf63b7662e5e4ccd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/d9c1698582dfbfbd092ec9c5c3325f862cdb3297",
-                "reference": "d9c1698582dfbfbd092ec9c5c3325f862cdb3297",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/78b5cc4feb61a882302df4fbaf63b7662e5e4ccd",
+                "reference": "78b5cc4feb61a882302df4fbaf63b7662e5e4ccd",
                 "shasum": ""
             },
             "require": {
@@ -1162,7 +1162,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2017-03-18T16:02:30+00:00"
+            "time": "2017-03-22T15:43:14+00:00"
         },
         {
             "name": "mews/purifier",
@@ -1672,16 +1672,16 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "3.6.0",
+            "version": "3.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "0b7bdfb180e72c8d76e75a649ced67e392201458"
+                "reference": "4ae32dd9ab8860a4bbd750ad269cba7f06f7934e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/0b7bdfb180e72c8d76e75a649ced67e392201458",
-                "reference": "0b7bdfb180e72c8d76e75a649ced67e392201458",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/4ae32dd9ab8860a4bbd750ad269cba7f06f7934e",
+                "reference": "4ae32dd9ab8860a4bbd750ad269cba7f06f7934e",
                 "shasum": ""
             },
             "require": {
@@ -1693,9 +1693,9 @@
             },
             "require-dev": {
                 "apigen/apigen": "^4.1",
-                "codeception/aspect-mock": "1.0.0",
+                "codeception/aspect-mock": "^1.0 | ^2.0",
                 "doctrine/annotations": "~1.2.0",
-                "goaop/framework": "1.0.0-alpha.2",
+                "goaop/framework": "1.0.0-alpha.2 | ^1.0 | ^2.1",
                 "ircmaxell/random-lib": "^1.1",
                 "jakub-onderka/php-parallel-lint": "^0.9.0",
                 "mockery/mockery": "^0.9.4",
@@ -1750,24 +1750,27 @@
                 "identifier",
                 "uuid"
             ],
-            "time": "2017-03-18T15:38:09+00:00"
+            "time": "2017-03-26T20:37:53+00:00"
         },
         {
             "name": "react/promise",
-            "version": "v2.5.0",
+            "version": "v2.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/promise.git",
-                "reference": "2760f3898b7e931aa71153852dcd48a75c9b95db"
+                "reference": "62785ae604c8d69725d693eb370e1d67e94c4053"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/promise/zipball/2760f3898b7e931aa71153852dcd48a75c9b95db",
-                "reference": "2760f3898b7e931aa71153852dcd48a75c9b95db",
+                "url": "https://api.github.com/repos/reactphp/promise/zipball/62785ae604c8d69725d693eb370e1d67e94c4053",
+                "reference": "62785ae604c8d69725d693eb370e1d67e94c4053",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
             },
             "type": "library",
             "autoload": {
@@ -1793,7 +1796,7 @@
                 "promise",
                 "promises"
             ],
-            "time": "2016-12-22T14:09:01+00:00"
+            "time": "2017-03-25T12:08:31+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

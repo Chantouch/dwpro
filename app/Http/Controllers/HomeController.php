@@ -36,14 +36,7 @@ class HomeController extends Controller
         $companies = Employee::where('status', 1)->get();
         $contract_terms = ContractType::where('status', 1)->get();
         $feature_posts = $this->post->all();
-        $full_time_posts = Post::where('status', 1);
-        $contract = array();
-        foreach ($contract_terms as $contract_term) {
-            $contract[] = $contract_term->id;
-        }
-        $full_time_posts->whereIn('contract_type_id', $contract);
-        $full_time_posts = $full_time_posts->get();
-        //dd($full_time);
+        $full_time_posts = Post::where('status', 1)->get();
         return view('front.index', compact(
             'posts', 'cities', 'feature_posts', 'companies',
             'contract_terms', 'full_time_posts'

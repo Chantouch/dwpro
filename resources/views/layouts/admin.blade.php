@@ -444,7 +444,7 @@
 <script src="{!! asset('assets/js/wow.min.js') !!}"></script>
 <script src="{!! asset('assets/js/jquery.nicescroll.js') !!}"></script>
 <script src="{!! asset('assets/js/jquery.scrollTo.min.js') !!}"></script>
-<script type="text/javascript" src="{!! asset('assets/plugins/toastr/toastr.            min.js') !!}"></script>
+<script type="text/javascript" src="{!! asset('assets/plugins/toastr/toastr.min.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('js/vuejs/vue.js') !!}"></script>
 <script src="{!! asset('js/vuejs/vue-resource.min.js') !!}"></script>
 @stack('src-scripts')
