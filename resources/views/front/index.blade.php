@@ -1,11 +1,11 @@
 @extends('layouts.front.default')
 @section('title', 'Jobs list')
 @section('page_specific_styles')
-    <link href="{{ asset('plugins/animate/animate.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/plugins/animate.less/animate.min.css') }}" rel="stylesheet" type="text/css"/>
     <!-- Select2 -->
-    <link rel="stylesheet" href="{!! asset('plugins/select2/select2.min.css') !!}">
-    <link rel="stylesheet" href="{!! asset('plugins/ion-range-slider/css/ion.rangeSlider.css') !!}">
-    <link rel="stylesheet" href="{!! asset('plugins/ion-range-slider/css/ion.rangeSlider.skinFlat.css') !!}">
+    <link rel="stylesheet" href="{!! asset('assets/plugins/select2/select2.css') !!}">
+    <link rel="stylesheet" href="{!! asset('assets/plugins/ion-range-slider/css/ion.rangeSlider.css') !!}">
+    <link rel="stylesheet" href="{!! asset('assets/plugins/ion-range-slider/css/ion.rangeSlider.skinFlat.css') !!}">
 
 @stop
 
@@ -21,26 +21,25 @@
                 <div class="owl-wrapper">
                     <div class="owl-item">
                         <div class="item-slide">
-                            <img src="{!! asset('webfront/images/upload/dummy-slide-1.jpg')!!}" class="img-responsive"
+                            <img src="{!! asset('images/upload/dummy-slide-1.jpg')!!}" class="img-responsive"
                                  alt="dummy-slide">
                         </div>
                     </div>
                     <div class="owl-item">
                         <div class="item-slide">
-                            <img src="{!! asset('webfront/images/upload/dummy-slide-2.jpg')!!}" class="img-responsive"
+                            <img src="{!! asset('images/upload/dummy-slide-2.jpg')!!}" class="img-responsive"
                                  alt="dummy-slide">
                         </div>
                     </div>
                     <div class="owl-item">
                         <div class="item-slide">
-                            <img src="{!! asset('webfront/images/upload/dummy-slide-2.jpg')!!}" class="img-responsive"
+                            <img src="{!! asset('images/upload/dummy-slide-2.jpg')!!}" class="img-responsive"
                                  alt="dummy-slide">
                         </div>
                     </div>
                     <div class="owl-item">
                         <div class="item-slide">
-                            <img src="{!! asset('front')!!}" class="img-responsive"
-                                 alt="dummy-slide">
+                            <img src="#" class="img-responsive" alt="dummy-slide">
                         </div>
                     </div>
                 </div>
@@ -83,7 +82,7 @@
                     <h4><i class="glyphicon glyphicon-briefcase"></i> Recent Job</h4>
 
                     {{--Tab jos--}}
-                    {{--@include('components.tab_jobs')--}}
+                    @include('components.tab_jobs')
                     {{--Tab jos--}}
 
                     <div class="spacer-2"></div>
@@ -99,8 +98,7 @@
                     <div class="post-resume-container">
                         {{--<button type="button" class="post-resume-button">Upload Your Resume--}}
                         {{--<i class="icon-upload grey"></i></button>--}}
-                        <a href="#" class="post-resume-button text-center">Upload
-                            Your Resume
+                        <a href="#" class="post-resume-button text-center">Upload Your Resume
                             <i class="icon-upload grey"></i></a>
                     </div>
                 </div>
@@ -218,34 +216,35 @@
         </div>
         <div id="sync2" class="owl-carousel">
             <div class="testimony-image">
-                <img src="images/upload/testimony-image-1.jpg" class="img-responsive" alt="testimony"/>
+                <img src="{!! asset('images/upload/testimony-image-1.jpg') !!}" class="img-responsive" alt="testimony"/>
             </div>
             <div class="testimony-image">
-                <img src="images/upload/testimony-image-2.jpg" class="img-responsive" alt="testimony"/>
+                <img src="{!! asset('images/upload/testimony-image-2.jpg') !!}" class="img-responsive" alt="testimony"/>
             </div>
             <div class="testimony-image">
-                <img src="images/upload/testimony-image-3.jpg" class="img-responsive" alt="testimony"/>
+                <img src="{!! asset('images/upload/testimony-image-3.jpg') !!}" class="img-responsive" alt="testimony"/>
             </div>
             <div class="testimony-image">
-                <img src="images/upload/testimony-image-4.jpg" class="img-responsive" alt="testimony"/>
+                <img src="{!! asset('images/upload/testimony-image-4.jpg') !!}" class="img-responsive" alt="testimony"/>
             </div>
             <div class="testimony-image">
-                <img src="images/upload/testimony-image-5.jpg" class="img-responsive" alt="testimony"/>
+                <img src="{!! asset('images/upload/testimony-image-5.jpg') !!}" class="img-responsive" alt="testimony"/>
             </div>
             <div class="testimony-image">
-                <img src="images/upload/testimony-image-6.jpg" class="img-responsive" alt="testimony"/>
+                <img src="{!! asset('images/upload/testimony-image-6.jpg') !!}" class="img-responsive" alt="testimony"/>
             </div>
             <div class="testimony-image">
-                <img src="images/upload/testimony-image-7.jpg" class="img-responsive" alt="testimony"/>
+                <img src="{!! asset('images/upload/testimony-image-7.jpg') !!}" class="img-responsive" alt="testimony"/>
             </div>
             <div class="testimony-image">
-                <img src="images/upload/testimony-image-8.jpg" class="img-responsive" alt="testimony"/>
+                <img src="{!! asset('images/upload/testimony-image-8.jpg') !!}" class="img-responsive" alt="testimony"/>
             </div>
             <div class="testimony-image">
-                <img src="images/upload/testimony-image-9.jpg" class="img-responsive" alt="testimony"/>
+                <img src="{!! asset('images/upload/testimony-image-9.jpg') !!}" class="img-responsive" alt="testimony"/>
             </div>
             <div class="testimony-image">
-                <img src="images/upload/testimony-image-10.jpg" class="img-responsive" alt="testimony"/>
+                <img src="{!! asset('images/upload/testimony-image-10.jpg') !!}" class="img-responsive"
+                     alt="testimony"/>
             </div>
 
         </div>
@@ -482,11 +481,12 @@
 @stop
 
 @section('page_specific_js')
-    <script src="{{ asset('plugins/typeahead/bootstrap3-typeahead.min.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('assets/plugins/typeahead/bootstrap3-typeahead.min.js')}}" type="text/javascript"></script>
     <!-- Select2 -->
-    <script src="{!! asset('plugins/select2/select2.full.min.js') !!}"></script>
-    <script src="{{ asset('plugins/wow/wow.min.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('plugins/ion-range-slider/js/ion.rangeSlider.min.js')}}" type="text/javascript"></script>
+    <script src="{!! asset('assets/plugins/select2/select2.full.js') !!}"></script>
+    <script src="{{ asset('assets/plugins/wow/wow.min.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('assets/plugins/ion-range-slider/js/ion.rangeSlider.min.js')}}"
+            type="text/javascript"></script>
 @stop
 @section('page_specific_scripts')
     $.ajaxSetup({
