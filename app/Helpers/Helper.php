@@ -5,6 +5,8 @@
  * Date: 17/03/2017
  * Time: 11:13 AM
  */
+use Carbon\Carbon;
+
 class Helper
 {
 
@@ -149,5 +151,10 @@ class Helper
         } else {
             return "Others";
         }
+    }
+
+    public static function date_time_format($date)
+    {
+        return Carbon::parse($date)->format('D-d-M-Y H:i A');
     }
 }

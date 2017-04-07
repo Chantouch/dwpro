@@ -29,6 +29,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public static function rule()
+    {
+        return [
+            'first_name' => 'required'
+        ];
+    }
+
     //SetAndGet Attribute
 
     /**

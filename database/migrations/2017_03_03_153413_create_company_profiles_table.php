@@ -16,11 +16,15 @@ class CreateCompanyProfilesTable extends Migration
         Schema::create('company_profiles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique()->nullable();
-            $table->integer('employee_id', false, true)->unsigned();
-            $table->integer('industry_id', false, true)->unsigned();
-            $table->integer('business_type_id', false, true)->unsigned();
-            $table->integer('city_id', false, true)->unsigned();
+            $table->integer('employee_id', false, true);
+            $table->integer('industry_id', false, true);
+            $table->integer('business_type_id', false, true);
+            $table->integer('city_id', false, true);
             $table->string('website')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('google_plus')->nullable();
+            $table->string('linked_in')->nullable();
             $table->string('address')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('company_email')->nullable();

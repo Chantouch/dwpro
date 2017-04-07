@@ -16,7 +16,7 @@
         http_build_query([
             'url' => $url,
             'media' => 'http://placehold.it/300x300?text=Cool+link',
-            'description' => $job->post_name
+            'description' => $post->name
         ])
         !!}" target="_blank">
         <i class="fa fa-pinterest-square"></i>

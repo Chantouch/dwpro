@@ -8,7 +8,7 @@
                     communication skills are what will get you promoted.
                 </p>
                 <p>
-                    <a href="{!! route('candidate.attachments.create') !!}" class="btn btn-default btn-black">UPLOAD
+                    <a href="#" class="btn btn-default btn-black">UPLOAD
                         YOUR RESUME <i class="icon-upload white"></i>
                     </a>
                 </p>
@@ -20,7 +20,7 @@
                     hungry and out of a job are the stuff of which dictatorships are made.
                 </p>
                 <p>
-                    <a href="{!! route('employer.postJobs.create') !!}" class="btn btn-default btn-green">POST A JOB
+                    <a href="#" class="btn btn-default btn-green">POST A JOB
                         NOW</a>
                 </p>
             </div>

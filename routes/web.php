@@ -15,6 +15,7 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/post', 'HomeController@getPost');
+Route::get('view/job/{id}/{company}/{industry}/{slug}', 'HomeController@view_post')->name('home.view.job');
 
 //Admin Route
 Route::group(['prefix' => 'admin'], function () {

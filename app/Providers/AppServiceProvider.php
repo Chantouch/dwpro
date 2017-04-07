@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Employee;
+use App\Models\City;
+use App\Models\Functions;
+use App\Models\Industry;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Validator;
@@ -37,6 +41,12 @@ class AppServiceProvider extends ServiceProvider
         Validator::replacer('smaller_than', function ($message, $attribute, $rule, $parameters) {
             return str_replace(':field', $parameters[0], $message);
         });
+
+        view()->share('cities', City::where('status', 1)->orderBy('created_at', 'ASC')->pluck('name', 'id'));
+        view()->share('feature_cities', City::where('status', 1)->orderBy('created_at', 'ASC')->take(5)->get());
+        view()->share('feature_functions', Functions::where('status', 1)->orderBy('created_at', 'ASC')->take(5)->get());
+        view()->share('feature_industries', Industry::where('status', 1)->orderBy('created_at', 'ASC')->take(5)->get());
+        view()->share('feature_companies', Employee::where('status', 1)->orderBy('created_at', 'ASC')->take(5)->get());
     }
 
     /**

@@ -50,22 +50,22 @@
         @include('layouts.front.header')
     </div><!-- end main header -->
     @yield('contents')
-    {{--<div class="main-page-title"><!-- start main page title -->--}}
-    {{--<div class="container">--}}
-    {{--@if (Session::has('alert'))--}}
-    {{--<div class="alert alert-warning alert-dismissable job-alert alert-red">--}}
-    {{--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">--}}
-    {{--<i class="fa fa-times-circle"></i></button>--}}
-    {{--{!! Session::get('alert') !!}--}}
-    {{--</div>--}}
-    {{--@endif--}}
-    {{--@yield('main_page_container')--}}
-    {{--</div>--}}
-    {{--</div><!-- end main page title -->--}}
-    {{--@yield('content')--}}
-    {{--<div id="page-content">--}}
-    {{--@yield('page_content')--}}
-    {{--</div>--}}
+    <div class="main-page-title"><!-- start main page title -->
+        <div class="container">
+            @if (Session::has('alert'))
+                <div class="alert alert-warning alert-dismissable job-alert alert-red">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                        <i class="fa fa-times-circle"></i></button>
+                    {!! Session::get('alert') !!}
+                </div>
+            @endif
+            @yield('main_page_container')
+        </div>
+    </div><!-- end main page title -->
+    @yield('content')
+    <div id="page-content">
+        @yield('page_content')
+    </div>
     <div id="footer"><!-- Footer -->
         @include('layouts.front.footer')
     </div><!-- Footer -->

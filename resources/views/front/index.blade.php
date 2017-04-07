@@ -6,11 +6,9 @@
     <link rel="stylesheet" href="{!! asset('assets/plugins/select2/select2.css') !!}">
     <link rel="stylesheet" href="{!! asset('assets/plugins/ion-range-slider/css/ion.rangeSlider.css') !!}">
     <link rel="stylesheet" href="{!! asset('assets/plugins/ion-range-slider/css/ion.rangeSlider.skinFlat.css') !!}">
-
 @stop
 
 @section('contents')
-
     <div class="main-slider"><!-- start main-headline section -->
         <div class="slider-nav">
             <a class="slider-prev"><i class="fa fa-chevron-circle-left"></i></a>
@@ -96,12 +94,12 @@
                                         </div>
                                         <div class="col-md-5 job-list-desc">
                                             <h6>{!! $post->name !!}</h6>
-                                            <p>{!! $post->job_description !!}</p>
+                                            <p>{!! str_limit($post->job_description, 40) !!}</p>
                                         </div>
                                         <div class="col-md-6 full">
                                             <div class="job-list-location col-md-5">
                                                 <h6>
-                                                    <i class="fa fa-map-marker"></i>{!! Helper::relationship($post->city) !!}
+                                                    <i class="fa fa-map-marker"></i>{!! str_limit(Helper::relationship($post->city), 15) !!}
                                                 </h6>
                                             </div>
                                             <div class="job-list-type col-md-4 ">
@@ -111,7 +109,8 @@
                                             </div>
                                             <div class="col-md-3 job-list-button">
                                                 <h6 class="pull-right">
-                                                    <a href="#" class="btn-view-job">View</a>
+                                                    <a href="{!! route('home.view.job',[$post->hashid,$post->employee->company_profile->slug,$post->industry->slug,$post->slug]) !!}"
+                                                       class="btn-view-job">View</a>
                                                 </h6>
                                             </div>
                                         </div>
@@ -130,12 +129,12 @@
                                                 </div>
                                                 <div class="col-md-5 job-list-desc">
                                                     <h6>{!! $post->name !!}</h6>
-                                                    <p>{!! $post->job_description !!}</p>
+                                                    <p>{!! str_limit($post->job_description,40) !!}</p>
                                                 </div>
                                                 <div class="col-md-6 full">
                                                     <div class="job-list-location col-md-5">
                                                         <h6>
-                                                            <i class="fa fa-map-marker"></i>{!! Helper::relationship($post->city) !!}
+                                                            <i class="fa fa-map-marker"></i>{!! str_limit(Helper::relationship($post->city),15) !!}
                                                         </h6>
                                                     </div>
                                                     <div class="job-list-type col-md-4 ">
@@ -145,7 +144,8 @@
                                                     </div>
                                                     <div class="col-md-3 job-list-button">
                                                         <h6 class="pull-right">
-                                                            <a href="#" class="btn-view-job">View</a>
+                                                            <a href="{!! route('home.view.job',[$post->hashid,$post->employee->company_profile->slug,$post->industry->slug,$post->slug]) !!}"
+                                                               class="btn-view-job">View</a>
                                                         </h6>
                                                     </div>
                                                 </div>
@@ -501,38 +501,38 @@
                 {{--@endif--}}
 
                 <div class="company">
-                    <img src="images/upload/company-2.png" class="img-responsive" alt="company-post"/>
+                    <img src="{!! asset('images/upload/company-2.png') !!}" class="img-responsive" alt="company-post"/>
                 </div>
                 <div class="company">
-                    <img src="images/upload/company-3.png" class="img-responsive" alt="company-post"/>
+                    <img src="{!! asset('images/upload/company-3.png') !!}" class="img-responsive" alt="company-post"/>
                 </div>
                 <div class="company">
-                    <img src="images/upload/company-4.png" class="img-responsive" alt="company-post"/>
+                    <img src="{!! asset('images/upload/company-4.png') !!}" class="img-responsive" alt="company-post"/>
                 </div>
                 <div class="company">
-                    <img src="images/upload/company-5.png" class="img-responsive" alt="company-post"/>
+                    <img src="{!! asset('images/upload/company-5.png') !!}" class="img-responsive" alt="company-post"/>
                 </div>
 
                 <div class="company">
-                    <img src="images/upload/company-1.png" class="img-responsive" alt="company-post"/>
+                    <img src="{!! asset('images/upload/company-1.png') !!}" class="img-responsive" alt="company-post"/>
                 </div>
                 <div class="company">
-                    <img src="images/upload/company-2.png" class="img-responsive" alt="company-post"/>
+                    <img src="{!! asset('images/upload/company-2.png') !!}" class="img-responsive" alt="company-post"/>
                 </div>
                 <div class="company">
-                    <img src="images/upload/company-3.png" class="img-responsive" alt="company-post"/>
+                    <img src="{!! asset('images/upload/company-3.png') !!}" class="img-responsive" alt="company-post"/>
                 </div>
                 <div class="company">
-                    <img src="images/upload/company-4.png" class="img-responsive" alt="company-post"/>
+                    <img src="{!! asset('images/upload/company-4.png') !!}" class="img-responsive" alt="company-post"/>
                 </div>
                 <div class="company">
-                    <img src="images/upload/company-5.png" class="img-responsive" alt="company-post"/>
+                    <img src="{!! asset('images/upload/company-5.png') !!}" class="img-responsive" alt="company-post"/>
                 </div>
 
             </div>
         </div>
     </div>
-    {{--@include('webfront.jobs.feature-search')--}}
+    @include('front.jobs.feature-search')
 @stop
 @section('page_specific_js')
     <script src="{{ asset('assets/plugins/typeahead/bootstrap3-typeahead.min.js')}}" type="text/javascript"></script>
