@@ -2,7 +2,7 @@
 @section('title', 'Posts List')
 @section('css-plugins')
     <!-- Plugins css-->
-    <link href="{!! asset('assets/plugins/summernote/dist/summernote.css') !!}" rel="stylesheet"/>
+    {{--<link href="{!! asset('assets/plugins/summernote/dist/summernote.css') !!}" rel="stylesheet"/>--}}
     <link href="{!! asset('assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') !!}" rel="stylesheet"/>
     <link href="{!! asset('assets/plugins/switchery/dist/switchery.min.css') !!}" rel="stylesheet"/>
     <link href="{!! asset('assets/plugins/multiselect/css/multi-select.css') !!}" rel="stylesheet" type="text/css"/>
@@ -47,7 +47,7 @@
             type="text/javascript"></script>
     <script src="{!! asset('assets/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') !!}"
             type="text/javascript"></script>
-    <script src="{!! asset('assets/plugins/summernote/dist/summernote.min.js') !!}"></script>
+    {{--<script src="{!! asset('assets/plugins/summernote/dist/summernote.min.js') !!}"></script>--}}
     <script>
         $(".date").datepicker();
         $("#language_id").select2({

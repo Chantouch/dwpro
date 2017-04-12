@@ -13,7 +13,7 @@ class QualificationTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        factory(\App\Models\Qualification::class, 500)->create();
+        factory(\App\Models\Qualification::class, 5)->create();
         Model::reguard();
     }
 }

@@ -31,7 +31,7 @@ class ContactController extends Controller
     {
         $contacts = $this->contacts->with([
             'employee', 'position', 'department'
-        ])->where('employee_id', $this->emp_id())->paginate(10);
+        ])->where('parent_id', $this->emp_id())->paginate(10);
         return response()->json($contacts);
     }
 
@@ -55,9 +55,9 @@ class ContactController extends Controller
     {
         $data = $request->all();
         $this->validate($request, [
-            'name' => 'required',
+            'first_name' => 'required',
         ]);
-        $data['employee_id'] = $this->emp_id();
+        $data['parent_id'] = $this->emp_id();
         $edit = $this->contacts->create($data);
         return response()->json($edit);
     }
@@ -95,7 +95,7 @@ class ContactController extends Controller
     {
         $data = $request->all();
         $this->validate($request, [
-            'name' => 'required',
+            'first_name' => 'required',
         ]);
         $edit = $this->contacts->find($id)->update($data);
         return response()->json($edit);
@@ -128,7 +128,7 @@ class ContactController extends Controller
      */
     public function get_contact_deleted()
     {
-        $contact_deleted = $this->contacts->where('employee_id', $this->emp_id())->with([
+        $contact_deleted = $this->contacts->where('parent_id', $this->emp_id())->with([
             'employee', 'position', 'department'
         ])->onlyTrashed()->paginate(10);
         return response()->json($contact_deleted);
@@ -136,7 +136,7 @@ class ContactController extends Controller
 
     public function restore_contact($id)
     {
-        $contact_restore = $this->contacts->where('employee_id', $this->emp_id())->onlyTrashed()->find($id);
+        $contact_restore = $this->contacts->where('parent_id', $this->emp_id())->onlyTrashed()->find($id);
         $contact_restore->restore();
         return response()->json(['message' => 'Contact restore successfully']);
     }

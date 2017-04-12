@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Employee;
 use App\Mail\ApplyJob;
 use App\Models\Apply;
+use App\Models\City;
 use App\Models\ContractType;
+use App\Models\Functions;
+use App\Models\Industry;
 use App\Models\Post;
 use App\User;
 use Validator;
@@ -42,7 +45,7 @@ class HomeController extends Controller
     public function index()
     {
         $posts = $this->post->take(4)->get();
-        $companies = Employee::where('status', 1)->get();
+        $companies = Employee::where('status', 1)->where('parent_id', 0)->get();
         $contract_terms = ContractType::where('status', 1)->get();
         $feature_posts = $this->post->all();
         $full_time_posts = Post::where('status', 1)->get();
@@ -79,7 +82,7 @@ class HomeController extends Controller
      * @param $id
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
-     * @internal param $job_id
+     * @internal param $post_id
      */
     public function apply_job($id, Request $request)
     {
@@ -105,8 +108,8 @@ class HomeController extends Controller
 
                 }
             }
-            $job_id = $job->id;
-            $data['job_id'] = $job_id;
+            $post_id = $job->id;
+            $data['post_id'] = $post_id;
             $data['message'] = Purifier::clean($request->message);
             $apply = Apply::create($data);
             if (!$apply) {
@@ -120,7 +123,7 @@ class HomeController extends Controller
                 'email' => $request->email,
                 'subject' => $request->subject,
                 'message' => $request->message,
-                'post_id' => $job,
+                'post_id' => $post_id,
             ]));
             Mail::to('chantouchsek.cs83@gmail.com')->send($email);
         } catch (\Exception $exception) {
@@ -129,5 +132,92 @@ class HomeController extends Controller
         DB::commit();
         return redirect()->back()->withInput()->with('message', "You are successfully applied to {$job->name}");
 
+    }
+
+    /**
+     * @param $slug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search_by_function($slug)
+    {
+        $cat = Functions::where('slug', $slug)->firstOrFail();
+        $current_date = date('Y-m-d');
+        $functions = Post::with(['industry', 'employee'])->where('functions_id', $cat->id)->where('status', 1)->orderBy('created_at', 'DESC')->get();
+        return view('front.jobs.searchby', compact('functions'));
+    }
+
+    /**
+     * @param $slug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search_by_industry($slug)
+    {
+        $city_list = City::with('posts')->where('status', 1)->pluck('name', 'id');
+        $industry = Industry::with('posts')->where('slug', $slug)->firstOrFail();
+        $current_date = date('Y-m-d');
+        $industries = Post::with('industry', 'employer')->where('industry_id', '=', $industry->id)->where('status', 1)->where('closing_date', '>=', $current_date)->orderBy('created_at', 'DESC')->paginate(20);
+        return view('front.jobs.searchby', compact('industries', 'city_list'));
+    }
+
+    /**
+     * @param $slug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search_by_company($slug)
+    {
+        $city_list = City::with('posts')->where('status', 1)->pluck('name', 'id');
+        $company = Employee::with('posts')->where('slug', $slug)->firstOrFail();
+        $current_date = date('Y-m-d');
+        $companies = Post::with('industry', 'employer')->where('created_by', '=', $company->id)->where('status', 1)->where('closing_date', '>=', $current_date)->orderBy('created_at', 'DESC')->paginate(20);
+        return view('front.jobs.searchby', compact('companies', 'city_list'));
+    }
+
+    /**
+     * @param $slug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search_by_city($slug)
+    {
+        $city_list = City::with('posts')->where('status', 1)->pluck('name', 'id');
+        $city = City::with('posts')->where('slug', $slug)->firstOrFail();
+        $current_date = date('Y-m-d');
+        $cities = Post::with('industry', 'employer')->where('place_of_employment_city_id', '=', $city->id)->where('status', 1)->where('closing_date', '>=', $current_date)->orderBy('created_at', 'DESC')->paginate(20);
+        return view('front.jobs.searchby', compact('cities', 'city_list'));
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function all_functions()
+    {
+        $functions = Functions::all();
+        return view('front.search.all', compact('functions'));
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function all_industries()
+    {
+        $industries = Industry::all();
+        return view('front.search.all', compact('industries'));
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function all_companies()
+    {
+        $companies = Employee::all();
+        return view('front.search.all', compact('companies'));
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function all_cities()
+    {
+        $cities = City::all();
+        return view('front.search.all', compact('cities'));
     }
 }

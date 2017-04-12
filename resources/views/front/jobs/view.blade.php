@@ -300,40 +300,39 @@
         <div class="row">
             <div class="col-md-12">
                 <table class="table contact-information">
-                    @if(!empty($post->employee->contact_id))
-                        @foreach($post->employee->contacts as $contact)
-                            <thead>
-                            <tr>
-                                <th class="col-md-2 col-xs-5 no-border">Contact Name:</th>
-                                <td>{!! $contact->contact_name !!}</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th>Department:</th>
-                                <td>{!! $contact->department->name !!}</td>
-                            </tr>
-                            <tr>
-                                <th>Phone:</th>
-                                <td>{!! $contact->phone_number !!}</td>
-                            </tr>
-                            <tr>
-                                <th>Email:</th>
-                                <td>
-                                    <a href="mailto:{!! $contact->email !!}" target="_top">{!! $contact->email !!}</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Website:</th>
-                                <td><a href="{!! $post->employee->web_address !!}"
-                                       target="_blank">{!! $post->employee->web_address !!}</a></td>
-                            </tr>
-                            <tr>
-                                <th>Address:</th>
-                                <td>{!! $post->employee->address !!}</td>
-                            </tr>
-                            </tbody>
-                        @endforeach
+                    @if(!empty($post->contact_id))
+                        <thead>
+                        <tr>
+                            <th class="col-md-2 col-xs-5 no-border">Contact Name:</th>
+                            <td>{!! $post->contact->first_name.' '.$post->contact->last_name !!}</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>Department:</th>
+                            <td>{!! Helper::relationship($post->contact->department) !!}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone:</th>
+                            <td>{!! $post->contact->phone_number !!}</td>
+                        </tr>
+                        <tr>
+                            <th>Email:</th>
+                            <td>
+                                <a href="mailto:{!! $post->contact->email !!}"
+                                   target="_top">{!! $post->contact->email !!}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Website:</th>
+                            <td><a href="{!! $post->employee->company_profile->website !!}"
+                                   target="_blank">{!! $post->employee->company_profile->website !!}</a></td>
+                        </tr>
+                        <tr>
+                            <th>Address:</th>
+                            <td>{!! $post->employee->company_profile->address !!}</td>
+                        </tr>
+                        </tbody>
                     @else
                         <thead>
                         <tr>
@@ -382,7 +381,7 @@
                     <h6>Apply this job</h6>
                 </div>
                 <div class="container">
-                    {!! Form::open(['route' => ['employee.update_profile', $post->id], 'role'=>'form', 'id'=>'apply-job', 'files'=>'true']) !!}
+                    {!! Form::open(['route' => ['home.job.apply', $post->id], 'role'=>'form', 'id'=>'apply-job', 'files'=>'true']) !!}
                     <div class="form-group col-md-6{!! $errors->has('name') ? ' has-error' : '' !!}">
                         <label for="name">Name:</label>
                         {!! Form::text('name', null, ['class' => 'form-control name', 'id'=>'name']) !!}

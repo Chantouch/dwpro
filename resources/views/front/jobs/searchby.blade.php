@@ -1,15 +1,13 @@
-@extends('webfront.layouts.default')
+@extends('layouts.front.default')
 
 @section('page_specific_styles')
 
 @stop
 
-@section('full_content')
-
+@section('contents')
     <!-- start job finder -->
     @include('components.search')
     <!-- end job finder -->
-
     <div class="recent-job"><!-- Start Job -->
         <div class="container">
             <h4><i class="glyphicon glyphicon-briefcase"></i> JOBS</h4>
@@ -18,40 +16,36 @@
                     <li class='tab'><a href="#all">All</a></li>
                     <li class='tab'><a href="#contract">Contract</a></li>
                     <li class='tab'><a href="#full">Full Time</a></li>
-                    <li class='tab'><a href="#free">Freelence</a></li>
+                    <li class='tab'><a href="#free">Freelance</a></li>
                 </ul>
-
                 <div class='panel-container'>
                     <div id="all"><!-- Tabs section 1 -->
-                        @if(!empty($categories))
-                            @foreach($categories as $job)
+                        @if(!empty($functions))
+                            @foreach($functions as $function)
                                 <div class="recent-job-list"><!-- Tabs content -->
                                     <div class="job-list-logo col-md-1 ">
-                                        @if($job->employer->photo == 'default.jpg')
-                                            <img src="{!!asset('uploads/employers/'.$job->employer->photo)!!}"
-                                                 class="img-responsive"
-                                                 alt="{!! $job->post_name !!}"/>
-                                        @else
-                                            <img src="{!!asset($job->employer->path.$job->employer->photo)!!}"
-                                                 class="img-responsive"
-                                                 alt="{!! $job->post_name !!}"/>
-                                        @endif
+                                        <img src="http://lorempixel.com/640/480/?13940c" class="img-responsive" alt="Good"/>
+                                        {{--@else--}}
+                                        {{--<img src="{!!asset($function->employee->path.$function->employee->photo)!!}"--}}
+                                        {{--class="img-responsive"--}}
+                                        {{--alt="{!! $function->post_name !!}"/>--}}
+                                        {{--@endif--}}
                                     </div>
                                     <div class="col-md-5 job-list-desc">
-                                        <h6>{!! \Illuminate\Support\Str::limit($job->post_name, 35) !!}</h6>
-                                        <p>{!! \Illuminate\Support\Str::limit($job->description, 50) !!}</p>
+                                        <h6>{!! \Illuminate\Support\Str::limit($function->name, 35) !!}</h6>
+                                        <p>{!! \Illuminate\Support\Str::limit($function->description, 50) !!}</p>
                                     </div>
                                     <div class="col-md-6 full">
                                         <div class="job-list-location col-md-5">
                                             <h6>
-                                                <i class="fa fa-map-marker"></i>{!! $job->city->name !!}
+                                                <i class="fa fa-map-marker"></i>{!! $function->city->name !!}
                                             </h6>
                                         </div>
                                         <div class="job-list-type col-md-5 ">
-                                            <h6><i class="fa fa-user"></i>{!! $job->job_type !!}</h6>
+                                            <h6><i class="fa fa-user"></i>{!! $function->job_type !!}</h6>
                                         </div>
                                         <div class="col-md-2 job-list-button">
-                                            <a href="{!! route('jobs.view.name', [$job->employer->slug, $job->industry->slug , $job->id,$job->slug]) !!}"
+                                            <a href="{!! route('home.view.job', [$function->employee->slug, $function->industry->slug , $function->id,$function->slug]) !!}"
                                                class="btn-view-job">View</a>
                                         </div>
                                     </div>
@@ -59,118 +53,6 @@
                                 </div><!-- Tabs content -->
                             @endforeach
                         @endif
-                        @if(!empty($industries))
-                            @foreach($industries as $job)
-                                <div class="recent-job-list"><!-- Tabs content -->
-                                    <div class="job-list-logo col-md-1 ">
-                                        @if($job->employer->photo == 'default.jpg')
-                                            <img src="{!!asset('uploads/employers/'.$job->employer->photo)!!}"
-                                                 class="img-responsive"
-                                                 alt="{!! $job->post_name !!}"/>
-                                        @else
-                                            <img src="{!!asset($job->employer->path.$job->employer->photo)!!}"
-                                                 class="img-responsive"
-                                                 alt="{!! $job->post_name !!}"/>
-                                        @endif
-                                    </div>
-                                    <div class="col-md-5 job-list-desc">
-                                        <h6>{!! \Illuminate\Support\Str::limit($job->post_name, 35) !!}</h6>
-                                        <p>{!! \Illuminate\Support\Str::limit($job->description, 50) !!}</p>
-                                    </div>
-                                    <div class="col-md-6 full">
-                                        <div class="job-list-location col-md-5">
-                                            <h6>
-                                                <i class="fa fa-map-marker"></i>{!! $job->city->name !!}
-                                            </h6>
-                                        </div>
-                                        <div class="job-list-type col-md-5 ">
-                                            <h6><i class="fa fa-user"></i>{!! $job->job_type !!}</h6>
-                                        </div>
-                                        <div class="col-md-2 job-list-button">
-                                            <a href="{!! route('jobs.view.name', [$job->employer->slug, $job->industry->slug , $job->id,$job->slug]) !!}"
-                                               class="btn-view-job">View</a>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div><!-- Tabs content -->
-                            @endforeach
-                        @endif
-                        @if(!empty($companies))
-                            @foreach($companies as $job)
-                                <div class="recent-job-list"><!-- Tabs content -->
-                                    <div class="job-list-logo col-md-1 ">
-                                        @if($job->employer->photo == 'default.jpg')
-                                            <img src="{!!asset('uploads/employers/'.$job->employer->photo)!!}"
-                                                 class="img-responsive"
-                                                 alt="{!! $job->post_name !!}"/>
-                                        @else
-                                            <img src="{!!asset($job->employer->path.$job->employer->photo)!!}"
-                                                 class="img-responsive"
-                                                 alt="{!! $job->post_name !!}"/>
-                                        @endif
-                                    </div>
-                                    <div class="col-md-5 job-list-desc">
-                                        <h6>{!! \Illuminate\Support\Str::limit($job->post_name, 35) !!}</h6>
-                                        <p>{!! \Illuminate\Support\Str::limit($job->description, 50) !!}</p>
-                                    </div>
-                                    <div class="col-md-6 full">
-                                        <div class="job-list-location col-md-5">
-                                            <h6>
-                                                <i class="fa fa-map-marker"></i>{!! $job->city->name !!}
-                                            </h6>
-                                        </div>
-                                        <div class="job-list-type col-md-5 ">
-                                            <h6><i class="fa fa-user"></i>{!! $job->job_type !!}</h6>
-                                        </div>
-                                        <div class="col-md-2 job-list-button">
-                                            <a href="{!! route('jobs.view.name', [$job->employer->slug, $job->industry->slug , $job->id,$job->slug]) !!}"
-                                               class="btn-view-job">View</a>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div><!-- Tabs content -->
-                            @endforeach
-                        @endif
-                        @if(!empty($cities))
-                            @foreach($cities as $job)
-                                <div class="recent-job-list"><!-- Tabs content -->
-                                    <div class="job-list-logo col-md-1 ">
-                                        @if($job->employer->photo == 'default.jpg')
-                                            <img src="{!!asset('uploads/employers/'.$job->employer->photo)!!}"
-                                                 class="img-responsive"
-                                                 alt="{!! $job->post_name !!}"/>
-                                        @else
-                                            <img src="{!!asset($job->employer->path.$job->employer->photo)!!}"
-                                                 class="img-responsive"
-                                                 alt="{!! $job->post_name !!}"/>
-                                        @endif
-                                    </div>
-                                    <div class="col-md-5 job-list-desc">
-                                        <h6>{!! \Illuminate\Support\Str::limit($job->post_name, 35) !!}</h6>
-                                        <p>{!! \Illuminate\Support\Str::limit($job->description, 50) !!}</p>
-                                    </div>
-                                    <div class="col-md-6 full">
-                                        <div class="job-list-location col-md-5">
-                                            <h6>
-                                                <i class="fa fa-map-marker"></i>{!! $job->city->name !!}
-                                            </h6>
-                                        </div>
-                                        <div class="job-list-type col-md-5 ">
-                                            <h6><i class="fa fa-user"></i>{!! $job->job_type !!}</h6>
-                                        </div>
-                                        <div class="col-md-2 job-list-button">
-                                            <a href="{!! route('jobs.view.name', [$job->employer->slug, $job->industry->slug , $job->id,$job->slug]) !!}"
-                                               class="btn-view-job">View</a>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div><!-- Tabs content -->
-                            @endforeach
-                            {{--@if(empty($cities) || empty($categories) || empty($industries)|| empty($companies) )--}}
-                            {{--<span>There is no job here</span>--}}
-                            {{--@endif--}}
-                        @endif
-
                     </div><!-- Tabs section 1 -->
                     <div id="contract"><!-- Tabs section 2 -->
                     </div><!-- Tabs section 2 -->
@@ -274,28 +156,23 @@
     </div><!-- end Job -->
 
     <!-- Start page content -->
-    @include('webfront.jobs.page-content')
-    <!--End page content -->
-
+    @include('front.jobs.page-content')
+    <!-- End page content -->
 @stop
-
 @section('main_page_container')
 
 
 
 @stop
-
 @section('page_content')
 
 @stop
-
 @section('page_specific_js')
     <script type="text/javascript">
 
 
     </script>
 @stop
-
 @section('page_specific_scripts')
 
 @stop

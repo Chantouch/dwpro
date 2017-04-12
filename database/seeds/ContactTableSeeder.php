@@ -13,7 +13,7 @@ class ContactTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        factory(\App\Models\Contact::class, 500)->create();
+        factory(\App\Models\Contact::class, 50)->create();
         Model::reguard();
     }
 }

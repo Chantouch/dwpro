@@ -79,28 +79,25 @@
                         {{--@endif--}}
                     </a>
                     <div class="job-opening-content">
-                        <a href="#" target="_blank" title="{!! $job->name!!} at DDD">{!! $job->name!!}</a>
+                        <a href="{!! route('home.view.job',[$job->hashid,$job->employee->company_profile->slug,$job->industry->slug,$job->slug]) !!}"
+                           target="_blank"
+                           title="{!! $job->name !!} at {!! Helper::relationship($job->employee->company_profile) !!}">
+                            {!! $job->name !!}
+                        </a>
                         <p>
-                            Job Description.
-                            Job Description.
-                            Job Description.
-                            Job Description.tion.
-                            Job Description.
-                            Job Description.
-                            Job Description.tion.
-                            Job Description.
-                            Job Description.
-                            Job Description.
+                            {!! str_limit($job->job_description, 120) !!}
                         </p>
                     </div>
                     <div class="job-opening-meta clearfix">
                         <div class="meta-job-location meta-block">
                             <i class="fa fa-map-marker"></i>
-                            <a href="#" title="{!!$job->city->name !!}" target="_blank">{!!$job->city->name !!}</a>
+                            <a href="#" title="{!! Helper::relationship($job->city) !!}" target="_blank">
+                                {!! Helper::relationship($job->city) !!}
+                            </a>
                         </div>
                         <div class="meta-job-type meta-block">
                             <i class="fa fa-user"></i>
-                            {!!$job->job_type!!} </div>
+                            {!! Helper::relationship($job->contract_type) !!} </div>
                     </div>
                 </div>
             </div>

@@ -13,7 +13,7 @@ class ContractTermTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        factory(\App\Models\ContractType::class, 50)->create();
+        factory(\App\Models\ContractType::class, 5)->create();
         Model::reguard();
     }
 }

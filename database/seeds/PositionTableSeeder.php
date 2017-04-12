@@ -13,7 +13,7 @@ class PositionTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        factory(\App\Models\Position::class, 500)->create();
+        factory(\App\Models\Position::class, 5)->create();
         Model::reguard();
     }
 }

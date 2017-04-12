@@ -13,7 +13,7 @@ class LanguageTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        factory(\App\Models\Language::class, 500)->create();
+        factory(\App\Models\Language::class, 5)->create();
         Model::reguard();
     }
 }

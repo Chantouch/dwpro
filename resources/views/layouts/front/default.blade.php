@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title') &#8226; {{ config('app.name', 'Laravel') }}</title>
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -62,7 +62,6 @@
             @yield('main_page_container')
         </div>
     </div><!-- end main page title -->
-    @yield('content')
     <div id="page-content">
         @yield('page_content')
     </div>

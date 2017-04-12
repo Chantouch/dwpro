@@ -23,7 +23,7 @@ class Apply extends Model
             'phone' => 'required|numeric',
             'subject' => 'required|max:100',
             'message' => 'required|max:700',
-            'attachment' => 'required|mimes:pdf,doc,docx|image|mimes:jpeg,png,jpg,gif,svg|max:1024000',
+            'attachment' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024000',
         ];
     }
 

@@ -8,22 +8,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Contact extends Model
 {
+    protected $table = "employees";
     use SoftDeletes;
     protected $fillable = [
-        'name', 'description', 'status', 'employee_id', 'phone_number', 'department_id', 'position_id', 'email'
+        'first_name', 'last_name', 'email', 'phone_number', 'status', 'verified_by',
+        'parent_id', 'position_id', 'department_id'
     ];
 
     public static function rules()
     {
         return [
-            'name' => 'required',
+            'first_name' => 'required',
         ];
     }
 
     public static function messages()
     {
         return [
-            'name.required' => 'Name can not leave it blank',
+            'first_name.required' => 'First name can not leave it blank',
         ];
     }
 

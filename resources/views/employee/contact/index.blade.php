@@ -37,7 +37,7 @@
                             <tbody>
                             <tr v-for="(value, key, index) in contacts.data">
                                 <td scope="row">@{{ key + 1 }}</td>
-                                <td>@{{ value.name }}</td>
+                                <td>@{{ value.first_name + ' ' + value.last_name }}</td>
                                 <td>@{{ value.phone_number }}</td>
                                 <td>
                                     <span v-if="value.position">@{{ value.position.name }}</span>
@@ -55,7 +55,8 @@
                                 </td>
                                 <td>
                                     <div class="btn-group">
-                                        <a @click.prevent="editContact(value,'show-contact')" class="btn btn-default btn-xs waves-effect waves-light">
+                                        <a @click.prevent="editContact(value,'show-contact')"
+                                           class="btn btn-default btn-xs waves-effect waves-light">
                                             <i class="glyphicon glyphicon-eye-open"></i></a>
                                         <a @click.prevent="editContact(value,'edit-contact')"
                                            class="btn btn-default btn-xs waves-effect waves-light">

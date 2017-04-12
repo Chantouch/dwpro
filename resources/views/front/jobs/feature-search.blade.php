@@ -15,8 +15,8 @@
                         <ul>
                             @foreach($feature_functions as $function)
                                 <li>
-                                    <a href="#">
-                                        {!! $function->name !!} ( 23453 )
+                                    <a href="{!! route('jobs.view.by.function',[$function->slug]) !!}">
+                                        {!! $function->name !!} ( {!! count($function->posts) !!} )
                                     </a>
                                 </li>
                             @endforeach
@@ -29,7 +29,7 @@
                         <span><i class="fa fa-industry"></i></span>
                         <ul>
                             @foreach($feature_industries as $industry)
-                                <li><a href="#">{!! $industry->name !!} ( 5757 )</a></li>
+                                <li><a href="#">{!! $industry->name !!} ( {!! count($industry->posts) !!} )</a></li>
                             @endforeach
                         </ul>
                         <a href="#" class="btn btn-blue m-t-25">View All</a>
@@ -42,7 +42,8 @@
                             @foreach($feature_companies as $company)
                                 <li>
                                     <a href="#">
-                                        {!! Helper::relationship($company->company_profile) !!} ( 1260 )
+                                        {!! Helper::relationship($company->company_profile) !!}
+                                        ( {!! count($company->posts) !!} )
                                     </a>
                                 </li>
                             @endforeach
@@ -56,7 +57,7 @@
                         <span><i class="fa fa-building-o"></i></span>
                         <ul>
                             @foreach($feature_cities as $city)
-                                <li><a href="#">{!! $city->name !!} (1034)</a></li>
+                                <li><a href="#">{!! $city->name !!} ({!! count($city->posts) !!})</a></li>
                             @endforeach
                         </ul>
 

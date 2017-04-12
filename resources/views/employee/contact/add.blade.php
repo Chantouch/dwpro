@@ -12,8 +12,12 @@
                 <form method="POST" enctype="multipart/form-data"
                       v-on:submit.prevent="storeContact(new_contact.id)">
                     <div class="form-group">
-                        <label for="name">Name:</label>
-                        <input type="text" class="form-control" name="name" v-model="new_contact.name" id="name">
+                        <label for="name">First Name:</label>
+                        <input type="text" class="form-control" name="first_name" v-model="new_contact.first_name" id="first_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Last Name:</label>
+                        <input type="text" class="form-control" name="last_name" v-model="new_contact.last_name" id="last_name">
                     </div>
                     <div class="form-group">
                         <label for="phone_number">Mobile:</label>

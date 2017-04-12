@@ -87,7 +87,7 @@ class PostController extends Controller
         $salary = \Helper::salary();
         $gender = \Helper::gender();
         $closing_date = Carbon::now()->addMonth(1);
-        $contact = Contact::where('status', 1)->where('employee_id', $this->emp_id())->pluck('name', 'id');
+        $contact = Contact::where('status', 1)->where('parent_id', $this->emp_id())->pluck('first_name', 'id');
         return view('employee.post.create', compact(
             'title', 'functions', 'contract', 'cities', 'levels', 'qualifications', 'year_experience',
             'langs', 'gender', 'marital_status', 'industries', 'salary', 'closing_date', 'contact'
@@ -214,7 +214,7 @@ class PostController extends Controller
         $marital_status = \Helper::marital_status();
         $salary = \Helper::salary();
         $gender = \Helper::gender();
-        $contact = Contact::where('status', 1)->where('employee_id', $this->emp_id())->pluck('name', 'id');
+        $contact = Contact::where('status', 1)->where('parent_id', $this->emp_id())->pluck('first_name', 'id');
         return view('employee.post.edit', compact('job', 'functions', 'contract', 'cities', 'levels', 'qualifications', 'year_experience',
             'langs', 'gender', 'marital_status', 'industries', 'salary', 'contact'
         ));

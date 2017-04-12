@@ -13,7 +13,7 @@ class DepartmentTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        factory(\App\Models\Department::class, 500)->create();
+        factory(\App\Models\Department::class, 5)->create();
         Model::reguard();
     }
 }

@@ -13,7 +13,7 @@ class FunctionTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        factory(\App\Models\Functions::class, 500)->create();
+        factory(\App\Models\Functions::class, 5)->create();
         Model::reguard();
     }
 }

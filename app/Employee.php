@@ -3,9 +3,11 @@
 namespace App;
 
 use App\Models\CompanyProfile;
+use App\Models\Contact;
 use App\Models\Post;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Vinkla\Hashids\Facades\Hashids;
@@ -13,7 +15,7 @@ use Vinkla\Hashids\Facades\Hashids;
 class Employee extends Authenticatable
 {
     use Notifiable;
-
+    use SoftDeletes;
     protected $appends = ['hashid'];
     /**
      * The attributes that are mass assignable.
@@ -35,6 +37,7 @@ class Employee extends Authenticatable
 
 
     //==============Relationship=============//
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -59,7 +62,16 @@ class Employee extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class, 'parent_id');
+    }
+
     ///============Get and Set Attribute=============////
+
     /**
      * @return mixed
      */

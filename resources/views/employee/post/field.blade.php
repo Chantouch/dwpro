@@ -21,7 +21,7 @@
                 <!-- Responsible Description Field -->
                 <div class="form-group col-sm-12 col-lg-12 {{ $errors->has('job_description') ? ' has-error' : '' }}">
                     {!! Form::label('job_description', 'Responsible Description:') !!}
-                    {!! Form::textarea('job_description', null, ['class' => 'summernote']) !!}
+                    {!! Form::textarea('job_description', null, ['class' => 'form-control summernote']) !!}
                     @if ($errors->has('job_description'))
                         <span class="help-block">
                             <strong>{{ $errors->first('job_description') }}</strong>
@@ -32,12 +32,12 @@
                 <!-- Requirement Description Field -->
                 <div class="form-group col-sm-12 col-lg-12">
                     {!! Form::label('requirement_des', 'Requirement Description:') !!}
-                    {!! Form::textarea('requirement_des', null, ['class' => 'summernote']) !!}
+                    {!! Form::textarea('requirement_des', null, ['class' => 'form-control summernote']) !!}
                 </div>
 
                 <div class="form-group col-sm-6 col-lg-4">
                     {!! Form::label('functions_id', 'Function:') !!}
-                    {!! Form::select('functions_id',$functions, null, [
+                    {!! Form::select('functions_id',$functions , null, [
                     'class' => 'selectpicker', 'data-live-search' => 'true','data-style'=>'btn-white btn-md'
                     ]) !!}
                 </div>

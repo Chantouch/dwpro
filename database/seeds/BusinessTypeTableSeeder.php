@@ -13,7 +13,7 @@ class BusinessTypeTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        factory(\App\Models\BusinessType::class, 500)->create();
+        factory(\App\Models\BusinessType::class, 5)->create();
         Model::reguard();
     }
 }

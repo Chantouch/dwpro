@@ -13,7 +13,7 @@ class LevelTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        factory(\App\Models\Level::class, 500)->create();
+        factory(\App\Models\Level::class, 5)->create();
         Model::reguard();
     }
 }

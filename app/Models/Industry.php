@@ -25,4 +25,14 @@ class Industry extends Model
             'name.required' => 'Name can not leave it blank',
         ];
     }
+
+    //==============Relationship=============//
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
