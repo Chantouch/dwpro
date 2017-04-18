@@ -32,8 +32,8 @@
                                         {{--@endif--}}
                                     </div>
                                     <div class="col-md-5 job-list-desc">
-                                        <h6>{!! \Illuminate\Support\Str::limit($function->name, 35) !!}</h6>
-                                        <p>{!! \Illuminate\Support\Str::limit($function->description, 50) !!}</p>
+                                        <h6>{!! str_limit($function->name, 35) !!}</h6>
+                                        <p>{!! str_limit($function->description, 50) !!}</p>
                                     </div>
                                     <div class="col-md-6 full">
                                         <div class="job-list-location col-md-5">

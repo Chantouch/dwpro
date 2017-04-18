@@ -42,6 +42,11 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <link href="{{ asset('assets/plugins/animate.less/animate.min.css') }}" rel="stylesheet" type="text/css"/>
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{!! asset('assets/plugins/select2/select2.css') !!}">
+    <link rel="stylesheet" href="{!! asset('assets/plugins/ion-range-slider/css/ion.rangeSlider.css') !!}">
+    <link rel="stylesheet" href="{!! asset('assets/plugins/ion-range-slider/css/ion.rangeSlider.skinFlat.css') !!}">
     @yield('page_specific_styles')
 </head>
 <body>
@@ -101,6 +106,12 @@
 <script src="{!! asset('js/classie.js') !!}"></script>
 <script src="{!! asset('js/selectFx.js') !!}"></script>
 @yield('page_specific_js')
+<script src="{{ asset('assets/plugins/typeahead/bootstrap3-typeahead.min.js')}}" type="text/javascript"></script>
+<!-- Select2 -->
+<script src="{!! asset('assets/plugins/select2/select2.full.js') !!}"></script>
+<script src="{{ asset('assets/plugins/wow/wow.min.js')}}" type="text/javascript"></script>
+<script src="{{ asset('assets/plugins/ion-range-slider/js/ion.rangeSlider.min.js')}}"
+        type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         @yield('page_specific_scripts')
@@ -114,6 +125,44 @@
         @if ($errors->any())
         {!! implode('', $errors->all('notify(\':message\', \'warning\'); ')) !!}
         @endif
+
+        var path = "";
+        var city_path = "";
+        $('#name').typeahead({
+            source: function (query, process) {
+                return $.get(path, {query: query}, function (data) {
+                    return process(data);
+                })
+            }
+        });
+
+        $('#city').typeahead({
+            source: function (query, process) {
+                return $.get(city_path, {city: query}, function (data) {
+                    return process(data);
+                })
+            }
+        });
+
+        $("#salary_search").ionRangeSlider({
+            type: "single",
+            grid: true,
+            min: 0,
+            max: 3000,
+            prefix: "$",
+            values: [0, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 3000]
+        });
+
+        $("#experiences_search").ionRangeSlider({
+            type: "single",
+            grid: true,
+            min: 0,
+            max: 10,
+            prefix: "Y",
+            values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        });
+
+        new WOW().init();
     });
 </script>
 

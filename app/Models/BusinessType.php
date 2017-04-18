@@ -39,6 +39,6 @@ class BusinessType extends Model
      */
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class)->where('status', 1);
     }
 }

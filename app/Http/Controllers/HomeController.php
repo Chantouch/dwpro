@@ -143,6 +143,7 @@ class HomeController extends Controller
         $cat = Functions::where('slug', $slug)->firstOrFail();
         $current_date = date('Y-m-d');
         $functions = Post::with(['industry', 'employee'])->where('functions_id', $cat->id)->where('status', 1)->orderBy('created_at', 'DESC')->get();
+        //return response()->json($functions);
         return view('front.jobs.searchby', compact('functions'));
     }
 
