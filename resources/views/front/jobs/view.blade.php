@@ -253,7 +253,7 @@
                                 <div class="similar-job js-similar-job">
                                     <div class="l-similar-job">
                                         <div class="l-similar-job__left">
-                                            <a href="#"
+                                            <a href="{!! route('jobs.view.by.company',[$related->employee->company_profile->slug]) !!}"
                                                title="{!! Helper::relationship($related->employee->company_profile) !!}"
                                                target="_blank">
                                                 @if($related->employee->photo == 'default.jpg')
@@ -261,7 +261,7 @@
                                                          class="similar-job__company-img img-responsive"
                                                          alt="{!! $related->name !!}"/>
                                                 @else
-                                                    <img src="{!!asset($related->employee->path.$related->employee->photo)!!}"
+                                                    <img src="{!! asset('images/upload/testimony-image-1.jpg') !!}"
                                                          class="similar-job__company-img img-responsive"
                                                          alt="{!! $related->name !!}"/>
                                                 @endif
@@ -269,11 +269,11 @@
                                         </div>
                                         <div class="l-similar-job__right ">
                                             <span class="js-similar-job-title">
-                                                <a href="#"
+                                                <a href="{!! route('home.view.job',[$related->hashid,$related->employee->company_profile->slug,$related->industry->slug,$related->slug]) !!}"
                                                    class="similar-job__title"
                                                    title="{!! $related->name !!}">{!! $related->name !!}</a>
                                             </span>
-                                            <a href="#"
+                                            <a href="{!! route('jobs.view.by.city',[$related->city->slug]) !!}"
                                                target="_blank"
                                                class="similar-job__location js-similar-job-location">{!! Helper::relationship($related->city) !!}
                                                 , Cambodia</a>

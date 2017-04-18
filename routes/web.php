@@ -22,7 +22,7 @@ Route::post('job/apply/{id}', 'HomeController@apply_job')->name('home.job.apply'
 //Search by
 Route::get('jobs/function/{slug}/', ['as' => 'jobs.view.by.function', 'uses' => 'HomeController@search_by_function']);
 Route::get('jobs/industry/{slug}/', ['as' => 'jobs.view.by.industry', 'uses' => 'HomeController@search_by_industry']);
-Route::get('jobs/company/{slug}/', ['as' => 'jobs.view.by.company', 'uses' => 'HomeController@search_by_company']);
+Route::get('jobs/company/{slug}', ['as' => 'jobs.view.by.company', 'uses' => 'HomeController@search_by_company']);
 Route::get('jobs/city/{slug}/', ['as' => 'jobs.view.by.city', 'uses' => 'HomeController@search_by_city']);
 //For jobs all by specific
 Route::get('jobs/functions', ['as' => 'jobs.search.by.function.all', 'uses' => 'HomeController@all_functions']);

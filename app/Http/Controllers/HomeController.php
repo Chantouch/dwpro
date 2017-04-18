@@ -44,7 +44,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = $this->post->take(4)->get();
+        $posts = $this->post->where('status', 1)->take(4)->get();
         $companies = Employee::where('status', 1)->where('parent_id', 0)->get();
         $contract_terms = ContractType::where('status', 1)->get();
         $feature_posts = $this->post->all();
@@ -141,10 +141,12 @@ class HomeController extends Controller
     public function search_by_function($slug)
     {
         $cat = Functions::where('slug', $slug)->firstOrFail();
+        $all_posts = $this->post->where('status', 1)->take(4)->get();
         $current_date = date('Y-m-d');
-        $functions = Post::with(['industry', 'employee'])->where('functions_id', $cat->id)->where('status', 1)->orderBy('created_at', 'DESC')->get();
+        $contract_terms = ContractType::where('status', 1)->get();
+        $posts = Post::with(['industry', 'employee'])->where('functions_id', $cat->id)->where('status', 1)->orderBy('created_at', 'DESC')->get();
         //return response()->json($functions);
-        return view('front.jobs.searchby', compact('functions'));
+        return view('front.jobs.searchby', compact('posts', 'contract_terms', 'all_posts'));
     }
 
     /**
@@ -156,8 +158,9 @@ class HomeController extends Controller
         $city_list = City::with('posts')->where('status', 1)->pluck('name', 'id');
         $industry = Industry::with('posts')->where('slug', $slug)->firstOrFail();
         $current_date = date('Y-m-d');
-        $industries = Post::with('industry', 'employer')->where('industry_id', '=', $industry->id)->where('status', 1)->where('closing_date', '>=', $current_date)->orderBy('created_at', 'DESC')->paginate(20);
-        return view('front.jobs.searchby', compact('industries', 'city_list'));
+        $contract_terms = ContractType::where('status', 1)->get();
+        $posts = Post::with('industry', 'employer')->where('industry_id', '=', $industry->id)->where('status', 1)->where('closing_date', '>=', $current_date)->orderBy('created_at', 'DESC')->paginate(20);
+        return view('front.jobs.searchby', compact('posts', 'contract_terms'));
     }
 
     /**
@@ -167,10 +170,11 @@ class HomeController extends Controller
     public function search_by_company($slug)
     {
         $city_list = City::with('posts')->where('status', 1)->pluck('name', 'id');
-        $company = Employee::with('posts')->where('slug', $slug)->firstOrFail();
+        $company = Employee::with('posts')->where('parent_id', 0)->where('slug', $slug)->firstOrFail();
         $current_date = date('Y-m-d');
-        $companies = Post::with('industry', 'employer')->where('created_by', '=', $company->id)->where('status', 1)->where('closing_date', '>=', $current_date)->orderBy('created_at', 'DESC')->paginate(20);
-        return view('front.jobs.searchby', compact('companies', 'city_list'));
+        $contract_terms = ContractType::where('status', 1)->get();
+        $posts = Post::with('industry', 'employer')->where('created_by', '=', $company->id)->where('status', 1)->where('closing_date', '>=', $current_date)->orderBy('created_at', 'DESC')->paginate(20);
+        return view('front.jobs.searchby', compact('posts', 'contract_terms'));
     }
 
     /**
@@ -179,11 +183,12 @@ class HomeController extends Controller
      */
     public function search_by_city($slug)
     {
-        $city_list = City::with('posts')->where('status', 1)->pluck('name', 'id');
+        $all_posts = $this->post->where('status', 1)->take(4)->get();
         $city = City::with('posts')->where('slug', $slug)->firstOrFail();
         $current_date = date('Y-m-d');
-        $cities = Post::with('industry', 'employer')->where('place_of_employment_city_id', '=', $city->id)->where('status', 1)->where('closing_date', '>=', $current_date)->orderBy('created_at', 'DESC')->paginate(20);
-        return view('front.jobs.searchby', compact('cities', 'city_list'));
+        $contract_terms = ContractType::where('status', 1)->get();
+        $posts = Post::with('industry', 'employee')->where('city_id', '=', $city->id)->where('status', 1)->orderBy('created_at', 'DESC')->paginate(20);
+        return view('front.jobs.searchby', compact('posts', 'contract_terms', 'all_posts'));
     }
 
     /**
