@@ -36,9 +36,6 @@ class CreateCompanyProfilesTable extends Migration
             $table->string('tag_line')->nullable();
             $table->string('longitude')->nullable();
             $table->string('latitude')->nullable();
-            $table->string('confirm_code')->nullable();
-            $table->string('temp_enroll_no')->nullable();
-            $table->string('enroll_no')->nullable();
             $table->tinyInteger('currently_hiring')->default(1);
             $table->longText('about_us')->nullable();
             $table->longText('how_we_work')->nullable();

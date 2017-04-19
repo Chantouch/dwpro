@@ -53,7 +53,10 @@ $factory->define(\App\Employee::class, function (\Faker\Generator $faker) {
         'verified_by' => mt_rand(1, 5),
         'slug' => $faker->slug,
         'avatar' => $faker->image(),
-        'avatar_path' => $faker->imageUrl()
+        'avatar_path' => $faker->imageUrl(),
+        'confirm_code' => str_random(10),
+        'temp_enroll_no' => str_random(10),
+        'enroll_no' => $faker->randomNumber(),
     ];
 });
 
@@ -198,9 +201,6 @@ $factory->define(\App\Models\CompanyProfile::class, function (\Faker\Generator $
         'tag_line' => $faker->word,
         'longitude' => $faker->longitude,
         'latitude' => $faker->latitude,
-        'confirm_code' => str_random(10),
-        'temp_enroll_no' => str_random(10),
-        'enroll_no' => $faker->randomNumber(),
         'phone_number' => $faker->phoneNumber
     ];
 });

@@ -29,6 +29,9 @@ class CreateEmployeesTable extends Migration
             $table->integer('verified_by', false, true)->nullable();
             $table->string('avatar')->nullable();
             $table->string('avatar_path')->nullable();
+            $table->string('confirm_code')->nullable();
+            $table->string('temp_enroll_no')->nullable();
+            $table->string('enroll_no')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

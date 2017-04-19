@@ -73,6 +73,10 @@ Route::resource('posts', 'Employee\PostController');
 //Employee Route
 Route::prefix('employee')->name('employee.')->group(function () {
 
+    Route::get('register', 'Auth\EmployeeLoginController@showRegisterForm')->name('register');
+    Route::post('save/register', 'Auth\EmployeeLoginController@saveRegisterForm')->name('register.account');
+    Route::get('verify/{token}', 'Auth\EmployeeLoginController@verify')->name('verify.account');
+
     Route::get('login', 'Auth\EmployeeLoginController@showLoginForm')->name('login');
     Route::post('login', 'Auth\EmployeeLoginController@login')->name('login.post');
     Route::post('logout', 'Auth\EmployeeLoginController@logout')->name('logout');

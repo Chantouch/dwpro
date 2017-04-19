@@ -95,4 +95,16 @@ class Employee extends Authenticatable
             return $name;
         }
     }
+
+    //Verified employee after register
+
+    /**
+     * verified employer
+     */
+    public function verified()
+    {
+        $this->status = 1;
+        $this->confirm_code = null;
+        $this->save();
+    }
 }

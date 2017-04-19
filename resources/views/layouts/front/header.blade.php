@@ -40,7 +40,7 @@
                     </li>
                     <form id="logout-form" action="#" method="POST"
                           style="display: none;">
-                        {{ csrf_field() }}
+                        {!! csrf_field() !!}
                     </form>
 
                 @endif
@@ -52,8 +52,8 @@
 <div class="container"><!-- container -->
     <div class="row">
         <div class="col-md-4 col-xs-12"><!-- logo -->
-            <a href="#" title="Job Board" rel="home">
-                <img class="main-logo img-responsive text-center" src="{!! asset('images/logo.png') !!}" alt="job board">
+            <a href="/" title="Job Board" rel="home">
+                <img class="main-logo img-responsive text-center" src="{!! asset('images/logo.png') !!}" alt="{!! config('app.name', 'Laravel') !!}">
             </a>
         </div><!-- logo -->
         <div class="col-md-8 col-xs-12 main-nav"><!-- Main Navigation -->
@@ -66,7 +66,7 @@
                         {{--</ul>--}}
                     </li>
                     <li><a href="#">JOB SEARCH</a></li>
-                    <li><a href="#">POST A JOB</a></li>
+                    <li><a href="{!! route('employee.posts.create') !!}">POST A JOB</a></li>
                     <li><a href="#">POST A RESUME</a></li>
                     <li><a href="#">About Us</a></li>
                     <li><a href="#">Feedback</a></li>
