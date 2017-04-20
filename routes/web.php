@@ -75,6 +75,8 @@ Route::prefix('employee')->name('employee.')->group(function () {
 
     Route::get('register', 'Auth\EmployeeLoginController@showRegisterForm')->name('register');
     Route::post('save/register', 'Auth\EmployeeLoginController@saveRegisterForm')->name('register.account');
+    Route::get('register/add-company-profile', 'Employee\EmployeeController@add_company_profile')->name('register.add_company_profile');
+    Route::post('register/post/add-company-profile', 'Employee\EmployeeController@post_add_company_profile')->name('register.add_company_profile.post');
     Route::get('verify/{token}', 'Auth\EmployeeLoginController@verify')->name('verify.account');
 
     Route::get('login', 'Auth\EmployeeLoginController@showLoginForm')->name('login');

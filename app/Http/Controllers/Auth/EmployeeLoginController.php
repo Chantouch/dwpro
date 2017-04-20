@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Employee;
 use App\Mail\EmployeeActivationAccount;
+use App\Models\Industry;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Redirect;
 use Validator;
 use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -42,7 +44,7 @@ class EmployeeLoginController extends Controller
             return $this->redirectTo();
         }
 
-        return property_exists($this, 'redirectTo') ? $this->redirectTo : '/employee/home';
+        return property_exists($this, 'redirectTo') ? $this->redirectTo : 'employee/register/add-company-profile';
     }
 
     /**
@@ -190,7 +192,7 @@ class EmployeeLoginController extends Controller
         return 'email';
     }
 
-    //For user register
+    //===========For user register===========//
 
     /**
      * Create a new user instance after a valid registration.
@@ -206,7 +208,7 @@ class EmployeeLoginController extends Controller
         if (!$records == 0) {
             $current_id = Employee::all()->last()->id + 1;
         }
-        $enroll_id = 'TMP_EMP' . date('Y_M') . str_pad($current_id, 5, '0', STR_PAD_LEFT);
+        $enroll_id = 'TMP_EMP' . date('Y') . str_pad($current_id, 5, '0', STR_PAD_LEFT);
 
         return Employee::create([
             'first_name' => $data['first_name'],
@@ -223,38 +225,21 @@ class EmployeeLoginController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return string
      */
     protected function saveRegisterForm(Request $request)
     {
-        $messages = array(
-            'first_name.required' => 'Please enter first name',
-            'last_name.required' => 'Please enter last name',
-            'phone_number.required' => 'Please enter mobile phone',
-            'email.required' => 'Please enter email',
-            'email.unique' => 'This email is already taken. Please input a another email',
-            'password.required' => 'Please enter password',
-            'terms.required' => 'Please accept to our term and condition',
-        );
-
-        $rules = array(
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
-            'phone_number' => 'required',
-            'email' => 'required|email|max:255|unique:employees',
-            'password' => 'required|min:6|confirmed',
-            'terms' => 'required',
-        );
-
-        $validator = Validator::make($request->all(), $rules, $messages);
-
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
+        $validator = Validator::make($request->all(), Employee::rules(), Employee::messages());
         if ($validator->fails()) {
             $this->throwValidationException($request, $validator);
-            return redirect('employee/register')
+            return redirect()->route('employee.register')
                 ->withErrors($validator)
                 ->withInput();
         }
-
         DB::beginTransaction();
         try {
             $employee = $this->create($request->all());
@@ -262,16 +247,28 @@ class EmployeeLoginController extends Controller
                 'first_name' => $employee->first_name,
                 'confirm_code' => $employee->confirm_code,
             ]));
-            Mail::to($employee->email)->send($email);
+            //Mail::to($employee->email)->send($email);
             DB::commit();
             if ($employee->id) {
-                return redirect('/employee/login')->withInput()->with('success', 'You have successfully register with our website, please check your email to activate your account.');
+                if ($this->guard()->attempt($credentials)) {
+                    return redirect()->route('employee.register.add_company_profile')
+                        ->with('success', 'Please check your email to activate your account.');
+                } else {
+                    DB::rollback();
+                    return back()
+                        ->withInput()
+                        ->with('error', 'Error while registering in our website, Please contact to our Teach Support');
+                }
             } else {
-                return redirect('employee/register')->withInput()->with('error', 'Employer not register. Please try again');
+                return redirect('employee/register')
+                    ->withInput()
+                    ->with('error', 'Employer not register. Please try again');
             }
         } catch (\Exception $e) {
             DB::rollback();
-            return back()->withInput()->withErrors('status', 'Error while registering in our website, Please contact to our Teach Support');
+            return back()
+                ->withInput()
+                ->with('error', 'Error while registering in our website, Please contact to our Teach Support');
         }
     }
 
@@ -287,7 +284,9 @@ class EmployeeLoginController extends Controller
         } catch (ModelNotFoundException $exception) {
             return back()->with('status', 'The token already used, or broken.');
         }
-        return redirect('employee/login')->withInput()->with('status', 'You already activated your account, Please login here!');
+        return redirect()->route('employee.login')
+            ->withInput()
+            ->with('success', 'Your account is activated successfully, Plz login to post your job.');
     }
 
     /**
@@ -299,12 +298,9 @@ class EmployeeLoginController extends Controller
     public function logout(Request $request)
     {
         $this->guard()->logout();
-
         $request->session()->flush();
-
         $request->session()->regenerate();
-
-        return redirect('/');
+        return redirect()->route('employee.login');
     }
 
     /**

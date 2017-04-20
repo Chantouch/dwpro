@@ -60,6 +60,22 @@ class Helper
         ];
     }
 
+    public static function no_employee()
+    {
+        return [
+            '' => 'Select the company size (No. of employees)',
+            '0' => '1 - 5',
+            '1' => '6 - 10',
+            '2' => '11 - 20',
+            '3' => '12 - 50',
+            '4' => '51 - 100',
+            '5' => '101 - 500',
+            '6' => '501 - 1000',
+            '7' => '1001 - 5000',
+            '8' => 'More than 5000',
+        ];
+    }
+
 
     //-------Show at the front end of user-----------------//
 

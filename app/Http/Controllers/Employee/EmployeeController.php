@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Employee;
 
 use App\Employee;
 use App\Models\CompanyProfile;
+use App\Models\Industry;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -104,7 +105,10 @@ class EmployeeController extends Controller
         $profile = CompanyProfile::with([
             'employee', 'city', 'business_type', 'industry'
         ])->where('employee_id', $this->emp_id())->first();
-        $profile->update($request->all());
+        $update = $profile->update($request->all());
+        if (!$update) {
+            return response()->json(['error' => 'Can not update your profile now.']);
+        }
         return response()->json(['message' => 'Your profile updated successfully.']);
     }
 
@@ -161,5 +165,40 @@ class EmployeeController extends Controller
         } else {
             return redirect()->intended('employee/login')->with('message', 'Please login first to change your password');
         }
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function add_company_profile()
+    {
+        if ($this->guard()->user()->company_profile != null) {
+            return redirect()->route('employee.home');
+        } else {
+            $no_employee = \Helper::no_employee();
+            $industries = Industry::where('status', 1)->orderBy('name', 'ASC')->pluck('name', 'id');
+            return view('auth.employee.add-company-profile', compact('no_employee', 'industries'));
+        }
+    }
+
+
+    public function post_add_company_profile(Request $request)
+    {
+        $profile = CompanyProfile::with([
+            'employee', 'city', 'business_type', 'industry'
+        ])->where('employee_id', $this->emp_id())->first();
+        $update = $profile->create($request->all());
+        if (!$update) {
+            return response()->json(['error' => 'Can not update your profile now.']);
+        }
+        return response()->json(['message' => 'Your profile updated successfully.']);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function guard()
+    {
+        return Auth::guard('employee');
     }
 }

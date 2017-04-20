@@ -23,7 +23,9 @@ class Employee extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password', 'phone_number', 'status', 'verified_by'
+        'first_name', 'last_name', 'email', 'password', 'phone_number', 'status',
+        'verified_by', 'confirm_code', 'avatar', 'temp_enroll_no', 'avatar_path', 'department_id',
+        'position_id', 'slug', 'role', 'enrol_no'
     ];
 
     /**
@@ -34,6 +36,32 @@ class Employee extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    //==============Validation============/
+    public static function rules()
+    {
+        return [
+            'first_name.required' => 'Please enter first name',
+            'last_name.required' => 'Please enter last name',
+            'phone_number.required' => 'Please enter mobile phone',
+            'email.required' => 'Please enter email',
+            'email.unique' => 'This email is already taken. Please input a another email',
+            'password.required' => 'Please enter password',
+            'terms.required' => 'Please accept to our term and condition',
+        ];
+    }
+
+    public static function messages()
+    {
+        return [
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'phone_number' => 'required',
+            'email' => 'required|email|max:255|unique:employees',
+            'password' => 'required|min:6|confirmed',
+            'terms' => 'required',
+        ];
+    }
 
 
     //==============Relationship=============//

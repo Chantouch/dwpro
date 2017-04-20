@@ -72,16 +72,16 @@
         },
         {
             "name": "cviebrock/eloquent-sluggable",
-            "version": "4.2.2",
+            "version": "4.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cviebrock/eloquent-sluggable.git",
-                "reference": "08a8c7f02120b481e5856b518f0351c95259e305"
+                "reference": "cbeb6e16b783173dbb95e00f78237d349e73c07d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cviebrock/eloquent-sluggable/zipball/08a8c7f02120b481e5856b518f0351c95259e305",
-                "reference": "08a8c7f02120b481e5856b518f0351c95259e305",
+                "url": "https://api.github.com/repos/cviebrock/eloquent-sluggable/zipball/cbeb6e16b783173dbb95e00f78237d349e73c07d",
+                "reference": "cbeb6e16b783173dbb95e00f78237d349e73c07d",
                 "shasum": ""
             },
             "require": {
@@ -120,7 +120,7 @@
                 "laravel",
                 "slug"
             ],
-            "time": "2017-03-23T19:14:22+00:00"
+            "time": "2017-04-18T15:03:20+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
