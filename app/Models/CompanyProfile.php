@@ -15,7 +15,32 @@ class CompanyProfile extends Model
         'phone_number'
     ];
 
+    //===============Validation===============//
+    public static function rules()
+    {
+        return [
+            'name' => 'required|unique:company_profiles|max:255',
+            'city_id' => 'required|max:255',
+            'number_employee' => 'required',
+            'industry_id' => 'required',
+            'about_us' => 'max:255',
+            'website' => 'max:255',
+        ];
+    }
+
+    public static function messages()
+    {
+        return [
+            'name.required' => 'Please enter your company name',
+            'city_id.required' => 'Please select city',
+            'number_employee.required' => 'Please select number of employee',
+            'industry_id.required' => 'Please select industry type of your company',
+            'about_us.max' => 'About your company should not bigger than 255 length',
+        ];
+    }
+
     //===============Relationship===========//
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -41,6 +66,7 @@ class CompanyProfile extends Model
 
 
     //=========GetAndSetAttributes========//
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */

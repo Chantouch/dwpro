@@ -16,10 +16,10 @@ class CreateCompanyProfilesTable extends Migration
         Schema::create('company_profiles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique()->nullable();
-            $table->integer('employee_id', false, true);
-            $table->integer('industry_id', false, true);
-            $table->integer('business_type_id', false, true);
-            $table->integer('city_id', false, true);
+            $table->integer('employee_id', false, true)->nullable();
+            $table->integer('industry_id', false, true)->nullable();
+            $table->integer('business_type_id', false, true)->nullable();
+            $table->integer('city_id', false, true)->nullable();
             $table->string('website')->nullable();
             $table->string('twitter')->nullable();
             $table->string('facebook')->nullable();

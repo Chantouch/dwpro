@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Vinkla\Hashids\Facades\Hashids;
+use App\Notifications\EmployeeResetPassword as ResetPasswordNotification;
 
 class Employee extends Authenticatable
 {
@@ -37,7 +38,24 @@ class Employee extends Authenticatable
         'password', 'remember_token',
     ];
 
-    //==============Validation============/
+    //==============Send Notification===========//
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
+
+    //==============Validation============//
+
+    /**
+     * @return array
+     */
     public static function rules()
     {
         return [
@@ -51,6 +69,9 @@ class Employee extends Authenticatable
         ];
     }
 
+    /**
+     * @return array
+     */
     public static function messages()
     {
         return [

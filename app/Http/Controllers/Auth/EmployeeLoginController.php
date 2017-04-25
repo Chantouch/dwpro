@@ -229,11 +229,29 @@ class EmployeeLoginController extends Controller
      */
     protected function saveRegisterForm(Request $request)
     {
+        $messages = array(
+            'first_name.required' => 'Please enter first name',
+            'last_name.required' => 'Please enter last name',
+            'phone_number.required' => 'Please enter mobile phone',
+            'email.required' => 'Please enter email',
+            'email.unique' => 'This email is already taken. Please input a another email',
+            'password.required' => 'Please enter password',
+            'terms.required' => 'Please accept to our term and condition',
+        );
+
+        $rules = array(
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'phone_number' => 'required',
+            'email' => 'required|email|max:255|unique:employees',
+            'password' => 'required|min:6|confirmed',
+            'terms' => 'required',
+        );
         $credentials = [
             'email' => $request->email,
             'password' => $request->password,
         ];
-        $validator = Validator::make($request->all(), Employee::rules(), Employee::messages());
+        $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
             $this->throwValidationException($request, $validator);
             return redirect()->route('employee.register')

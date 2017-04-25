@@ -103,6 +103,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        dd($data);
         $validator = Validator::make($data, Post::rules(), Post::messages());
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Some files has errors. Please correct it and then try it again.');

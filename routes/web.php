@@ -79,6 +79,12 @@ Route::prefix('employee')->name('employee.')->group(function () {
     Route::post('register/post/add-company-profile', 'Employee\EmployeeController@post_add_company_profile')->name('register.add_company_profile.post');
     Route::get('verify/{token}', 'Auth\EmployeeLoginController@verify')->name('verify.account');
 
+    //====Employee Reset password====//
+    Route::get('password/reset', 'Auth\Employee\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+    Route::get('password/reset/{token}', 'Auth\Employee\ResetPasswordController@showResetForm')->name('password.request.form');
+    Route::post('password/email', 'Auth\Employee\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+    Route::post('password/request', 'Auth\Employee\ResetPasswordController@reset')->name('password.reset');
+
     Route::get('login', 'Auth\EmployeeLoginController@showLoginForm')->name('login');
     Route::post('login', 'Auth\EmployeeLoginController@login')->name('login.post');
     Route::post('logout', 'Auth\EmployeeLoginController@logout')->name('logout');
