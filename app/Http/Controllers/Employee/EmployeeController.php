@@ -224,7 +224,7 @@ class EmployeeController extends Controller
                         $profile_image = Image::make($request->file('logo_photo'))->resize(800, 385);
                         $profile_small = Image::make($request->file('logo_photo'))->resize(200, 40);
                         //to remove space from string
-                        $company_name = preg_replace('/\s+/', '', strtolower($request->name));
+                        $company_name = preg_replace('/\s+/', '_', strtolower($request->name));
                         $fileName = uniqid($company_name . '_') . '_' . time() . '.' . $request->file('logo_photo')->getClientOriginalExtension();
                         $avatar->save($destination_avatar . '/' . $fileName, 100);
                         $profile_image->save($destination_path . '/' . $fileName, 100);
@@ -246,7 +246,6 @@ class EmployeeController extends Controller
                     ->withInput()
                     ->with('error', 'Error while registering in our website, Please contact to our Teach Support');
             }
-
         }
     }
 

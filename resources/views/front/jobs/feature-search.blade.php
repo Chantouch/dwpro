@@ -21,7 +21,7 @@
                                 </li>
                             @endforeach
                         </ul>
-                        <a href="#" class="btn btn-blue m-t-25">View All</a>
+                        <a href="{!! route('jobs.search.by.function.all') !!}" class="btn btn-blue m-t-25">View All</a>
                     </li>
                     <!--======= Search By Industry =========-->
                     <li class="col-md-3 col-sm-6 wow fadeInUp" data-wow-delay="0.6s">
@@ -32,7 +32,7 @@
                                 <li><a href="#">{!! $industry->name !!} ( {!! count($industry->posts) !!} )</a></li>
                             @endforeach
                         </ul>
-                        <a href="#" class="btn btn-blue m-t-25">View All</a>
+                        <a href="{!! route('jobs.search.by.industry.all') !!}" class="btn btn-blue m-t-25">View All</a>
                     </li>
                     <!--======= Search by Company =========-->
                     <li class="col-md-3 col-sm-6 wow fadeInUp" data-wow-delay="0.9s">
@@ -49,7 +49,7 @@
                             @endforeach
                         </ul>
 
-                        <a href="#" class="btn btn-blue m-t-25">View All</a>
+                        <a href="{!! route('jobs.search.by.company.all') !!}" class="btn btn-blue m-t-25">View All</a>
                     </li>
                     <!--======= Search by City =========-->
                     <li class="col-md-3 col-sm-6 wow fadeInUp" data-wow-delay="1.2s">
@@ -61,7 +61,7 @@
                             @endforeach
                         </ul>
 
-                        <a href="#" class="btn btn-blue m-t-25">View All</a>
+                        <a href="{!! route('jobs.search.by.city.all') !!}" class="btn btn-blue m-t-25">View All</a>
                     </li>
                 </ul>
             </div>

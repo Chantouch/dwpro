@@ -6,6 +6,7 @@ use App\Employee;
 use App\Mail\ApplyJob;
 use App\Models\Apply;
 use App\Models\City;
+use App\Models\CompanyProfile;
 use App\Models\ContractType;
 use App\Models\Functions;
 use App\Models\Industry;
@@ -48,16 +49,19 @@ class HomeController extends Controller
         $companies = Employee::where('status', 1)->where('parent_id', 0)->get();
         $contract_terms = ContractType::where('status', 1)->get();
         $feature_posts = $this->post->all();
+        $cities = City::where('status', 1)->orderBy('created_at', 'ASC')->pluck('name', 'id');
         $full_time_posts = Post::where('status', 1)->get();
+        $filed_up_posts = Post::where('status', 2)->get();
+        $applications = User::where('status', 1)->get();
         return view('front.index', compact(
             'posts', 'feature_posts', 'companies',
-            'contract_terms', 'full_time_posts'
+            'contract_terms', 'full_time_posts', 'filed_up_posts',
+            'applications', 'cities'
         ));
     }
 
     public function getPost()
     {
-
         return view('employee.post.index');
     }
 
@@ -170,11 +174,11 @@ class HomeController extends Controller
     public function search_by_company($slug)
     {
         $cities = City::with('posts')->where('status', 1)->pluck('name', 'id');
-        $company = Employee::with('posts')->where('parent_id', 0)->where('slug', $slug)->firstOrFail();
+        $company = CompanyProfile::with('employee.posts')->where('slug', $slug)->firstOrFail();
         $current_date = date('Y-m-d');
         $contract_terms = ContractType::where('status', 1)->get();
-        $posts = Post::with('industry', 'employer')->where('created_by', '=', $company->id)->where('status', 1)->orderBy('created_at', 'DESC')->paginate(20);
-        return view('front.jobs.searchby', compact('posts', 'contract_terms'));
+        $posts = Post::with('industry', 'employee')->where('employee_id', $this->guard()->id())->where('status', 1)->orderBy('created_at', 'DESC')->paginate(20);
+        return view('front.jobs.searchby', compact('posts', 'contract_terms','cities'));
     }
 
     /**
@@ -196,7 +200,7 @@ class HomeController extends Controller
      */
     public function all_functions()
     {
-        $functions = Functions::all();
+        $functions = Functions::with('posts')->get();
         return view('front.search.all', compact('functions'));
     }
 
@@ -214,7 +218,7 @@ class HomeController extends Controller
      */
     public function all_companies()
     {
-        $companies = Employee::all();
+        $companies = CompanyProfile::all();
         return view('front.search.all', compact('companies'));
     }
 
@@ -227,9 +231,11 @@ class HomeController extends Controller
         return view('front.search.all', compact('cities'));
     }
 
-
-    public function more_jobs($employee)
+    /**
+     * @return mixed
+     */
+    public function guard()
     {
-
+        return auth()->guard('employee');
     }
 }

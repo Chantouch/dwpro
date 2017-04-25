@@ -1,4 +1,4 @@
-@extends('webfront.layouts.default')
+@extends('layouts.front.default')
 @section('title', 'Functions all')
 @section('page_specific_styles')
     <link href="{{ asset('plugins/animate/animate.css') }}" rel="stylesheet" type="text/css"/>
@@ -18,8 +18,7 @@
     </style>
 @stop
 
-@section('full_content')
-
+@section('contents')
     <div class="col-lg-12">
         <div class="show-grid">
             <div class="spacer-1">&nbsp;</div>
@@ -44,7 +43,7 @@
                         @foreach($functions as $function)
                             <div class="col-md-4 col-sm-6 col-lg-3">
                                 <span><a href="{!! route('jobs.view.by.function',[$function->slug]) !!}">{!! $function->name !!}
-                                        ({!! count($function->jobs) !!})</a></span>
+                                        ({!! count($function->posts) !!})</a></span>
                             </div>
                         @endforeach
                     @endif
@@ -52,15 +51,15 @@
                         @foreach($industries as $industry)
                             <div class="col-md-4 col-sm-6 col-lg-3">
                                 <span><a href="{!! route('jobs.view.by.industry',[$industry->slug]) !!}">{!! $industry->name !!}
-                                        ({!! count($industry->jobs) !!})</a></span>
+                                        ({!! count($industry->posts) !!})</a></span>
                             </div>
                         @endforeach
                     @endif
                     @if(!empty($companies))
                         @foreach($companies as $company)
                             <div class="col-md-4 col-sm-6 col-lg-3">
-                                <span><a href="{!! route('jobs.view.by.company',[$company->slug]) !!}">{!! $company->organization_name !!}
-                                        ({!! count($company->jobs) !!})</a></span>
+                                <span><a href="{!! route('jobs.view.by.company',[$company->slug]) !!}">{!! $company->name !!}
+                                        ({!! count($company->employee->posts) !!})</a></span>
                             </div>
                         @endforeach
                     @endif
@@ -68,7 +67,7 @@
                         @foreach($cities as $city)
                             <div class="col-md-4 col-sm-6 col-lg-3">
                                 <span><a href="{!! route('jobs.view.by.city',[$city->slug]) !!}">{!! $city->name !!}
-                                        ({!! count($city->jobs) !!})</a></span>
+                                        ({!! count($city->posts) !!})</a></span>
                             </div>
                         @endforeach
                     @endif

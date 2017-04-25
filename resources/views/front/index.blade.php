@@ -186,14 +186,14 @@
 
             <div class="counter clearfix">
                 <div class="counter-container col-md-3 col-xs-6">
-                    <div class="counter-value">342</div>
+                    <div class="counter-value">{!! count($full_time_posts) !!}</div>
                     <div class="line"></div>
                     <p>Job Posted</p>
                 </div>
 
 
                 <div class="counter-container col-md-3 col-xs-6">
-                    <div class="counter-value">3345</div>
+                    <div class="counter-value">{!! count($filed_up_posts) !!}</div>
                     <div class="line"></div>
                     <p>Position Filled</p>
                 </div>
@@ -205,7 +205,7 @@
                 </div>
 
                 <div class="counter-container col-md-3 col-xs-6">
-                    <div class="counter-value">5676</div>
+                    <div class="counter-value">{!! count($applications) !!}</div>
                     <div class="line"></div>
                     <p>Applicants</p>
                 </div>
