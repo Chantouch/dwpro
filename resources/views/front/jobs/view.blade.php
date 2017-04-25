@@ -126,8 +126,7 @@
         <li class="sline">|</li>
         <li>
             <i class="fa fa-list"></i>
-            <a href="#" title="View all job by {!! $post->employee->company_profile->name !!}">More Job</a></li>
-        {{--<li><i class="fa fa-tag"></i><a href="">Store</a></li>--}}
+            <a href="{!! route('jobs.view.by.company', [$post->employee->company_profile->slug]) !!}" title="View all job by {!! $post->employee->company_profile->name !!}">More Job</a></li>
         <li class="sline">|</li>
         <li>
             {{--<i class="fa fa-share-square-o"></i>--}}
@@ -138,7 +137,7 @@
 
     <div class="recent-job-detail">
         <div class="col-md-5 job-detail-desc">
-            <h5>{!! str_limit($post->name,15) !!}</h5>
+            <h5>{!! str_limit($post->name, 15) !!}</h5>
             <p>{!! str_limit($post->job_description, 60) !!}</p>
         </div>
         <div class="col-md-2 job-detail-name">

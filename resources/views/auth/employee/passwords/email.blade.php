@@ -53,8 +53,8 @@
                         @endif
                     </div>
 
-                    <div class="form-group">
-                        <div class="col-md-6 col-md-offset-4">
+                    <div class="form-group text-center">
+                        <div class="col-md-12">
                             <a class="btn btn-link" href="{{ route('employee.login') }}">
                                 Back to Login
                             </a>

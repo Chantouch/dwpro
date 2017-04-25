@@ -169,11 +169,11 @@ class HomeController extends Controller
      */
     public function search_by_company($slug)
     {
-        $city_list = City::with('posts')->where('status', 1)->pluck('name', 'id');
+        $cities = City::with('posts')->where('status', 1)->pluck('name', 'id');
         $company = Employee::with('posts')->where('parent_id', 0)->where('slug', $slug)->firstOrFail();
         $current_date = date('Y-m-d');
         $contract_terms = ContractType::where('status', 1)->get();
-        $posts = Post::with('industry', 'employer')->where('created_by', '=', $company->id)->where('status', 1)->where('closing_date', '>=', $current_date)->orderBy('created_at', 'DESC')->paginate(20);
+        $posts = Post::with('industry', 'employer')->where('created_by', '=', $company->id)->where('status', 1)->orderBy('created_at', 'DESC')->paginate(20);
         return view('front.jobs.searchby', compact('posts', 'contract_terms'));
     }
 
@@ -225,5 +225,11 @@ class HomeController extends Controller
     {
         $cities = City::all();
         return view('front.search.all', compact('cities'));
+    }
+
+
+    public function more_jobs($employee)
+    {
+
     }
 }

@@ -209,23 +209,30 @@
                                 </ul>
                             </li>
                             {{--<li class="hidden-xs">--}}
-                                {{--<a href="#" id="btn-fullscreen" class="waves-effect"><i--}}
-                                            {{--class="icon-size-fullscreen"></i></a>--}}
+                            {{--<a href="#" id="btn-fullscreen" class="waves-effect"><i--}}
+                            {{--class="icon-size-fullscreen"></i></a>--}}
                             {{--</li>--}}
                             {{--<li class="hidden-xs">--}}
-                                {{--<a href="#" class="right-bar-toggle waves-effect"><i class="icon-settings"></i></a>--}}
+                            {{--<a href="#" class="right-bar-toggle waves-effect"><i class="icon-settings"></i></a>--}}
                             {{--</li>--}}
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle profile waves-effect" data-toggle="dropdown"
-                                   aria-expanded="true"><img src="{!! asset('assets/images/users/avatar-1.jpg') !!}"
-                                                             alt="user-img"
-                                                             class="img-circle"> </a>
+                                   aria-expanded="true">
+                                    @if(auth()->guard('employee')->user()->logo_photo != 'default.jpg')
+                                        <img src="{!! asset( auth()->guard('employee')->user()->company_profile->photo_path. 'avatar/' . auth()->guard('employee')->user()->id.'/' . auth()->guard('employee')->user()->company_profile->logo_photo) !!}"
+                                             class="img-circle"
+                                             alt="{!! auth()->guard('employee')->user()->company_profile->name !!}"/>
+                                    @else
+                                        <img src="{!! asset('assets/images/users/avatar-1.jpg') !!}"
+                                             alt="user-img" class="img-circle">
+                                    @endif
+                                </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="javascript:void(0)"><i class="ti-user m-r-5"></i> Profile</a></li>
                                     <li><a href="javascript:void(0)"><i class="ti-settings m-r-5"></i> Settings</a></li>
                                     <li><a href="javascript:void(0)"><i class="ti-lock m-r-5"></i> Lock screen</a></li>
                                     <li>
-                                        @if(Auth::guard('employee')->check())
+                                        @if(auth()->guard('employee')->check())
                                             <a href="{{ route('employee.logout') }}"
                                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -273,11 +280,11 @@
                     <div class="row">
                         <div class="col-sm-12">
                             {{--<h4 class="page-title">--}}
-                                {{--@if(isset($title))--}}
-                                    {{--{!! $title !!}--}}
-                                {{--@else--}}
-                                    {{--Default Title--}}
-                                {{--@endif--}}
+                            {{--@if(isset($title))--}}
+                            {{--{!! $title !!}--}}
+                            {{--@else--}}
+                            {{--Default Title--}}
+                            {{--@endif--}}
                             {{--</h4>--}}
                             {{--<ol class="breadcrumb">--}}
                             {{--<li>--}}

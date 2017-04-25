@@ -25,6 +25,7 @@ class CompanyProfile extends Model
             'industry_id' => 'required',
             'about_us' => 'max:255',
             'website' => 'max:255',
+            'logo_photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240'
         ];
     }
 

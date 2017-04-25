@@ -13,22 +13,24 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
-Route::get('/post', 'HomeController@getPost');
-Route::get('view/job/{id}/{company}/{industry}/{slug}', 'HomeController@view_post')->name('home.view.job');
-//Route::post('view/job/{id}/{company}/{industry}/{slug}', 'HomeController@view_post')->name('home.view.job');
-Route::post('job/apply/{id}', 'HomeController@apply_job')->name('home.job.apply');
+Route::middleware('guest')->group(function () {
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/post', 'HomeController@getPost');
+    Route::get('view/job/{id}/{company}/{industry}/{slug}', 'HomeController@view_post')->name('home.view.job');
+    //Route::post('view/job/{id}/{company}/{industry}/{slug}', 'HomeController@view_post')->name('home.view.job');
+    Route::post('job/apply/{id}', 'HomeController@apply_job')->name('home.job.apply');
 
-//Search by
-Route::get('jobs/function/{slug}/', ['as' => 'jobs.view.by.function', 'uses' => 'HomeController@search_by_function']);
-Route::get('jobs/industry/{slug}/', ['as' => 'jobs.view.by.industry', 'uses' => 'HomeController@search_by_industry']);
-Route::get('jobs/company/{slug}', ['as' => 'jobs.view.by.company', 'uses' => 'HomeController@search_by_company']);
-Route::get('jobs/city/{slug}/', ['as' => 'jobs.view.by.city', 'uses' => 'HomeController@search_by_city']);
-//For jobs all by specific
-Route::get('jobs/functions', ['as' => 'jobs.search.by.function.all', 'uses' => 'HomeController@all_functions']);
-Route::get('jobs/industries', ['as' => 'jobs.search.by.industry.all', 'uses' => 'HomeController@all_industries']);
-Route::get('jobs/companies', ['as' => 'jobs.search.by.company.all', 'uses' => 'HomeController@all_companies']);
-Route::get('jobs/cities', ['as' => 'jobs.search.by.city.all', 'uses' => 'HomeController@all_cities']);
+    //Search by
+    Route::get('jobs/function/{slug}/', ['as' => 'jobs.view.by.function', 'uses' => 'HomeController@search_by_function']);
+    Route::get('jobs/industry/{slug}/', ['as' => 'jobs.view.by.industry', 'uses' => 'HomeController@search_by_industry']);
+    Route::get('jobs/company/{slug}', ['as' => 'jobs.view.by.company', 'uses' => 'HomeController@search_by_company']);
+    Route::get('jobs/city/{slug}/', ['as' => 'jobs.view.by.city', 'uses' => 'HomeController@search_by_city']);
+    //For jobs all by specific
+    Route::get('jobs/functions', ['as' => 'jobs.search.by.function.all', 'uses' => 'HomeController@all_functions']);
+    Route::get('jobs/industries', ['as' => 'jobs.search.by.industry.all', 'uses' => 'HomeController@all_industries']);
+    Route::get('jobs/companies', ['as' => 'jobs.search.by.company.all', 'uses' => 'HomeController@all_companies']);
+    Route::get('jobs/cities', ['as' => 'jobs.search.by.city.all', 'uses' => 'HomeController@all_cities']);
+});
 
 //Admin Route
 Route::group(['prefix' => 'admin'], function () {

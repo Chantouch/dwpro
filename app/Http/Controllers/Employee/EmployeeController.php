@@ -7,6 +7,7 @@ use App\Models\BusinessType;
 use App\Models\CompanyProfile;
 use App\Models\Industry;
 use App\Models\Post;
+use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Vinkla\Hashids\HashidsManager;
 use Validator;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class EmployeeController extends Controller
 {
@@ -191,23 +193,6 @@ class EmployeeController extends Controller
         if ($this->guard()->user()->company_profile != null) {
             return redirect()->route('employee.home');
         } else {
-            $messages = array(
-                'name.required' => 'Please enter your company name',
-                'city_id.required' => 'Please select city',
-                'number_employee.required' => 'Please select number of employee',
-                'industry_id.required' => 'Please select industry type of your company',
-                'about_us.max' => 'About your company should not bigger than 255 length',
-            );
-
-            $rules = array(
-                'name' => 'required|max:255',
-                'city_id' => 'required|max:255',
-                'number_employee' => 'required',
-                'industry_id' => 'required',
-                'about_us' => 'max:255',
-                'website' => 'max:255',
-            );
-
             DB::beginTransaction();
             try {
                 $data = $request->all();
@@ -216,13 +201,46 @@ class EmployeeController extends Controller
                 if ($validator->fails()) {
                     return redirect()->back()->withInput()->withErrors($validator);
                 }
+                $id = $this->emp_id();
+                $path = 'uploads/employers/profile/';
+                $small = $path . '/small/' . $id . '/';
+                $medium = $path . '/medium/' . $id . '/';
+                $avatar = $path . '/avatar/' . $id . '/';
+                $destination_path = public_path($medium);
+                $destination_small = public_path($small);
+                $destination_avatar = public_path($avatar);
+                if ($request->hasFile('logo_photo')) {
+                    if ($request->file('logo_photo')->isValid()) {
+                        if (!file_exists($destination_path)) {
+                            mkdir($destination_path, 0777, true);
+                        }
+                        if (!file_exists($destination_avatar)) {
+                            mkdir($destination_avatar, 0777, true);
+                        }
+                        if (!file_exists($destination_small)) {
+                            mkdir($destination_small, 0777, true);
+                        }
+                        $avatar = Image::make($request->file('logo_photo'))->resize(787, 787);
+                        $profile_image = Image::make($request->file('logo_photo'))->resize(800, 385);
+                        $profile_small = Image::make($request->file('logo_photo'))->resize(200, 40);
+                        //to remove space from string
+                        $company_name = preg_replace('/\s+/', '', strtolower($request->name));
+                        $fileName = uniqid($company_name . '_') . '_' . time() . '.' . $request->file('logo_photo')->getClientOriginalExtension();
+                        $avatar->save($destination_avatar . '/' . $fileName, 100);
+                        $profile_image->save($destination_path . '/' . $fileName, 100);
+                        $profile_small->save($destination_small . '/' . $fileName, 100);
+                        $data['photo_path'] = $path;
+                        $data['cover_path'] = $path;
+                        $data['logo_photo'] = $fileName;
+                    }
+                }
                 $data['employee_id'] = $this->emp_id();
                 $save = CompanyProfile::create($data);
                 if (!$save) {
                     return response()->json(['error' => 'Can not update your profile now.']);
                 }
                 return redirect()->route('employee.home')->with('success', 'Your account is not yet activate.');
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 DB::rollback();
                 return back()
                     ->withInput()

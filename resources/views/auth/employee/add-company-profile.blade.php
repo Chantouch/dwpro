@@ -78,7 +78,7 @@
                 @endif
             </div>
             <div class="panel-body">
-                <form class="form" role="form" method="POST"
+                <form class="form" role="form" method="POST" enctype="multipart/form-data"
                       action="{{ route('employee.register.add_company_profile.post') }}">
                     {{ csrf_field() }}
                     <div class="row">
@@ -89,16 +89,24 @@
                                        value="{{ old('name') }}" autofocus placeholder="Company name">
                                 @if ($errors->has('name'))
                                     <span class="help-block">
-                                <strong>{{ $errors->first('name') }}</strong>
-                            </span>
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                         </div>
                         <div class="col-md-3 m-t-10">
-                            <label for="image-label" class="control-label">Logo</label>
-                            <div id="image-preview">
-                                <label for="image-upload" id="image-label">Choose File</label>
-                                <input type="file" name="logo_photo" id="image-upload"/>
+                            <div class="form-group{{ $errors->has('logo_photo') ? ' has-error' : '' }}">
+                                <label for="image-label" class="control-label">Logo</label>
+                                <div id="image-preview">
+                                    <label for="image-upload" id="image-label">Choose File</label>
+                                    {{--<input type="file" name="logo_photo" id="image-upload"/>--}}
+                                    {!! Form::file('logo_photo',['id'=>'image-upload']) !!}
+                                </div>
+                                @if ($errors->has('logo_photo'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('logo_photo') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
                         <div class="col-md-9 m-t-10">

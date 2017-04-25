@@ -42,7 +42,7 @@ class Helper
     public static function relationship($model)
     {
         if ($model == null) {
-            return "N/A";
+            return "Not Selected";
         } else {
             return $model->name;
         }
