@@ -1664,7 +1664,7 @@ div.map-popup > h6 {
     float: left;
 }
 
-.tab:nth-child(5) {
+.tab:last-child {
     border-right: 1px solid #e3e3e3;
 }
 

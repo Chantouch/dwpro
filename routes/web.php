@@ -21,15 +21,22 @@ Route::middleware('guest')->group(function () {
     Route::post('job/apply/{id}', 'HomeController@apply_job')->name('home.job.apply');
 
     //Search by
-    Route::get('jobs/function/{slug}/', ['as' => 'jobs.view.by.function', 'uses' => 'HomeController@search_by_function']);
-    Route::get('jobs/industry/{slug}/', ['as' => 'jobs.view.by.industry', 'uses' => 'HomeController@search_by_industry']);
-    Route::get('jobs/company/{slug}', ['as' => 'jobs.view.by.company', 'uses' => 'HomeController@search_by_company']);
-    Route::get('jobs/city/{slug}/', ['as' => 'jobs.view.by.city', 'uses' => 'HomeController@search_by_city']);
-    //For jobs all by specific
-    Route::get('jobs/functions', ['as' => 'jobs.search.by.function.all', 'uses' => 'HomeController@all_functions']);
-    Route::get('jobs/industries', ['as' => 'jobs.search.by.industry.all', 'uses' => 'HomeController@all_industries']);
-    Route::get('jobs/companies', ['as' => 'jobs.search.by.company.all', 'uses' => 'HomeController@all_companies']);
-    Route::get('jobs/cities', ['as' => 'jobs.search.by.city.all', 'uses' => 'HomeController@all_cities']);
+    Route::group(['prefix' => 'jobs'], function () {
+        Route::name('jobs.view.by.')->group(function () {
+            Route::get('function/{slug}', ['as' => 'function', 'uses' => 'HomeController@search_by_function']);
+            Route::get('industry/{slug}', ['as' => 'industry', 'uses' => 'HomeController@search_by_industry']);
+            Route::get('company/{slug}', ['as' => 'company', 'uses' => 'HomeController@search_by_company']);
+            Route::get('city/{slug}', ['as' => 'city', 'uses' => 'HomeController@search_by_city']);
+        });
+        //For jobs all by specific
+        Route::name('jobs.search.by.')->group(function () {
+            Route::get('functions', ['as' => 'function.all', 'uses' => 'HomeController@all_functions']);
+            Route::get('industries', ['as' => 'industry.all', 'uses' => 'HomeController@all_industries']);
+            Route::get('companies', ['as' => 'company.all', 'uses' => 'HomeController@all_companies']);
+            Route::get('cities', ['as' => 'city.all', 'uses' => 'HomeController@all_cities']);
+        });
+        Route::get('search/', 'HomeController@job_search')->name('jobs.search');
+    });
 });
 
 //Admin Route
@@ -74,44 +81,47 @@ Route::resource('posts', 'Employee\PostController');
 
 //Employee Route
 Route::prefix('employee')->name('employee.')->group(function () {
-
     Route::get('register', 'Auth\EmployeeLoginController@showRegisterForm')->name('register');
     Route::post('save/register', 'Auth\EmployeeLoginController@saveRegisterForm')->name('register.account');
     Route::get('register/add-company-profile', 'Employee\EmployeeController@add_company_profile')->name('register.add_company_profile');
     Route::post('register/post/add-company-profile', 'Employee\EmployeeController@post_add_company_profile')->name('register.add_company_profile.post');
     Route::get('verify/{token}', 'Auth\EmployeeLoginController@verify')->name('verify.account');
-
     //====Employee Reset password====//
-    Route::get('password/reset', 'Auth\Employee\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-    Route::get('password/reset/{token}', 'Auth\Employee\ResetPasswordController@showResetForm')->name('password.request.form');
-    Route::post('password/email', 'Auth\Employee\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-    Route::post('password/request', 'Auth\Employee\ResetPasswordController@reset')->name('password.reset');
-
+    Route::prefix('password')->name('password.')->group(function () {
+        Route::get('reset', 'Auth\Employee\ForgotPasswordController@showLinkRequestForm')->name('request');
+        Route::get('reset/{token}', 'Auth\Employee\ResetPasswordController@showResetForm')->name('request.form');
+        Route::post('email', 'Auth\Employee\ForgotPasswordController@sendResetLinkEmail')->name('email');
+        Route::post('request', 'Auth\Employee\ResetPasswordController@reset')->name('reset');
+    });
     Route::get('login', 'Auth\EmployeeLoginController@showLoginForm')->name('login');
     Route::post('login', 'Auth\EmployeeLoginController@login')->name('login.post');
     Route::post('logout', 'Auth\EmployeeLoginController@logout')->name('logout');
     Route::get('account-settings/change-password', 'Employee\EmployeeController@show_change_password')->name('account-settings.show-change-password');
     Route::post('account-settings/change/password', 'Employee\EmployeeController@change_password')->name('account-settings.change-password');
 
-    Route::get('home', 'EmployeeController@index')->name('home');
+    Route::get('home', 'Employee\EmployeeController@index')->name('home');
     Route::get('account-settings/company-profile', 'Employee\EmployeeController@company_profile')->name('company_profile');
     Route::get('edit-profile', 'Employee\EmployeeController@edit_profile')->name('edit_profile');
     Route::patch('update-profile', 'Employee\EmployeeController@update_profile')->name('update_profile');
     Route::patch('update-profile-about', 'Employee\EmployeeController@update_profile_about')->name('update_profile_about');
-    Route::get('posts/all', 'Employee\EmployeeController@posts')->name('posts.json');
     //Test api.
     //Route::get('posts', 'Employee\EmployeeController@posts')->name('posts');
-    Route::get('posts/active', 'Employee\PostController@status_active')->name('posts.active');
-    Route::get('posts/drafts', 'Employee\PostController@status_drafts')->name('posts.drafts');
-    Route::get('posts/expired', 'Employee\PostController@status_expired')->name('posts.expired');
-    Route::get('posts/unpublished', 'Employee\PostController@unpublished')->name('posts.unpublished');
-    Route::get('posts/update_status/disabled/{num}', 'Employee\PostController@update_job_status')->name('update_job.status_filled_up');
-    Route::get('posts/update_status/active/{num}', 'Employee\PostController@update_job_status')->name('update_job.status_active');
-    Route::get('posts/update_status/filled_up/{num}', 'Employee\PostController@update_job_status')->name('update_job.status_disabled');
-
-    Route::resource('posts', 'Employee\PostController');
-    Route::get('posts/{id}/{draft}', 'Employee\PostController@edit_draft')->name('posts.edit.draft');
-
+    Route::prefix('posts')->group(function () {
+        Route::name('posts.')->group(function () {
+            Route::get('all', 'Employee\EmployeeController@posts')->name('json');
+            Route::get('active', 'Employee\PostController@status_active')->name('active');
+            Route::get('drafts', 'Employee\PostController@status_drafts')->name('drafts');
+            Route::get('expired', 'Employee\PostController@status_expired')->name('expired');
+            Route::get('unpublished', 'Employee\PostController@unpublished')->name('unpublished');
+            Route::get('{id}/{draft}', 'Employee\PostController@edit_draft')->name('edit.draft');
+            Route::resource('/', 'Employee\PostController');
+        });
+        Route::prefix('update_status')->name('update_job.')->group(function () {
+            Route::get('disabled/{num}', 'Employee\PostController@update_job_status')->name('status_filled_up');
+            Route::get('active/{num}', 'Employee\PostController@update_job_status')->name('status_active');
+            Route::get('filled_up/{num}', 'Employee\PostController@update_job_status')->name('status_disabled');
+        });
+    });
     // Contact
     Route::get('/contact-list', 'Employee\EmployeeController@contact_form')->name('contacts_data');
     Route::get('/contact-list/deleted', 'Employee\EmployeeController@get_contact_deleted')->name('get_contact_deleted_list');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Employee;
 
 use App\Employee;
 use App\Models\BusinessType;
+use App\Models\City;
 use App\Models\CompanyProfile;
 use App\Models\Industry;
 use App\Models\Post;
@@ -50,18 +51,11 @@ class EmployeeController extends Controller
     public function index()
     {
         $title = "Employee Dashboard";
-        return view('employee.dashboard', compact('title'));
-    }
-
-    public function all_posts()
-    {
-        $title = "All Posts";
-        $employee_id = Auth::guard('employee')->id();
-        $posts = $this->post->where('employee_id', $employee_id)->with([
-            'industry', 'city', 'qualification', 'level', 'contract_type',
-            'functions', 'contact'
-        ])->paginate(10);
-        return view('employee.post.all', compact('posts', 'title'));
+        if ($this->guard()->user()->company_profile != null) {
+            return view('employee.dashboard', compact('title'));
+        } else {
+            return redirect()->route('employee.register.add_company_profile')->with('error', 'Please add or update your company profile first.');
+        }
     }
 
     /**
@@ -179,11 +173,12 @@ class EmployeeController extends Controller
         if ($this->guard()->user()->company_profile != null) {
             return redirect()->route('employee.home');
         } else {
+            $cities = City::where('status', 1)->orderBy('created_at', 'ASC')->pluck('name', 'id');
             $no_employee = \Helper::no_employee();
             $industries = Industry::where('status', 1)->orderBy('name', 'ASC')->pluck('name', 'id');
             $business_type = BusinessType::where('status', 1)->orderBy('name', 'ASC')->pluck('name', 'id');
             return view('auth.employee.add-company-profile',
-                compact('no_employee', 'industries', 'business_type'));
+                compact('no_employee', 'industries', 'business_type', 'cities'));
         }
     }
 
@@ -202,33 +197,34 @@ class EmployeeController extends Controller
                     return redirect()->back()->withInput()->withErrors($validator);
                 }
                 $id = $this->emp_id();
-                $path = 'uploads/employers/profile/';
-                $small = $path . '/small/' . $id . '/';
-                $medium = $path . '/medium/' . $id . '/';
-                $avatar = $path . '/avatar/' . $id . '/';
-                $destination_path = public_path($medium);
-                $destination_small = public_path($small);
-                $destination_avatar = public_path($avatar);
+                $path = 'uploads/company/image/' . date('Ym') . '/' . $id . '/';
+                $_200x40 = $path . '200x40/';
+                $_800x385 = $path . '800x385/';
+                $_787x787 = $path . '787x787/';
+                $_197x97 = $path . '197x97/';
+                $destination_800x385 = public_path($_800x385);
+                $destination_200x40 = public_path($_200x40);
+                $destination_787x787 = public_path($_787x787);
+                $destination_197x97 = public_path($_197x97);
                 if ($request->hasFile('logo_photo')) {
                     if ($request->file('logo_photo')->isValid()) {
-                        if (!file_exists($destination_path)) {
-                            mkdir($destination_path, 0777, true);
+                        if (!file_exists($destination_800x385 || $destination_787x787 || $destination_200x40 || $destination_197x97)) {
+                            mkdir($destination_800x385, 0777, true);
+                            mkdir($destination_787x787, 0777, true);
+                            mkdir($destination_200x40, 0777, true);
+                            mkdir($destination_197x97, 0777, true);
                         }
-                        if (!file_exists($destination_avatar)) {
-                            mkdir($destination_avatar, 0777, true);
-                        }
-                        if (!file_exists($destination_small)) {
-                            mkdir($destination_small, 0777, true);
-                        }
-                        $avatar = Image::make($request->file('logo_photo'))->resize(787, 787);
-                        $profile_image = Image::make($request->file('logo_photo'))->resize(800, 385);
-                        $profile_small = Image::make($request->file('logo_photo'))->resize(200, 40);
+                        $avatar_787x787 = Image::make($request->file('logo_photo'))->resize(787, 787);
+                        $profile_800x385 = Image::make($request->file('logo_photo'))->resize(800, 385);
+                        $profile_200x40 = Image::make($request->file('logo_photo'))->resize(200, 40);
+                        $profile_179x97 = Image::make($request->file('logo_photo'))->resize(179, 97);
                         //to remove space from string
                         $company_name = preg_replace('/\s+/', '_', strtolower($request->name));
                         $fileName = uniqid($company_name . '_') . '_' . time() . '.' . $request->file('logo_photo')->getClientOriginalExtension();
-                        $avatar->save($destination_avatar . '/' . $fileName, 100);
-                        $profile_image->save($destination_path . '/' . $fileName, 100);
-                        $profile_small->save($destination_small . '/' . $fileName, 100);
+                        $avatar_787x787->save($destination_787x787 . '/' . $fileName, 100);
+                        $profile_800x385->save($destination_800x385 . '/' . $fileName, 100);
+                        $profile_200x40->save($destination_200x40 . '/' . $fileName, 100);
+                        $profile_179x97->save($destination_197x97 . '/' . $fileName, 100);
                         $data['photo_path'] = $path;
                         $data['cover_path'] = $path;
                         $data['logo_photo'] = $fileName;

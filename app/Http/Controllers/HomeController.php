@@ -18,6 +18,7 @@ use Purifier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Vinkla\Hashids\HashidsManager;
+use Session;
 
 class HomeController extends Controller
 {
@@ -36,6 +37,14 @@ class HomeController extends Controller
         $this->middleware('web');
         $this->post = $post;
         $this->hashid = $hashid;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function guard()
+    {
+        return auth()->guard('employee');
     }
 
     /**
@@ -73,11 +82,14 @@ class HomeController extends Controller
             return redirect()->back()->with('error', 'We can not find this job.');
         }
         $post = $this->post->with(['industry', 'employee.company_profile'])->where('slug', $slug)->first();
-        $related_jobs = $this->post->with(['industry', 'employee.company_profile'])->get();
-        $posts = $this->post->take(4)->get();
-        $contract_terms = ContractType::where('status', 1)->get();
+        $name = explode(' ', trim($post->name));
+        $related_jobs = $this->post
+            ->with(['industry', 'employee.company_profile'])
+            ->where('name', 'like', '%' . $name[0] . '%')
+            ->get();
+        $contract_types = ContractType::where('status', 1)->get();
         $full_time_posts = Post::where('status', 1)->get();
-        return view('front.jobs.view', compact('post', 'related_jobs', 'posts', 'contract_terms', 'full_time_posts'));
+        return view('front.jobs.view', compact('post', 'related_jobs', 'contract_types', 'full_time_posts'));
     }
 
     //For candidate apply job directly from site
@@ -144,13 +156,15 @@ class HomeController extends Controller
      */
     public function search_by_function($slug)
     {
+        $title = "Job in functions";
         $cat = Functions::where('slug', $slug)->firstOrFail();
         $all_posts = $this->post->where('status', 1)->take(4)->get();
         $current_date = date('Y-m-d');
+        $cities = City::with('posts')->where('status', 1)->pluck('name', 'id');
         $contract_terms = ContractType::where('status', 1)->get();
         $posts = Post::with(['industry', 'employee'])->where('functions_id', $cat->id)->where('status', 1)->orderBy('created_at', 'DESC')->get();
         //return response()->json($functions);
-        return view('front.jobs.searchby', compact('posts', 'contract_terms', 'all_posts'));
+        return view('front.jobs.searchby', compact('posts', 'contract_terms', 'all_posts', 'title', 'cities'));
     }
 
     /**
@@ -159,12 +173,13 @@ class HomeController extends Controller
      */
     public function search_by_industry($slug)
     {
-        $city_list = City::with('posts')->where('status', 1)->pluck('name', 'id');
+        $title = "Job in functions";
+        $cities = City::with('posts')->where('status', 1)->pluck('name', 'id');
         $industry = Industry::with('posts')->where('slug', $slug)->firstOrFail();
         $current_date = date('Y-m-d');
         $contract_terms = ContractType::where('status', 1)->get();
-        $posts = Post::with('industry', 'employer')->where('industry_id', '=', $industry->id)->where('status', 1)->where('closing_date', '>=', $current_date)->orderBy('created_at', 'DESC')->paginate(20);
-        return view('front.jobs.searchby', compact('posts', 'contract_terms'));
+        $posts = Post::with('industry', 'employee')->where('industry_id', $industry->id)->where('status', 1)->orderBy('created_at', 'DESC')->paginate(20);
+        return view('front.jobs.searchby', compact('posts', 'contract_terms', 'title', 'cities'));
     }
 
     /**
@@ -173,12 +188,13 @@ class HomeController extends Controller
      */
     public function search_by_company($slug)
     {
+        $title = "Job in functions";
         $cities = City::with('posts')->where('status', 1)->pluck('name', 'id');
         $company = CompanyProfile::with('employee.posts')->where('slug', $slug)->firstOrFail();
         $current_date = date('Y-m-d');
         $contract_terms = ContractType::where('status', 1)->get();
-        $posts = Post::with('industry', 'employee')->where('employee_id', $this->guard()->id())->where('status', 1)->orderBy('created_at', 'DESC')->paginate(20);
-        return view('front.jobs.searchby', compact('posts', 'contract_terms','cities'));
+        $posts = Post::with('industry', 'employee')->where('employee_id', $company->employee->id)->where('status', 1)->orderBy('created_at', 'DESC')->paginate(20);
+        return view('front.jobs.searchby', compact('posts', 'contract_terms', 'cities', 'title'));
     }
 
     /**
@@ -187,12 +203,14 @@ class HomeController extends Controller
      */
     public function search_by_city($slug)
     {
+        $title = "Job in functions";
         $all_posts = $this->post->where('status', 1)->take(4)->get();
         $city = City::with('posts')->where('slug', $slug)->firstOrFail();
+        $cities = City::with('posts')->where('status', 1)->pluck('name', 'id');
         $current_date = date('Y-m-d');
         $contract_terms = ContractType::where('status', 1)->get();
         $posts = Post::with('industry', 'employee')->where('city_id', '=', $city->id)->where('status', 1)->orderBy('created_at', 'DESC')->paginate(20);
-        return view('front.jobs.searchby', compact('posts', 'contract_terms', 'all_posts'));
+        return view('front.jobs.searchby', compact('posts', 'contract_terms', 'all_posts', 'title', 'cities'));
     }
 
     /**
@@ -200,8 +218,9 @@ class HomeController extends Controller
      */
     public function all_functions()
     {
+        $title = "Job in functions";
         $functions = Functions::with('posts')->get();
-        return view('front.search.all', compact('functions'));
+        return view('front.search.all', compact('functions', 'title'));
     }
 
     /**
@@ -209,8 +228,9 @@ class HomeController extends Controller
      */
     public function all_industries()
     {
+        $title = "Job in functions";
         $industries = Industry::all();
-        return view('front.search.all', compact('industries'));
+        return view('front.search.all', compact('industries', 'title'));
     }
 
     /**
@@ -218,8 +238,9 @@ class HomeController extends Controller
      */
     public function all_companies()
     {
+        $title = "Job in functions";
         $companies = CompanyProfile::all();
-        return view('front.search.all', compact('companies'));
+        return view('front.search.all', compact('companies', 'title'));
     }
 
     /**
@@ -227,15 +248,55 @@ class HomeController extends Controller
      */
     public function all_cities()
     {
+        $title = "Job in functions";
         $cities = City::all();
-        return view('front.search.all', compact('cities'));
+        return view('front.search.all', compact('cities', 'title'));
     }
 
-    /**
-     * @return mixed
-     */
-    public function guard()
+    public function job_Search(Request $request)
     {
-        return auth()->guard('employee');
+        $current_date = date('Y-m-d');
+        $category = Functions::with('posts')->where('status', 1)->limit(5)->get();
+        $industry = Industry::with('posts')->where('status', 1)->orderBy('name', 'ASC')->take(5)->get();
+        $company = Employee::with('posts')->where('status', 1)->limit(5)->get();
+        $cite = City::with('posts')->where('status', 1)->take(5)->get();
+        $top_jobs = Post::with('industry', 'employee')->where('status', 1)->where('closing_date', '>=', $current_date)->orderBy('salary', 'DESC')->take(5)->get();
+        $cities = City::with('posts')->where('status', 1)->pluck('name', 'id');
+        $query = Post::query();
+        $city = $request->input('city');
+        $post_name = $request->input('name');
+        $salary_min = $request->input('salary');
+        $experiences = $request->input('experiences');
+        $feature_posts = $this->post->all();
+        if ($city) {
+            $query->where(function ($q) use ($city) {
+                $q->where('name', 'like', "%$city%")
+                    ->orWhere('city_id', 'like', "%$city%");
+            });
+        }
+        if ($post_name) {
+            $query->where(function ($q) use ($post_name) {
+                $q->where('name', 'like', "%$post_name%")
+                    ->orWhere('city_id', 'like', "%$post_name%");
+            });
+        }
+        if ($salary_min) {
+            $query->where(function ($q) use ($salary_min) {
+                $q->where('name', 'like', "%$salary_min%")
+                    ->orWhere('salary', 'like', "%$salary_min%");
+            });
+        }
+        if ($experiences) {
+            $query->where(function ($q) use ($experiences) {
+                $q->where('name', 'like', "%$experiences%")
+                    ->orWhere('year_experience', 'like', "%$experiences%");
+            });
+        }
+        $jobs = $query->orderBy('created_at', 'DESC')->paginate(20);
+        //$jobs->appends(['name'=> $post_name]);
+        Session::flash('_old_input', $request->all());
+        return view('front.jobs.search',
+            compact('jobs', 'cities', 'top_jobs', 'cit', 'company', 'category', 'industry', 'feature_posts')
+        );
     }
 }

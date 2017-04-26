@@ -12,6 +12,7 @@ use App\Models\Level;
 use App\Models\Post;
 use App\Models\Qualification;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -40,31 +41,31 @@ class PostController extends Controller
     }
 
     /**
+     * @return mixed
+     */
+    public function guard()
+    {
+        return Auth::guard('employee');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //        $item = Post::latest()->paginate(1);
-        //        $response = [
-        //            'pagination' => [
-        //                'total' => $item->total(),
-        //                'per_page' => $item->perPage(),
-        //                'current_page' => $item->currentPage(),
-        //                'last_page' => $item->lastPage(),
-        //                'from' => $item->firstItem(),
-        //                'to' => $item->lastItem()
-        //            ],
-        //            'data' => $item,
-        //        ];
-        //        return response()->json($response);
         $title = "All Posts";
-        $posts = $this->post->where('employee_id', $this->emp_id())->with([
-            'industry', 'city', 'qualification', 'level', 'contract_type',
-            'functions', 'contact'
-        ])->paginate(10);
-        return view('employee.post.all', compact('posts', 'title'));
+        if ($this->guard()->user()->company_profile == null) {
+            return redirect()->route('employee.register.add_company_profile')->with('error', 'Please add or update your company profile first.');
+        } else {
+            $employee_id = Auth::guard('employee')->id();
+            $posts = $this->post->where('employee_id', $employee_id)->with([
+                'industry', 'city', 'qualification', 'level', 'contract_type',
+                'functions', 'contact'
+            ])->paginate(10);
+            return view('employee.post.all', compact('posts', 'title'));
+        }
     }
 
     /**
@@ -75,23 +76,27 @@ class PostController extends Controller
     public function create()
     {
         $title = "Create new post";
-        $functions = Functions::where('status', 1)->orderBy('id', 'asc')->pluck('name', 'id');
-        $contract = ContractType::where('status', 1)->orderBy('id', 'asc')->pluck('name', 'id');
-        $cities = City::where('status', 1)->orderBy('id', 'asc')->pluck('name', 'id');
-        $levels = Level::where('status', 1)->orderBy('id', 'asc')->pluck('name', 'id');
-        $qualifications = Qualification::where('status', 1)->orderBy('id', 'asc')->pluck('name', 'id');
-        $langs = Language::where('status', 1)->orderBy('id', 'asc')->pluck('name', 'id');
-        $industries = Industry::where('status', 1)->orderBy('id', 'asc')->pluck('name', 'id');
-        $year_experience = \Helper::year_experience();
-        $marital_status = \Helper::marital_status();
-        $salary = \Helper::salary();
-        $gender = \Helper::gender();
-        $closing_date = Carbon::now()->addMonth(1);
-        $contact = Contact::where('status', 1)->where('parent_id', $this->emp_id())->pluck('first_name', 'id');
-        return view('employee.post.create', compact(
-            'title', 'functions', 'contract', 'cities', 'levels', 'qualifications', 'year_experience',
-            'langs', 'gender', 'marital_status', 'industries', 'salary', 'closing_date', 'contact'
-        ));
+        if ($this->guard()->user()->company_profile == null) {
+            return redirect()->route('employee.register.add_company_profile')->with('error', 'Please add or update your company profile first.');
+        } else {
+            $functions = Functions::where('status', 1)->orderBy('id', 'asc')->pluck('name', 'id');
+            $contract = ContractType::where('status', 1)->orderBy('id', 'asc')->pluck('name', 'id');
+            $cities = City::where('status', 1)->orderBy('id', 'asc')->pluck('name', 'id');
+            $levels = Level::where('status', 1)->orderBy('id', 'asc')->pluck('name', 'id');
+            $qualifications = Qualification::where('status', 1)->orderBy('id', 'asc')->pluck('name', 'id');
+            $langs = Language::where('status', 1)->orderBy('id', 'asc')->pluck('name', 'id');
+            $industries = Industry::where('status', 1)->orderBy('id', 'asc')->pluck('name', 'id');
+            $year_experience = \Helper::year_experience();
+            $marital_status = \Helper::marital_status();
+            $salary = \Helper::salary();
+            $gender = \Helper::gender();
+            $closing_date = Carbon::now()->addMonth(1);
+            $contact = Contact::where('status', 1)->where('parent_id', $this->emp_id())->pluck('first_name', 'id');
+            return view('employee.post.create', compact(
+                'title', 'functions', 'contract', 'cities', 'levels', 'qualifications', 'year_experience',
+                'langs', 'gender', 'marital_status', 'industries', 'salary', 'closing_date', 'contact'
+            ));
+        }
     }
 
     /**
@@ -102,47 +107,54 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-        dd($data);
-        $validator = Validator::make($data, Post::rules(), Post::messages());
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Some files has errors. Please correct it and then try it again.');
-        }
-        DB::beginTransaction();
-        //Generate job id
-        $records = Post::count();
-        $current_id = 1;
-        if (!$records == 0) {
-            $current_id = Post::orderBy('id', 'DESC')->first()->id + 1;
-        }
-        $data['employee_id'] = $this->emp_id();
-        $job_id = 'EMP_JOB' . str_pad($current_id, 6, '0', STR_PAD_LEFT);
-        $data['post_id'] = $job_id;
-        $data['closing_date'] = date('Y-m-d', strtotime($request->closing_date));
-        $data['contact_id'] = Auth::guard('employee')->user()->id;
-        switch ($request->submitbutton) {
-            case "save":
-                $data['status'] = 1;
-                break;
-            case "save-draft":
-                $data['status'] = 3;
-                break;
-            default:
-                $data['status'] = 0;
-                break;
-        }
-        $data['closing_date'] = Carbon::now()->addMonth(1);
-        $job = Post::create($data);
-        if ($job) {
-            $job->languages()->attach($request->language_id);
-        }
-        if (!$job) {
-            DB::rollbackTransaction();
-            return redirect()->back()->withInput()->with('message', 'Unable to process your requires');
-        }
+        if ($this->guard()->user()->company_profile == null) {
+            return redirect()->route('employee.register.add_company_profile')->with('error', 'Please add or update your company profile first.');
+        } else {
+            $data = $request->all();
+            $validator = Validator::make($data, Post::rules(), Post::messages());
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Some files has errors. Please correct it and then try it again.');
+            }
+            try {
+                DB::beginTransaction();
+                //Generate job id
+                $records = Post::count();
+                $current_id = 1;
+                if (!$records == 0) {
+                    $current_id = Post::orderBy('id', 'DESC')->first()->id + 1;
+                }
+                $data['employee_id'] = $this->emp_id();
+                $job_id = 'EMP_JOB' . str_pad($current_id, 6, '0', STR_PAD_LEFT);
+                $data['post_id'] = $job_id;
+                $data['closing_date'] = date('Y-m-d', strtotime($request->closing_date));
+                $data['contact_id'] = Auth::guard('employee')->user()->id;
+                switch ($request->submitbutton) {
+                    case "save":
+                        $data['status'] = 1;
+                        break;
+                    case "save-draft":
+                        $data['status'] = 3;
+                        break;
+                    default:
+                        $data['status'] = 0;
+                        break;
+                }
+                $data['closing_date'] = Carbon::now()->addMonth(1);
+                $job = Post::create($data);
+                if ($job) {
+                    $job->languages()->attach($request->language_id);
+                }
+                if (!$job) {
+                    DB::rollbackTransaction();
+                    return redirect()->back()->withInput()->with('message', 'Unable to process your requires');
+                }
 
-        DB::commit();
-        return redirect()->route('employee.posts.edit', [$job->hashid])->with('success', 'You\'r reviewing your recently published job.');
+                DB::commit();
+                return redirect()->route('employee.posts.edit', [$job->hashid])->with('success', 'You\'r reviewing your recently published job.');
+            } catch (ModelNotFoundException $exception) {
+                return back()->with('error', 'Error while push your data.');
+            }
+        }
     }
 
     /**

@@ -89,8 +89,14 @@
                                 @foreach($posts as $post)
                                     <div class="recent-job-list-home">
                                         <div class="job-list-logo col-md-1 ">
-                                            <img src="{!! asset('images/upload/company-2-post.png') !!}"
-                                                 class="img-responsive" alt="srjhfghdgh"/>
+                                            @if($post->employee->company_profile->logo_photo != null)
+                                                <img src="{!! asset( $post->employee->company_profile->photo_path.'787x787/'.$post->employee->company_profile->logo_photo ) !!}"
+                                                     class="img-responsive"
+                                                     alt="{!! $post->employee->company_profile->name !!}"/>
+                                            @else
+                                                <img src="{!! asset('uploads/employers/default.jpg') !!}"
+                                                     class="img-responsive" alt="Default alternative"/>
+                                            @endif
                                         </div>
                                         <div class="col-md-5 job-list-desc">
                                             <h6>{!! $post->name !!}</h6>
@@ -124,8 +130,14 @@
                                         @if($post->contract_type_id == $contract_term->id)
                                             <div class="recent-job-list-home">
                                                 <div class="job-list-logo col-md-1 ">
-                                                    <img src="{!! asset('images/upload/company-2-post.png') !!}"
-                                                         class="img-responsive" alt="srjhfghdgh"/>
+                                                    @if($post->employee->company_profile->logo_photo != null)
+                                                        <img src="{!! asset( $post->employee->company_profile->photo_path.'787x787/'.$post->employee->company_profile->logo_photo ) !!}"
+                                                             class="img-responsive"
+                                                             alt="{!! $post->employee->company_profile->name !!}"/>
+                                                    @else
+                                                        <img src="{!! asset('uploads/employers/default.jpg') !!}"
+                                                             class="img-responsive" alt="Default alternative"/>
+                                                    @endif
                                                 </div>
                                                 <div class="col-md-5 job-list-desc">
                                                     <h6>{!! $post->name !!}</h6>
@@ -484,51 +496,24 @@
             </p>
 
             <div id="company-post-list" class="owl-carousel company-post">
-                {{--@if(!empty($companies))--}}
-                {{--@foreach($companies as $com)--}}
+                @if(!empty($companies))
+                    @foreach($companies as $com)
+                        <div class="company">
+                            @if($com->company_profile->logo_photo != null)
+                                <img src="{!! asset( $com->company_profile->photo_path.'197x97/'.$com->company_profile->logo_photo ) !!}"
+                                     class="img-responsive"
+                                     alt="{!! Helper::relationship($com->company_profile) !!}"/>
+                            @else
+                                <img src="{!! asset('uploads/employers/company-1.png') !!}"
+                                     class="img-responsive" alt="Default alternative"/>
+                            @endif
+                        </div>
+                    @endforeach
+                @endif
+
                 {{--<div class="company">--}}
-                {{--@if($com->photo != 'default.jpg')--}}
-                {{--<img class="profile-user-img img-responsive"--}}
-                {{--src="{!! asset($com->path.'/'.$com->photo) !!}"--}}
-                {{--alt="{!! $com->contact_name !!}">--}}
-                {{--@else--}}
-                {{--<img src="{!! asset('uploads/employers/' .$com->photo) !!}"--}}
-                {{--class="profile-user-img img-responsive"--}}
-                {{--alt="{!! $com->contact_name !!}"/>--}}
-                {{--@endif--}}
+                    {{--<img src="{!! asset('images/upload/company-2.png') !!}" class="img-responsive" alt="company-post"/>--}}
                 {{--</div>--}}
-                {{--@endforeach--}}
-                {{--@endif--}}
-
-                <div class="company">
-                    <img src="{!! asset('images/upload/company-2.png') !!}" class="img-responsive" alt="company-post"/>
-                </div>
-                <div class="company">
-                    <img src="{!! asset('images/upload/company-3.png') !!}" class="img-responsive" alt="company-post"/>
-                </div>
-                <div class="company">
-                    <img src="{!! asset('images/upload/company-4.png') !!}" class="img-responsive" alt="company-post"/>
-                </div>
-                <div class="company">
-                    <img src="{!! asset('images/upload/company-5.png') !!}" class="img-responsive" alt="company-post"/>
-                </div>
-
-                <div class="company">
-                    <img src="{!! asset('images/upload/company-1.png') !!}" class="img-responsive" alt="company-post"/>
-                </div>
-                <div class="company">
-                    <img src="{!! asset('images/upload/company-2.png') !!}" class="img-responsive" alt="company-post"/>
-                </div>
-                <div class="company">
-                    <img src="{!! asset('images/upload/company-3.png') !!}" class="img-responsive" alt="company-post"/>
-                </div>
-                <div class="company">
-                    <img src="{!! asset('images/upload/company-4.png') !!}" class="img-responsive" alt="company-post"/>
-                </div>
-                <div class="company">
-                    <img src="{!! asset('images/upload/company-5.png') !!}" class="img-responsive" alt="company-post"/>
-                </div>
-
             </div>
         </div>
     </div>

@@ -218,10 +218,10 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle profile waves-effect" data-toggle="dropdown"
                                    aria-expanded="true">
-                                    @if(auth()->guard('employee')->user()->logo_photo != 'default.jpg')
-                                        <img src="{!! asset( auth()->guard('employee')->user()->company_profile->photo_path. 'avatar/' . auth()->guard('employee')->user()->id.'/' . auth()->guard('employee')->user()->company_profile->logo_photo) !!}"
+                                    @if(auth()->guard('employee')->user()->company_profile->logo_photo != null)
+                                        <img src="{!! asset( auth()->guard('employee')->user()->company_profile->photo_path .'787x787/'. auth()->guard('employee')->user()->company_profile->logo_photo) !!}"
                                              class="img-circle"
-                                             alt="{!! auth()->guard('employee')->user()->company_profile->name !!}"/>
+                                             alt="{!! Helper::relationship(auth()->guard('employee')->user()->company_profile) !!}"/>
                                     @else
                                         <img src="{!! asset('assets/images/users/avatar-1.jpg') !!}"
                                              alt="user-img" class="img-circle">

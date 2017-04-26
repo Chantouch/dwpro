@@ -1,5 +1,5 @@
 @extends('layouts.front.default')
-@section('title', 'Functions all')
+@section('title', $title)
 @section('page_specific_styles')
     <link href="{{ asset('plugins/animate/animate.css') }}" rel="stylesheet" type="text/css"/>
     <style>

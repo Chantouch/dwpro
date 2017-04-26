@@ -1,7 +1,7 @@
 <div class="job-finder">
     <div class="container">
         <h3>Find a Job</h3>
-        {!! Form::open(array('route' => 'home', 'role'=>'search', 'method' => 'GET')) !!}
+        {!! Form::open(array('route' => 'jobs.search', 'role'=>'search', 'method' => 'GET')) !!}
         <div class="col-md-7 form-group group-1">
             <label for="name" class="label">Job Title</label>
             {!! Form::text('name', null, ['class' => 'input-job', 'placeholder' => 'Keywords (IT Engineer, Shop Manager, Hr Manager...)', 'id' => 'name']) !!}

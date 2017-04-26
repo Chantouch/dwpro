@@ -29,7 +29,9 @@
                         <span><i class="fa fa-industry"></i></span>
                         <ul>
                             @foreach($feature_industries as $industry)
-                                <li><a href="#">{!! $industry->name !!} ( {!! count($industry->posts) !!} )</a></li>
+                                <li>
+                                    <a href="{!! route('jobs.view.by.industry',[$industry->slug]) !!}">{!! $industry->name !!}
+                                        ( {!! count($industry->posts) !!} )</a></li>
                             @endforeach
                         </ul>
                         <a href="{!! route('jobs.search.by.industry.all') !!}" class="btn btn-blue m-t-25">View All</a>
@@ -41,14 +43,13 @@
                         <ul>
                             @foreach($feature_companies as $company)
                                 <li>
-                                    <a href="#">
+                                    <a href="{!! route('jobs.view.by.company',[$company->company_profile->slug]) !!}">
                                         {!! Helper::relationship($company->company_profile) !!}
                                         ( {!! count($company->posts) !!} )
                                     </a>
                                 </li>
                             @endforeach
                         </ul>
-
                         <a href="{!! route('jobs.search.by.company.all') !!}" class="btn btn-blue m-t-25">View All</a>
                     </li>
                     <!--======= Search by City =========-->
@@ -57,10 +58,12 @@
                         <span><i class="fa fa-building-o"></i></span>
                         <ul>
                             @foreach($feature_cities as $city)
-                                <li><a href="#">{!! $city->name !!} ({!! count($city->posts) !!})</a></li>
+                                <li>
+                                    <a href="{!! route('jobs.view.by.city',[$city->slug]) !!}">{!! $city->name !!}
+                                        ({!! count($city->posts) !!})</a>
+                                </li>
                             @endforeach
                         </ul>
-
                         <a href="{!! route('jobs.search.by.city.all') !!}" class="btn btn-blue m-t-25">View All</a>
                     </li>
                 </ul>

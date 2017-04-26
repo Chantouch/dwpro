@@ -11,37 +11,37 @@
 {{--<div class="clearfix"></div>--}}
 {{--<br/>--}}
 {{--<div id="job-listing-carousel" class="owl-carousel"><!-- job opening carousel item -->--}}
-{{--@foreach($top_jobs as $job)--}}
+{{--@foreach($top_jobs as $post)--}}
 {{--<div class="item-listing">--}}
 {{--<div class="job-opening">--}}
-{{--<a href="{!! route('jobs.view.by.company', [$job->employer->slug]) !!}"--}}
-{{--title="{!! $job->employer->organization_name !!}" target="_blank">--}}
-{{--@if($job->employer->photo == 'default.jpg')--}}
-{{--<img src="{!!asset('uploads/employers/'.$job->employer->photo)!!}"--}}
+{{--<a href="{!! route('jobs.view.by.company', [$post->employer->slug]) !!}"--}}
+{{--title="{!! $post->employer->organization_name !!}" target="_blank">--}}
+{{--@if($post->employer->photo == 'default.jpg')--}}
+{{--<img src="{!!asset('uploads/employers/'.$post->employer->photo)!!}"--}}
 {{--class="img-responsive"--}}
-{{--alt="{!! $job->employer->organization_name !!}"/>--}}
+{{--alt="{!! $post->employer->organization_name !!}"/>--}}
 {{--@else--}}
-{{--<img src="{!!asset($job->employer->path.$job->employer->photo)!!}"--}}
+{{--<img src="{!!asset($post->employer->path.$post->employer->photo)!!}"--}}
 {{--class="img-responsive"--}}
-{{--alt="{!! $job->employer->organization_name !!}"/>--}}
+{{--alt="{!! $post->employer->organization_name !!}"/>--}}
 {{--@endif--}}
 {{--</a>--}}
 {{--<div class="job-opening-content">--}}
-{{--<a href="{!! route('jobs.view.name', [$job->employer->slug, $job->industry->slug , $job->id,$job->slug]) !!}"--}}
+{{--<a href="{!! route('jobs.view.name', [$post->employer->slug, $post->industry->slug , $post->id,$post->slug]) !!}"--}}
 {{--target="_blank"--}}
-{{--title="{!! $job->post_name!!} at {!! $job->employer->organization_name !!}">{!! $job->post_name!!}</a>--}}
+{{--title="{!! $post->post_name!!} at {!! $post->employer->organization_name !!}">{!! $post->post_name!!}</a>--}}
 {{--<p>--}}
-{{--{!! \Illuminate\Support\Str::limit($job->description, 100) !!}--}}
+{{--{!! \Illuminate\Support\Str::limit($post->description, 100) !!}--}}
 {{--</p>--}}
 {{--</div>--}}
 {{--<div class="job-opening-meta clearfix">--}}
 {{--<div class="meta-job-location meta-block">--}}
 {{--<i class="fa fa-map-marker"></i>--}}
-{{--<a href="{!! route('jobs.view.by.city', [$job->city->slug]) !!}"--}}
-{{--title="{!!$job->city->name !!}" target="_blank">{!!$job->city->name !!}</a>--}}
+{{--<a href="{!! route('jobs.view.by.city', [$post->city->slug]) !!}"--}}
+{{--title="{!!$post->city->name !!}" target="_blank">{!!$post->city->name !!}</a>--}}
 {{--</div>--}}
 {{--<div class="meta-job-type meta-block">--}}
-{{--<i class="fa fa-user"></i> {!!$job->job_type!!}--}}
+{{--<i class="fa fa-user"></i> {!!$post->job_type!!}--}}
 {{--</div>--}}
 {{--</div>--}}
 {{--</div>--}}
@@ -65,39 +65,39 @@
     <div class="clearfix"></div>
     <br/>
     <div id="job-opening-carousel" class="owl-carousel">
-        @foreach ($feature_posts as $job)
+        @foreach ($feature_posts as $post)
             <div class="item-home">
                 <div class="job-opening">
                     <a href="#" title="#" target="_blank">
-                        {{--@if($job->employer->photo == 'default.jpg')--}}
-                        <img src="{!!asset('images/upload/dummy-job-open-1.png')!!}"
-                             class="img-responsive" alt="Hi"/>
-                        {{--@else--}}
-                        {{--<img src="{!!asset($job->employer->path.$job->employer->photo)!!}"--}}
-                        {{--class="img-responsive"--}}
-                        {{--alt="{!! $job->employer->organization_name !!}"/>--}}
-                        {{--@endif--}}
+                        @if($post->employee->company_profile->logo_photo != null)
+                            <img src="{!! asset( $post->employee->company_profile->photo_path.'800x385/'.$post->employee->company_profile->logo_photo ) !!}"
+                                 class="img-responsive"
+                                 alt="{!! $post->employee->company_profile->name !!}"/>
+                        @else
+                            <img src="{!!asset('images/upload/dummy-job-open-1.png')!!}"
+                                 class="img-responsive" alt="Default alternative"/>
+                        @endif
                     </a>
                     <div class="job-opening-content">
-                        <a href="{!! route('home.view.job',[$job->hashid,$job->employee->company_profile->slug,$job->industry->slug,$job->slug]) !!}"
+                        <a href="{!! route('home.view.job',[$post->hashid,$post->employee->company_profile->slug,$post->industry->slug,$post->slug]) !!}"
                            target="_blank"
-                           title="{!! $job->name !!} at {!! Helper::relationship($job->employee->company_profile) !!}">
-                            {!! $job->name !!}
+                           title="{!! $post->name !!} at {!! Helper::relationship($post->employee->company_profile) !!}">
+                            {!! $post->name !!}
                         </a>
                         <p>
-                            {!! str_limit($job->job_description, 120) !!}
+                            {!! str_limit($post->job_description, 120) !!}
                         </p>
                     </div>
                     <div class="job-opening-meta clearfix">
                         <div class="meta-job-location meta-block">
                             <i class="fa fa-map-marker"></i>
-                            <a href="#" title="{!! Helper::relationship($job->city) !!}" target="_blank">
-                                {!! Helper::relationship($job->city) !!}
+                            <a href="{!! route('jobs.view.by.city',[$post->city->slug]) !!}" title="{!! Helper::relationship($post->city) !!}" target="_blank">
+                                {!! Helper::relationship($post->city) !!}
                             </a>
                         </div>
                         <div class="meta-job-type meta-block">
                             <i class="fa fa-user"></i>
-                            {!! Helper::relationship($job->contract_type) !!} </div>
+                            {!! Helper::relationship($post->contract_type) !!} </div>
                     </div>
                 </div>
             </div>

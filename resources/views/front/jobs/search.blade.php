@@ -1,22 +1,14 @@
-@extends('webfront.layouts.default')
+@extends('layouts.front.default')
 @section('title', 'Jobs Result of Searching')
 @section('page_specific_styles')
     <link href="{{ asset('plugins/animate/animate.css') }}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="{!! asset('plugins/ion-range-slider/css/ion.rangeSlider.css') !!}">
     <link rel="stylesheet" href="{!! asset('plugins/ion-range-slider/css/ion.rangeSlider.skinFlat.css') !!}">
-
-    <style>
-
-    </style>
 @stop
-
-
-@section('full_content')
-
+@section('contents')
     <!-- start job finder -->
     @include('components.search')
     <!-- end job finder -->
-
     <div class="recent-job"><!-- Start Job -->
         <div class="container">
             <h4>
@@ -38,20 +30,20 @@
                             @foreach($jobs as $job)
                                 <div class="recent-job-list"><!-- Tabs content -->
                                     <div class="col-md-1 job-list-logo">
-                                        @if($job->employer->photo == 'default.jpg')
-                                            <img src="{!!asset('uploads/employers/'.$job->employer->photo)!!}"
+                                        @if($job->employee->photo == 'default.jpg')
+                                            <img src="{!!asset('uploads/employers/'.$job->employee->photo)!!}"
                                                  class="img-responsive"
-                                                 alt="{!! $job->post_name !!}"/>
+                                                 alt="{!! $job->name !!}"/>
                                         @else
-                                            <img src="{!!asset($job->employer->path.$job->employer->photo)!!}"
+                                            <img src="{!!asset($job->employee->path.$job->employee->photo)!!}"
                                                  class="img-responsive"
-                                                 alt="{!! $job->post_name !!}"/>
+                                                 alt="{!! $job->name !!}"/>
                                         @endif
                                     </div>
 
                                     <div class="col-md-5 job-list-desc">
-                                        <h6>{!! \Illuminate\Support\Str::limit($job->post_name, 35) !!}</h6>
-                                        <p>{!! \Illuminate\Support\Str::limit($job->description, 50) !!}</p>
+                                        <h6>{!! str_limit($job->name, 35) !!}</h6>
+                                        <p>{!! str_limit($job->description, 50) !!}</p>
                                     </div>
                                     <div class="col-md-3 job-list-location">
                                         <h6><i class="fa fa-map-marker"></i>{!! $job->city->name !!}</h6>
@@ -63,7 +55,7 @@
                                             </div>
                                             <div class="col-md-5 job-list-button">
                                                 <h6 class="pull-right">
-                                                    <a href="{!! route('jobs.view.name', [$job->employer->slug, $job->industry->slug , $job->id,$job->slug]) !!}"
+                                                    <a href="{!! route('home.view.job',[$job->hashid,$job->employee->company_profile->slug,$job->industry->slug,$job->slug]) !!}"
                                                        class="btn-view-job">View</a>
                                                 </h6>
                                             </div>
@@ -108,11 +100,11 @@
     </div><!-- end Job -->
 
     <!-- Start page content -->
-    @include('webfront.jobs.page-content')
+    @include('front.jobs.page-content')
     <!--End page content -->
 
     <!-- Feature Search -->
-    @include('webfront.jobs.feature-search')
+    @include('front.jobs.feature-search')
     <!--End Feature search -->
 
 @stop
@@ -137,8 +129,8 @@
     }
     });
 
-    var path = "{!! route('job.search.name') !!}";
-    var city_path = "{!! route('job.search.city') !!}";
+    {{--var path = "{!! route('job.search.name') !!}";--}}
+    {{--var city_path = "{!! route('job.search.city') !!}";--}}
     $('#searchjob').typeahead({
     source: function (query, process) {
     return $.get(path, {query: query}, function (data) {

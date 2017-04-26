@@ -126,7 +126,8 @@
         <li class="sline">|</li>
         <li>
             <i class="fa fa-list"></i>
-            <a href="{!! route('jobs.view.by.company', [$post->employee->company_profile->slug]) !!}" title="View all job by {!! $post->employee->company_profile->name !!}">More Job</a></li>
+            <a href="{!! route('jobs.view.by.company', [$post->employee->company_profile->slug]) !!}"
+               title="View all job by {!! $post->employee->company_profile->name !!}">More Job</a></li>
         <li class="sline">|</li>
         <li>
             {{--<i class="fa fa-share-square-o"></i>--}}
@@ -255,8 +256,8 @@
                                             <a href="{!! route('jobs.view.by.company',[$related->employee->company_profile->slug]) !!}"
                                                title="{!! Helper::relationship($related->employee->company_profile) !!}"
                                                target="_blank">
-                                                @if($related->employee->photo == 'default.jpg')
-                                                    <img src="{!!asset('uploads/employees/'.$related->employee->photo)!!}"
+                                                @if($related->employee->company_profile->logo_photo != null)
+                                                    <img src="{!!asset($related->employee->company_profile->photo_path.'787x787/'.$related->employee->company_profile->logo_photo)!!}"
                                                          class="similar-job__company-img img-responsive"
                                                          alt="{!! $related->name !!}"/>
                                                 @else
