@@ -1511,7 +1511,7 @@ nav {
 
 .job-detail-button {
     min-height: 65px;
-    padding: 15px 0 0 0;
+    padding: 23px 0 0 0;
     font-family: 'Raleway', myriad pro, tahoma, sans-serif;
 }
 
@@ -1531,6 +1531,12 @@ nav {
 
 .job-detail-type h6 i {
     color: #ff9494;
+    margin: 0 10px 0 0;
+
+}
+
+.job-detail-name h6 i {
+    color: #bc0df8;
     margin: 0 10px 0 0;
 
 }
@@ -1708,7 +1714,7 @@ div.map-popup > h6 {
 .recent-job-list, .recent-job-list-home {
     width: 100%;
     border-bottom: 1px solid #e3e3e3;
-    padding: 10px 0;
+    padding: 5px 0;
 }
 
 .recent-job-list-det {

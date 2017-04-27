@@ -54,10 +54,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = $this->post->where('status', 1)->take(4)->get();
+        $posts = $this->post->where('status', 1)->take(20)->get();
         $companies = Employee::where('status', 1)->where('parent_id', 0)->get();
         $contract_terms = ContractType::where('status', 1)->get();
-        $feature_posts = $this->post->all();
+        $feature_posts = $this->post->where('status', 1)->get();
         $cities = City::where('status', 1)->orderBy('created_at', 'ASC')->pluck('name', 'id');
         $full_time_posts = Post::where('status', 1)->get();
         $filed_up_posts = Post::where('status', 2)->get();
@@ -156,7 +156,7 @@ class HomeController extends Controller
      */
     public function search_by_function($slug)
     {
-        $title = "Job in functions";
+        $title = "Job by functions";
         $cat = Functions::where('slug', $slug)->firstOrFail();
         $all_posts = $this->post->where('status', 1)->take(4)->get();
         $current_date = date('Y-m-d');
@@ -173,7 +173,7 @@ class HomeController extends Controller
      */
     public function search_by_industry($slug)
     {
-        $title = "Job in functions";
+        $title = "Job by industry";
         $cities = City::with('posts')->where('status', 1)->pluck('name', 'id');
         $industry = Industry::with('posts')->where('slug', $slug)->firstOrFail();
         $current_date = date('Y-m-d');
@@ -188,7 +188,7 @@ class HomeController extends Controller
      */
     public function search_by_company($slug)
     {
-        $title = "Job in functions";
+        $title = "Job by company";
         $cities = City::with('posts')->where('status', 1)->pluck('name', 'id');
         $company = CompanyProfile::with('employee.posts')->where('slug', $slug)->firstOrFail();
         $current_date = date('Y-m-d');
@@ -203,14 +203,29 @@ class HomeController extends Controller
      */
     public function search_by_city($slug)
     {
-        $title = "Job in functions";
+        $title = "Job in city";
         $all_posts = $this->post->where('status', 1)->take(4)->get();
         $city = City::with('posts')->where('slug', $slug)->firstOrFail();
         $cities = City::with('posts')->where('status', 1)->pluck('name', 'id');
         $current_date = date('Y-m-d');
+        $top_opening_jobs = Post::with('employee')->where('status', 1)->take(6)->get();
         $contract_terms = ContractType::where('status', 1)->get();
         $posts = Post::with('industry', 'employee')->where('city_id', '=', $city->id)->where('status', 1)->orderBy('created_at', 'DESC')->paginate(20);
-        return view('front.jobs.searchby', compact('posts', 'contract_terms', 'all_posts', 'title', 'cities'));
+        return view('front.jobs.searchby',
+            compact('posts', 'contract_terms', 'all_posts', 'title', 'cities', 'top_opening_jobs')
+        );
+    }
+
+
+    public function search_by_contract_term($slug)
+    {
+        $title = "Job by contract term";
+        $term = ContractType::with('posts')->where('slug', $slug)->firstOrFail();
+        $cities = City::with('posts')->where('status', 1)->pluck('name', 'id');
+        $current_date = date('Y-m-d');
+        $contract_terms = ContractType::where('status', 1)->get();
+        $posts = Post::with('industry', 'employee')->where('contract_type_id', $term->id)->where('status', 1)->orderBy('created_at', 'DESC')->paginate(20);
+        return view('front.jobs.searchby', compact('posts', 'contract_terms', 'title', 'cities'));
     }
 
     /**
@@ -228,7 +243,7 @@ class HomeController extends Controller
      */
     public function all_industries()
     {
-        $title = "Job in functions";
+        $title = "Job in industries";
         $industries = Industry::all();
         return view('front.search.all', compact('industries', 'title'));
     }
@@ -238,7 +253,7 @@ class HomeController extends Controller
      */
     public function all_companies()
     {
-        $title = "Job in functions";
+        $title = "Job in companies";
         $companies = CompanyProfile::all();
         return view('front.search.all', compact('companies', 'title'));
     }
@@ -248,7 +263,7 @@ class HomeController extends Controller
      */
     public function all_cities()
     {
-        $title = "Job in functions";
+        $title = "Job in cities";
         $cities = City::all();
         return view('front.search.all', compact('cities', 'title'));
     }

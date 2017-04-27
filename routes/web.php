@@ -27,6 +27,7 @@ Route::middleware('guest')->group(function () {
             Route::get('industry/{slug}', ['as' => 'industry', 'uses' => 'HomeController@search_by_industry']);
             Route::get('company/{slug}', ['as' => 'company', 'uses' => 'HomeController@search_by_company']);
             Route::get('city/{slug}', ['as' => 'city', 'uses' => 'HomeController@search_by_city']);
+            Route::get('term/{slug}', 'HomeController@search_by_contract_term')->name('contract_term');
         });
         //For jobs all by specific
         Route::name('jobs.search.by.')->group(function () {
@@ -41,11 +42,11 @@ Route::middleware('guest')->group(function () {
 
 //Admin Route
 Route::group(['prefix' => 'admin'], function () {
-	
-	Route::get('cache-config', ['as' => 'admin.system.cache.config', 'uses' => 'Admin\ConfigController@cache_config']);
-	Route::get('clear-cache', ['as' => 'admin.system.cache.clear', 'uses' => 'Admin\ConfigController@cache_clear']);
-	Route::get('view-cache', ['as' => 'admin.system.view.clear', 'uses' => 'Admin\ConfigController@clear_view']);
-	
+
+    Route::get('cache-config', ['as' => 'admin.system.cache.config', 'uses' => 'Admin\ConfigController@cache_config']);
+    Route::get('clear-cache', ['as' => 'admin.system.cache.clear', 'uses' => 'Admin\ConfigController@cache_clear']);
+    Route::get('view-cache', ['as' => 'admin.system.view.clear', 'uses' => 'Admin\ConfigController@clear_view']);
+
     Route::get('login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('login', 'Auth\AdminLoginController@login')->name('admin.login.post');
     Route::post('logout', 'Auth\AdminLoginController@logout')->name('admin.logout');

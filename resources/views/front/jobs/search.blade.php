@@ -9,93 +9,104 @@
     <!-- start job finder -->
     @include('components.search')
     <!-- end job finder -->
-    <div class="recent-job"><!-- Start Job -->
+    <div class="recent-job">
         <div class="container">
-            <h4>
-                <i class="glyphicon glyphicon-briefcase"></i>
-                We found {!! count($jobs) !!} Job(s)
-            </h4>
-
-            <div id="tab-container" class='tab-container'><!-- Start Tabs -->
-                <ul class='etabs clearfix'>
-                    <li class='tab'><a href="#all">All Jobs Matches</a></li>
-                    {{--<li class='tab'><a href="#full">Full Time</a></li>--}}
-                    {{--<li class='tab'><a href="#part_time">Part Time</a></li>--}}
-                    {{--<li class='tab'><a href="#contract">Contract</a></li>--}}
-                    {{--<li class='tab'><a href="#internship">Internship</a></li>--}}
-                </ul>
-                <div class='panel-container'>
-                    <div id="all"><!-- Tabs section 1 -->
-                        @if (count($jobs) >= 1)
-                            @foreach($jobs as $job)
-                                <div class="recent-job-list"><!-- Tabs content -->
-                                    <div class="col-md-1 job-list-logo">
-                                        @if($job->employee->photo == 'default.jpg')
-                                            <img src="{!!asset('uploads/employers/'.$job->employee->photo)!!}"
-                                                 class="img-responsive"
-                                                 alt="{!! $job->name !!}"/>
-                                        @else
-                                            <img src="{!!asset($job->employee->path.$job->employee->photo)!!}"
-                                                 class="img-responsive"
-                                                 alt="{!! $job->name !!}"/>
-                                        @endif
-                                    </div>
-
-                                    <div class="col-md-5 job-list-desc">
-                                        <h6>{!! str_limit($job->name, 35) !!}</h6>
-                                        <p>{!! str_limit($job->description, 50) !!}</p>
-                                    </div>
-                                    <div class="col-md-3 job-list-location">
-                                        <h6><i class="fa fa-map-marker"></i>{!! $job->city->name !!}</h6>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="row">
-                                            <div class="col-md-7 job-list-type">
-                                                <h6><i class="fa fa-user"></i>{!! $job->job_type !!}</h6>
+            <div class="row">
+                <div class="col-md-8">
+                    <h4>
+                        <i class="glyphicon glyphicon-briefcase"></i>
+                        We found {!! count($jobs) !!} Job(s)
+                    </h4>
+                    <div id="tab-container" class='tab-container'><!-- Start Tabs -->
+                        <ul class='etabs clearfix'>
+                            <li class='tab'><a href="#all">All Jobs Matches</a></li>
+                            {{--<li class='tab'><a href="#full">Full Time</a></li>--}}
+                            {{--<li class='tab'><a href="#part_time">Part Time</a></li>--}}
+                            {{--<li class='tab'><a href="#contract">Contract</a></li>--}}
+                            {{--<li class='tab'><a href="#internship">Internship</a></li>--}}
+                        </ul>
+                        <div class='panel-container'>
+                            <div id="all"><!-- Tabs section 1 -->
+                                @if(count($jobs) >= 1)
+                                    @foreach($jobs as $post)
+                                        <div class="recent-job-list-home">
+                                            <div class="job-list-logo col-md-1 ">
+                                                @if($post->employee->company_profile->logo_photo != null)
+                                                    <img src="{!! asset( $post->employee->company_profile->photo_path.'787x787/'.$post->employee->company_profile->logo_photo ) !!}"
+                                                         class="img-responsive"
+                                                         alt="{!! $post->employee->company_profile->name !!}"/>
+                                                @else
+                                                    <img src="{!! asset('uploads/employers/default.jpg') !!}"
+                                                         class="img-responsive" alt="Default alternative"/>
+                                                @endif
                                             </div>
-                                            <div class="col-md-5 job-list-button">
-                                                <h6 class="pull-right">
-                                                    <a href="{!! route('home.view.job',[$job->hashid,$job->employee->company_profile->slug,$job->industry->slug,$job->slug]) !!}"
-                                                       class="btn-view-job">View</a>
-                                                </h6>
+                                            <div class="col-md-5 job-list-desc">
+                                                <h6>{!! $post->name !!}</h6>
+                                                <p>{!! str_limit($post->job_description, 40) !!}</p>
                                             </div>
+                                            <div class="col-md-6 full">
+                                                <div class="job-list-location col-md-5">
+                                                    <h6>
+                                                        <i class="fa fa-map-marker"></i>{!! str_limit(Helper::relationship($post->city), 15) !!}
+                                                    </h6>
+                                                </div>
+                                                <div class="job-list-type col-md-4 ">
+                                                    <h6>
+                                                        <i class="fa fa-user"></i>{!! Helper::relationship($post->contract_type) !!}
+                                                    </h6>
+                                                </div>
+                                                <div class="col-md-3 job-list-button">
+                                                    <h6 class="pull-right">
+                                                        <a href="{!! route('home.view.job',[$post->hashid,$post->employee->company_profile->slug,$post->industry->slug,$post->slug]) !!}"
+                                                           class="btn-view-job">View</a>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
                                         </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div><!-- Tabs content -->
-                            @endforeach
-                        @else
-                            <span>There is no job match</span>
-                        @endif
+                                    @endforeach
+                                @else
+                                    <span>There is no job match</span>
+                                @endif
 
-                        {!! $jobs->render() !!}
+                                {!! $jobs->render() !!}
 
-                    </div><!-- Tabs section 1 -->
+                            </div><!-- Tabs section 1 -->
 
-                    {{--<div id="contract"><!-- Tabs section 2 -->--}}
-                    {{----}}
-                    {{--</div><!-- Tabs section 2 -->--}}
+                            {{--<div id="contract"><!-- Tabs section 2 -->--}}
+                            {{----}}
+                            {{--</div><!-- Tabs section 2 -->--}}
 
-                    {{--<div id="full"><!-- Tabs section 3 -->--}}
-                    {{----}}
-                    {{--</div><!-- Tabs section 3 -->--}}
+                            {{--<div id="full"><!-- Tabs section 3 -->--}}
+                            {{----}}
+                            {{--</div><!-- Tabs section 3 -->--}}
 
-                    {{--<div id="part_time"><!-- Tabs section 4 -->--}}
-                    {{----}}
-                    {{--</div><!-- Tabs section 4 -->--}}
+                            {{--<div id="part_time"><!-- Tabs section 4 -->--}}
+                            {{----}}
+                            {{--</div><!-- Tabs section 4 -->--}}
 
-                    {{--<div id="internship">
-                    <!-- Tabs section 5 -->--}}
-                    {{----}}
-                    {{--</div><!-- Tabs section 5 -->--}}
+                            {{--<div id="internship">
+                            <!-- Tabs section 5 -->--}}
+                            {{----}}
+                            {{--</div><!-- Tabs section 5 -->--}}
 
+                        </div>
+                    </div><!-- end Tabs -->
+                    <div class="spacer-2"></div>
                 </div>
-            </div><!-- end Tabs -->
-
-            {{--Top job opening--}}
-            @include('components.opening_jobs')
-            {{--Top job opening--}}
-
+                {{--Top job opening--}}
+                <div class="col-md-4">
+                    @include('components.opening_jobs')
+                    <div class="post-resume-title">Post Your Resume</div>
+                    <div class="post-resume-container">
+                        {{--<button type="button" class="post-resume-button">Upload Your Resume--}}
+                        {{--<i class="icon-upload grey"></i></button>--}}
+                        <a href="#" class="post-resume-button text-center">Upload Your Resume
+                            <i class="icon-upload grey"></i></a>
+                    </div>
+                </div>
+                {{--Top job opening--}}
+            </div>
         </div>
     </div><!-- end Job -->
 

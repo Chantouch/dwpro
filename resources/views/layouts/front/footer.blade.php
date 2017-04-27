@@ -14,18 +14,16 @@
                      data-theme="dark" data-count="hidden" data-onytevent="onYtEvent"></div>
             </div>
         </div><!-- Text Widget -->
-
         <div class="col-md-2 footer-widget"><!-- Footer Menu Widget -->
             <h6 class="widget-title">Useful Links</h6>
             <div class="footer-widget-nav">
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Post A Job</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="{!! route('employee.posts.create') !!}">Post A Job</a></li>
                     <li><a href="#">Post A Resume</a></li>
                 </ul>
             </div>
         </div><!-- Footer Menu Widget -->
-
         <div class="col-md-4 footer-widget"><!-- Recent Tweet Widget -->
             <h6 class="widget-title">Recent Tweets</h6>
             <div class="recent-twitt">
@@ -41,7 +39,6 @@
                 <div class="hastag">#Themeforest #WordPress 04:29 AM Oct 31</div>
             </div>
         </div><!-- Recent Tweet Widget -->
-
         <div class="col-md-3 footer-widget"><!-- News Leter Widget -->
             <h6 class="widget-title">Singn For news Letter</h6>
             <div class="textwidget">
@@ -49,7 +46,6 @@
                     There is no job more important than parenting. This I believe.
                 </p>
             </div>
-
             <form role="form">
                 <div class="form-group">
                     <label>
@@ -67,9 +63,7 @@
         </div><!-- News Leter Widget -->
         <div class="clearfix"></div>
     </div>
-
     <div class="footer-credits"><!-- Footer credits -->
         2015 &copy; Technologies All Rights Reserved.
     </div><!-- Footer credits -->
-
 </div><!-- Container -->

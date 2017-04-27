@@ -20,7 +20,7 @@
                     hungry and out of a job are the stuff of which dictatorships are made.
                 </p>
                 <p>
-                    <a href="#" class="btn btn-default btn-green">POST A JOB
+                    <a href="{!! route('employee.posts.create') !!}" class="btn btn-default btn-green">POST A JOB
                         NOW</a>
                 </p>
             </div>

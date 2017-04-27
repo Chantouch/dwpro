@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="{!! asset('assets/plugins/select2/select2.css') !!}">
     <link rel="stylesheet" href="{!! asset('assets/plugins/ion-range-slider/css/ion.rangeSlider.css') !!}">
     <link rel="stylesheet" href="{!! asset('assets/plugins/ion-range-slider/css/ion.rangeSlider.skinFlat.css') !!}">
+    <style>
+        .main-page-title {
+            min-height: 0;
+            border: none;
+        }
+    </style>
 @stop
 
 @section('contents')
@@ -53,7 +59,7 @@
                     The price of success is hard work, dedication to the job at hand, and the determination that whether
                     we win or lose, we have applied the best of ourselves to the task at hand.
                 </p>
-                <p><a href="#" class="btn btn-default btn-yellow">Find a Job</a></p>
+                <p><a href="{!! route('jobs.search') !!}" class="btn btn-default btn-yellow">Find a Job</a></p>
             </div>
             <div class="col-md-6 align-left">
                 <h4>Hire Skilled People, best of them</h4>
@@ -61,7 +67,7 @@
                     Understand, our police officers put their lives on the line for us every single day. They've got a
                     tough job to do to maintain public safety and hold accountable those who break the law.
                 </p>
-                <p><a href="#" class="btn btn-default btn-light">Post a Job</a>
+                <p><a href="{!! route('employee.posts.create') !!}" class="btn btn-default btn-light">Post a Job</a>
                 </p>
             </div>
             <div class="clearfix"></div>
@@ -78,95 +84,37 @@
                     <div id="tab-container" class='tab-container'>
                         <ul class='etabs clearfix'>
                             <li class='tab'><a href="#all">All</a></li>
-                            @foreach($contract_terms as $contract_term)
-                                <li class='tab'>
-                                    <a href="#{!! $contract_term->slug !!}">{!! $contract_term->name !!}</a>
-                                </li>
-                            @endforeach
+                            @if(isset($contract_terms))
+                                @foreach($contract_terms as $contract_term)
+                                    <li class='tab'>
+                                        <a href="#{!! $contract_term->slug !!}">{!! $contract_term->name !!}</a>
+                                    </li>
+                                @endforeach
+                            @endif
                         </ul>
                         <div class='panel-container'>
                             <div id="all">
-                                @foreach($posts as $post)
+                                @if(count($posts))
+                                    @foreach($posts as $post)
+                                        @include('front.jobs.recent-tab')
+                                    @endforeach
+                                @else
                                     <div class="recent-job-list-home">
-                                        <div class="job-list-logo col-md-1 ">
-                                            @if($post->employee->company_profile->logo_photo != null)
-                                                <img src="{!! asset( $post->employee->company_profile->photo_path.'787x787/'.$post->employee->company_profile->logo_photo ) !!}"
-                                                     class="img-responsive"
-                                                     alt="{!! $post->employee->company_profile->name !!}"/>
-                                            @else
-                                                <img src="{!! asset('uploads/employers/default.jpg') !!}"
-                                                     class="img-responsive" alt="Default alternative"/>
+                                        <p>There is no jobs.</p>
+                                    </div>
+                                @endif
+                            </div>
+                            @if(isset($contract_terms))
+                                @foreach($contract_terms as $contract_term)
+                                    <div id="{!! $contract_term->slug !!}">
+                                        @foreach($full_time_posts as $post)
+                                            @if($post->contract_type_id == $contract_term->id)
+                                                @include('front.jobs.recent-tab')
                                             @endif
-                                        </div>
-                                        <div class="col-md-5 job-list-desc">
-                                            <h6>{!! $post->name !!}</h6>
-                                            <p>{!! str_limit($post->job_description, 40) !!}</p>
-                                        </div>
-                                        <div class="col-md-6 full">
-                                            <div class="job-list-location col-md-5">
-                                                <h6>
-                                                    <i class="fa fa-map-marker"></i>{!! str_limit(Helper::relationship($post->city), 15) !!}
-                                                </h6>
-                                            </div>
-                                            <div class="job-list-type col-md-4 ">
-                                                <h6>
-                                                    <i class="fa fa-user"></i>{!! Helper::relationship($post->contract_type) !!}
-                                                </h6>
-                                            </div>
-                                            <div class="col-md-3 job-list-button">
-                                                <h6 class="pull-right">
-                                                    <a href="{!! route('home.view.job',[$post->hashid,$post->employee->company_profile->slug,$post->industry->slug,$post->slug]) !!}"
-                                                       class="btn-view-job">View</a>
-                                                </h6>
-                                            </div>
-                                        </div>
-                                        <div class="clearfix"></div>
+                                        @endforeach
                                     </div>
                                 @endforeach
-                            </div>
-                            @foreach($contract_terms as $contract_term)
-                                <div id="{!! $contract_term->slug !!}">
-                                    @foreach($full_time_posts as $post)
-                                        @if($post->contract_type_id == $contract_term->id)
-                                            <div class="recent-job-list-home">
-                                                <div class="job-list-logo col-md-1 ">
-                                                    @if($post->employee->company_profile->logo_photo != null)
-                                                        <img src="{!! asset( $post->employee->company_profile->photo_path.'787x787/'.$post->employee->company_profile->logo_photo ) !!}"
-                                                             class="img-responsive"
-                                                             alt="{!! $post->employee->company_profile->name !!}"/>
-                                                    @else
-                                                        <img src="{!! asset('uploads/employers/default.jpg') !!}"
-                                                             class="img-responsive" alt="Default alternative"/>
-                                                    @endif
-                                                </div>
-                                                <div class="col-md-5 job-list-desc">
-                                                    <h6>{!! $post->name !!}</h6>
-                                                    <p>{!! str_limit($post->job_description,40) !!}</p>
-                                                </div>
-                                                <div class="col-md-6 full">
-                                                    <div class="job-list-location col-md-5">
-                                                        <h6>
-                                                            <i class="fa fa-map-marker"></i>{!! str_limit(Helper::relationship($post->city),15) !!}
-                                                        </h6>
-                                                    </div>
-                                                    <div class="job-list-type col-md-4 ">
-                                                        <h6>
-                                                            <i class="fa fa-user"></i>{!! Helper::relationship($post->contract_type) !!}
-                                                        </h6>
-                                                    </div>
-                                                    <div class="col-md-3 job-list-button">
-                                                        <h6 class="pull-right">
-                                                            <a href="{!! route('home.view.job',[$post->hashid,$post->employee->company_profile->slug,$post->industry->slug,$post->slug]) !!}"
-                                                               class="btn-view-job">View</a>
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            @endforeach
+                            @endif
                         </div>
                     </div>
                     <div class="spacer-2"></div>
@@ -175,7 +123,6 @@
                     {{--Opening jobs--}}
                     @include('components.opening_jobs')
                     {{--Opening jobs--}}
-
                     <div class="post-resume-title">Post Your Resume</div>
                     <div class="post-resume-container">
                         {{--<button type="button" class="post-resume-button">Upload Your Resume--}}
@@ -195,27 +142,22 @@
                 A leader's job is not to do the work for others, it's to help others figure out how to do it themselves,
                 to get things done, and to succeed beyond what they thought possible.
             </p>
-
             <div class="counter clearfix">
                 <div class="counter-container col-md-3 col-xs-6">
                     <div class="counter-value">{!! count($full_time_posts) !!}</div>
                     <div class="line"></div>
                     <p>Job Posted</p>
                 </div>
-
-
                 <div class="counter-container col-md-3 col-xs-6">
                     <div class="counter-value">{!! count($filed_up_posts) !!}</div>
                     <div class="line"></div>
                     <p>Position Filled</p>
                 </div>
-
                 <div class="counter-container col-md-3 col-xs-6">
                     <div class="counter-value">{!! count($companies) !!}</div>
                     <div class="line"></div>
                     <p>Companies</p>
                 </div>
-
                 <div class="counter-container col-md-3 col-xs-6">
                     <div class="counter-value">{!! count($applications) !!}</div>
                     <div class="line"></div>
@@ -512,13 +454,17 @@
                 @endif
 
                 {{--<div class="company">--}}
-                    {{--<img src="{!! asset('images/upload/company-2.png') !!}" class="img-responsive" alt="company-post"/>--}}
+                {{--<img src="{!! asset('images/upload/company-2.png') !!}" class="img-responsive" alt="company-post"/>--}}
                 {{--</div>--}}
             </div>
         </div>
     </div>
     @include('front.jobs.feature-search')
 @stop
+@section('main_page_container')
+
+@stop
+
 @section('page_specific_js')
     <script src="{{ asset('assets/plugins/typeahead/bootstrap3-typeahead.min.js')}}" type="text/javascript"></script>
     <!-- Select2 -->

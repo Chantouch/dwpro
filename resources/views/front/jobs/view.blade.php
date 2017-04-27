@@ -85,6 +85,10 @@
             text-decoration: none;
         }
 
+        .recent-job-list-home .job-list-logo, .recent-job-list .job-list-logo {
+            padding: 0 20px;
+        }
+
     </style>
 @stop
 
@@ -94,17 +98,19 @@
         <h1>{!! $post->name !!}</h1>
         <div class="spacer-1">&nbsp;</div>
     </div>
-    <img src="{!! asset('images/upload/company-3-post.png') !!}" class="img-responsive job-detail-logo"
-         alt="Posting new">
-    {{--@if($post->employee->photo == 'default.jpg')--}}
-    {{--<img src="{!!asset('uploads/employees/'.$post->employee->photo)!!}"--}}
-    {{--class="img-responsive job-detail-logo"--}}
-    {{--alt="{!! $related->name !!}"/>--}}
-    {{--@else--}}
-    {{--<img src="{!!asset('uploads/employees/small/'.$post->employee->id.'/'.$post->employee->photo)!!}"--}}
-    {{--class="img-responsive job-detail-logo"--}}
-    {{--alt="{!! $post->name !!}"/>--}}
-    {{--@endif--}}
+    <a href="{!! route('jobs.view.by.company',[$post->employee->company_profile->slug]) !!}"
+       title="{!! Helper::relationship($post->employee->company_profile) !!}"
+       target="_blank">
+        @if($post->employee->company_profile->logo_photo != null)
+            <img src="{!!asset($post->employee->company_profile->photo_path.'200x40/'.$post->employee->company_profile->logo_photo)!!}"
+                 class="img-responsive job-detail-logo"
+                 alt="{!! $post->name !!}"/>
+        @else
+            <img src="{!! asset('images/upload/company-3-post.png') !!}"
+                 class="img-responsive job-detail-logo" alt="{!! $post->name !!}"/>
+        @endif
+    </a>
+
     <ul class="meta-job-detail">
         <li>
             <i class="fa fa-link"></i>
@@ -112,16 +118,16 @@
                title="{!!  Helper::relationship($post->employee->company_profile) !!}">Website</a></li>
         <li>
             <i class="fa fa-twitter"></i>
-            <a href="{!! $post->employee->twitter_url !!}" target="_blank"
+            <a href="{!! $post->employee->company_profile->twitter !!}" target="_blank"
                title="{!!  Helper::relationship($post->employee->company_profile) !!}">Twitter</a></li>
         <li>
             <i class="fa fa-facebook"></i>
-            <a href="{!! $post->employee->fb_url !!}" target="_blank"
+            <a href="{!! $post->employee->company_profile->facebook !!}" target="_blank"
                title="{!!  Helper::relationship($post->employee->company_profile) !!}">Facebook</a>
         </li>
         <li>
             <i class="fa fa-google-plus"></i>
-            <a href="{!! $post->employee->g_plus_url !!}" target="_blank"
+            <a href="{!! $post->employee->company_profile->google_plus !!}" target="_blank"
                title="{!! Helper::relationship($post->employee->company_profile) !!}">Google+</a></li>
         <li class="sline">|</li>
         <li>
@@ -142,15 +148,28 @@
             <p>{!! str_limit($post->job_description, 60) !!}</p>
         </div>
         <div class="col-md-2 job-detail-name">
-            <h6>{!! str_limit(Helper::relationship($post->employee->company_profile),15) !!}</h6>
+            <h6><i class="fa fa-home"></i>{!! str_limit(Helper::relationship($post->employee->company_profile),15) !!}
+            </h6>
         </div>
         <div class="col-md-2 job-detail-location">
-            <h6><i class="fa fa-map-marker"></i>{!! str_limit(Helper::relationship($post->city),15) !!}</h6>
+            <h6>
+                <i class="fa fa-map-marker"></i>
+                <a href="{!! route('jobs.view.by.city',[$post->city->slug]) !!}"
+                   title="{!! Helper::relationship($post->city) !!}" target="_blank">
+                    {!! str_limit(Helper::relationship($post->city),15) !!}
+                </a>
+            </h6>
         </div>
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-7 job-detail-type">
-                    <h6><i class="fa fa-user"></i>{!! Helper::relationship($post->contract_type) !!}</h6>
+                    <h6>
+                        <i class="fa fa-user"></i>
+                        <a href="{!! route('jobs.view.by.contract_term',[$post->contract_type->slug]) !!}"
+                           title="{!! Helper::relationship($post->contract_type) !!}" target="_blank">
+                            {!! str_limit(Helper::relationship($post->contract_type),10) !!}
+                        </a>
+                    </h6>
                 </div>
                 <div class="col-md-5 job-detail-button">
                     <a href="#apply-job" class="btn-apply-job">APPLY</a>

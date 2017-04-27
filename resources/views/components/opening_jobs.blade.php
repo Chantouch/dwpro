@@ -97,7 +97,10 @@
                         </div>
                         <div class="meta-job-type meta-block">
                             <i class="fa fa-user"></i>
-                            {!! Helper::relationship($post->contract_type) !!} </div>
+                            <a href="{!! route('jobs.view.by.contract_term',[$post->contract_type->slug]) !!}" title="{!! Helper::relationship($post->contract_type) !!}" target="_blank">
+                                {!! Helper::relationship($post->contract_type) !!}
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

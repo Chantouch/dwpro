@@ -70,7 +70,7 @@
             </div>
             <div class="text-center wow zoomInUp" data-wow-delay="1.3s">
                 <div class="spacer-1"></div>
-                <a href="#" class="btn btn-default btn-green btn-lg">View All</a>
+                <a href="{!! route('jobs.search') !!}" class="btn btn-default btn-green btn-lg">View All</a>
             </div>
             <!-- container -->
         </div>

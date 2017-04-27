@@ -112,90 +112,19 @@
                 </div><!-- job opening carousel nav -->
                 <div class="clearfix"></div>
                 <br/>
-                <div id="job-listing-carousel" class="owl-carousel"><!-- job opening carousel item -->
-                    <div class="item-listing">
-                        <div class="job-opening">
-                            <img src="{!! asset('images/upload/dummy-job-open-2.png') !!}" class="img-responsive"
-                                 alt="job-opening"/>
-                            <div class="job-opening-content">
-                                HR Manager
-                                <p>
-                                    Place for worlds best shipping company and work with great level efficiency to break
-                                    trough in new career.
-                                </p>
-                            </div>
-                            <div class="job-opening-meta clearfix">
-                                <div class="meta-job-location meta-block"><i class="fa fa-map-marker"></i>San Fransisco
-                                </div>
-                                <div class="meta-job-type meta-block"><i class="fa fa-user"></i>Full Time</div>
-                            </div>
-                        </div>
+                @if(isset($top_opening_jobs))
+                    <div id="job-listing-carousel" class="owl-carousel"><!-- job opening carousel item -->
+                        @foreach($top_opening_jobs as $post)
+                            @include('front.jobs.top-opening-job')
+                        @endforeach
                     </div>
-
-                    <div class="item-listing">
-                        <div class="job-opening">
-                            <img src="{!! asset('images/upload/dummy-job-open-1.png') !!}" class="img-responsive"
-                                 alt="job-opening"/>
-                            <div class="job-opening-content">
-                                HR Manager
-                                <p>
-                                    Place for worlds best shipping company and work with great level efficiency to break
-                                    trough in new career.
-                                </p>
-                            </div>
-                            <div class="job-opening-meta clearfix">
-                                <div class="meta-job-location meta-block"><i class="fa fa-map-marker"></i>San Fransisco
-                                </div>
-                                <div class="meta-job-type meta-block"><i class="fa fa-user"></i>Full Time</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="item-listing">
-                        <div class="job-opening">
-                            <img src="{!! asset('images/upload/dummy-job-open-2.png') !!}" class="img-responsive"
-                                 alt="job-opening"/>
-                            <div class="job-opening-content">
-                                HR Manager
-                                <p>
-                                    Place for worlds best shipping company and work with great level efficiency to break
-                                    trough in new career.
-                                </p>
-                            </div>
-                            <div class="job-opening-meta clearfix">
-                                <div class="meta-job-location meta-block"><i class="fa fa-map-marker"></i>San Fransisco
-                                </div>
-                                <div class="meta-job-type meta-block"><i class="fa fa-user"></i>Full Time</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="item-listing">
-                        <div class="job-opening">
-                            <img src="{!! asset('images/upload/dummy-job-open-1.png') !!}" class="img-responsive"
-                                 alt="job-opening"/>
-                            <div class="job-opening-content">
-                                HR Manager
-                                <p>
-                                    Place for worlds best shipping company and work with great level efficiency to break
-                                    trough in new career.
-                                </p>
-                            </div>
-                            <div class="job-opening-meta clearfix">
-                                <div class="meta-job-location meta-block"><i class="fa fa-map-marker"></i>San Fransisco
-                                </div>
-                                <div class="meta-job-type meta-block"><i class="fa fa-user"></i>Full Time</div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- job opening carousel item -->
+                @endif
             </div>
-        </div>
-    </div><!-- end Job -->
-
-    <!-- Start page content -->
+        </div><!-- end Job -->
+        <!-- Start page content -->
     @include('front.jobs.page-content')
     <!-- End page content -->
+    </div>
 @stop
 @section('main_page_container')
 
