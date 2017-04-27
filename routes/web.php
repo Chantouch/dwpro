@@ -41,6 +41,11 @@ Route::middleware('guest')->group(function () {
 
 //Admin Route
 Route::group(['prefix' => 'admin'], function () {
+	
+	Route::get('cache-config', ['as' => 'admin.system.cache.config', 'uses' => 'Admin\ConfigController@cache_config']);
+	Route::get('clear-cache', ['as' => 'admin.system.cache.clear', 'uses' => 'Admin\ConfigController@cache_clear']);
+	Route::get('view-cache', ['as' => 'admin.system.view.clear', 'uses' => 'Admin\ConfigController@clear_view']);
+	
     Route::get('login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('login', 'Auth\AdminLoginController@login')->name('admin.login.post');
     Route::post('logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
