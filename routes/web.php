@@ -11,8 +11,6 @@
 |
 */
 
-Auth::routes();
-
 Route::middleware('guest')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/post', 'HomeController@getPost');
@@ -134,4 +132,12 @@ Route::prefix('employee')->name('employee.')->group(function () {
     Route::get('/contact/deleted', 'Employee\ContactController@get_contact_deleted')->name('get_contact_deleted');
     Route::put('/contact/restore_contact/{id}', 'Employee\ContactController@restore_contact')->name('restore_contact');
     Route::resource('contacts', 'Employee\ContactController');
+});
+
+//Candidate section
+
+Auth::routes();
+Route::prefix('candidate')->name('candidate.')->group(function () {
+    Route::get('/home', 'Candidate\HomeController@index')->name('home');
+
 });

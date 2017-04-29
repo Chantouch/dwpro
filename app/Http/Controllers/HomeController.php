@@ -210,7 +210,7 @@ class HomeController extends Controller
         $current_date = date('Y-m-d');
         $top_opening_jobs = Post::with('employee')->where('status', 1)->take(6)->get();
         $contract_terms = ContractType::where('status', 1)->get();
-        $posts = Post::with('industry', 'employee')->where('city_id', '=', $city->id)->where('status', 1)->orderBy('created_at', 'DESC')->paginate(20);
+        $posts = Post::with('industry', 'employee')->where('city_id', $city->id)->where('status', 1)->orderBy('created_at', 'DESC')->paginate(20);
         return view('front.jobs.searchby',
             compact('posts', 'contract_terms', 'all_posts', 'title', 'cities', 'top_opening_jobs')
         );

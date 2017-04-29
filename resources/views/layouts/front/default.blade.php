@@ -54,7 +54,6 @@
     <div id="header"><!-- start main header -->
         @include('layouts.front.header')
     </div><!-- end main header -->
-    @yield('contents')
     <div class="main-page-title"><!-- start main page title -->
         <div class="container">
             @if (Session::has('alert'))
@@ -67,6 +66,7 @@
             @yield('main_page_container')
         </div>
     </div><!-- end main page title -->
+    @yield('contents')
     <div id="page-content">
         @yield('page_content')
     </div>

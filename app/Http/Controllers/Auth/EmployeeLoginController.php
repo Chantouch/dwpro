@@ -265,7 +265,7 @@ class EmployeeLoginController extends Controller
                 'first_name' => $employee->first_name,
                 'confirm_code' => $employee->confirm_code,
             ]));
-            //Mail::to($employee->email)->send($email);
+            Mail::to($employee->email)->send($email);
             DB::commit();
             if ($employee->id) {
                 if ($this->guard()->attempt($credentials)) {

@@ -63,7 +63,7 @@
 
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label for="password" class="control-label"></label>
-                                {!! Form::text('password', null, ['class' => 'form-control','placeholder'=>'Password']) !!}
+                                {!! Form::password('password', ['class' => 'form-control','placeholder'=>'Password']) !!}
                                 @if ($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -96,7 +96,7 @@
 
                             <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                                 <label for="password_confirmation" class="control-label"></label>
-                                {!! Form::text('password_confirmation', null, ['class' => 'form-control','placeholder'=>'Password confirmation']) !!}
+                                {!! Form::password('password_confirmation', ['class' => 'form-control','placeholder'=>'Password confirmation']) !!}
                                 @if ($errors->has('password_confirmation'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password_confirmation') }}</strong>
@@ -124,28 +124,6 @@
                             <button class="btn btn-pink btn-block text-uppercase waves-effect waves-light"
                                     type="submit">
                                 Register
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="form-group m-t-20 m-b-0">
-                        <div class="col-sm-12 text-center">
-                            <h4><b>Sign Up with</b></h4>
-                        </div>
-                    </div>
-
-                    <div class="form-group m-b-0 text-center">
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-facebook waves-effect waves-light m-t-20">
-                                <i class="fa fa-facebook m-r-5"></i> Facebook
-                            </button>
-
-                            <button type="button" class="btn btn-twitter waves-effect waves-light m-t-20">
-                                <i class="fa fa-twitter m-r-5"></i> Twitter
-                            </button>
-
-                            <button type="button" class="btn btn-googleplus waves-effect waves-light m-t-20">
-                                <i class="fa fa-google-plus m-r-5"></i> Google+
                             </button>
                         </div>
                     </div>
