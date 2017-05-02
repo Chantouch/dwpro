@@ -259,7 +259,7 @@
                     <h3 class="profile-completion-header">Profile Info</h3>
                     <div class="row">
                         <div class="col-md-4">
-                            <div id="image-preview">
+                            <div id="image-preview" style="background-image: url('{!! $auth->avatar_path !!}')">
                                 <label for="image-upload" id="image-label">Choose File</label>
                                 {!! Form::file('logo_photo',['id'=>'image-upload']) !!}
                             </div>
@@ -271,11 +271,11 @@
                         </div>
                         <div class="col-md-8">
                             <div class="profile-info">
-                                <p>Lives in: Phnom Penh</p>
-                                <p>Email: chantouchsek.cs83@gmail.com</p>
-                                <p>Phone: 070375783</p>
-                                <p>Gender: Male</p>
-                                <p>Address: Phnom Penh</p>
+                                <p>Lives in: {!! $auth->profile_city !!}</p>
+                                <p>Email: {!! $auth->email !!}</p>
+                                <p>Phone: {!! $auth->phone_number !!}</p>
+                                <p>Gender: {!! Helper::show_gender($auth->gender) !!}</p>
+                                <p>Address: {!! $auth->profile_address !!}</p>
                             </div>
                         </div>
                     </div>

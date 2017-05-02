@@ -11,8 +11,9 @@
 |
 */
 
-Route::middleware('guest')->group(function () {
+Route::middleware('web')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
+    //Route::get('/home', 'HomeController@index')->name('home.guest');
     Route::get('/post', 'HomeController@getPost');
     Route::get('view/job/{id}/{company}/{industry}/{slug}', 'HomeController@view_post')->name('home.view.job');
     //Route::post('view/job/{id}/{company}/{industry}/{slug}', 'HomeController@view_post')->name('home.view.job');

@@ -67,7 +67,7 @@
                         {{--<li><a href="about.html">About Page</a></li>--}}
                         {{--</ul>--}}
                     </li>
-                    <li><a href="#">JOB SEARCH</a></li>
+                    <li><a href="{!! route('jobs.search') !!}">JOB SEARCH</a></li>
                     <li><a href="{!! route('employee.posts.create') !!}">POST A JOB</a></li>
                     <li><a href="{!! route('candidate.home') !!}">POST A RESUME</a></li>
                     <li><a href="#">About Us</a></li>

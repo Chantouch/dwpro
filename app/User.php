@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password', 'phone_number', 'verified_by', 'status', 'date_of_birth',
+        'username', 'email', 'password', 'phone_number', 'verified_by', 'status', 'first_name', 'last_name',
         'enroll_id', 'enroll_temp', 'avatar', 'avatar_path', 'terms', 'confirm_code', 'verified_status'
     ];
 
@@ -58,8 +58,6 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserProfile::class);
     }
-
-
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -118,5 +116,39 @@ class User extends Authenticatable
         $this->status = 1;
         $this->confirm_code = null;
         $this->save();
+    }
+
+
+    //Prevent from error on null value
+    public function getProfileAddressAttribute()
+    {
+        $value = "";
+        if ($this->profile === null) {
+            return "No Address";
+        } else {
+            try {
+                $profile = auth()->user()->profile;
+                $value = $profile->address;
+            } catch (ModelNotFoundException $exception) {
+
+            }
+            return $value;
+        }
+    }
+
+    public function getProfileCityAttribute()
+    {
+        $value = "";
+        if ($this->profile === null) {
+            return "No City";
+        } else {
+            try {
+                $profile = auth()->user()->profile;
+                $value = $profile->city->name;
+            } catch (ModelNotFoundException $exception) {
+
+            }
+            return $value;
+        }
     }
 }

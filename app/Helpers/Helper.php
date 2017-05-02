@@ -25,7 +25,7 @@ class Helper
         return [
             '0' => 'Both',
             '1' => 'Female',
-            '2' => 'Male',
+            '2' => 'Male'
         ];
     }
 

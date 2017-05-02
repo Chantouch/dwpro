@@ -21,7 +21,6 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(30),
         'slug' => $faker->slug,
-        'date_of_birth' => $faker->date(),
         'verified_by' => mt_rand(0, 5),
         'status' => mt_rand(0, 1),
         'avatar' => $faker->image(),
@@ -35,7 +34,10 @@ $factory->define(\App\Models\UserProfile::class, function (\Faker\Generator $fak
         'bio' => $faker->paragraph,
         'cover_letter' => $faker->paragraph,
         'address' => $faker->address,
-        'user_id' => mt_rand(1, 5)
+        'user_id' => mt_rand(1, 5),
+        'date_of_birth' => $faker->date(),
+        'city_id' => mt_rand(1, 25),
+        'country_id' => '1',
     ];
 });
 

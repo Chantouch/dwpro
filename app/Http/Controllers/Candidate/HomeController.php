@@ -19,7 +19,7 @@ class HomeController extends Controller
         $auth = auth()->guard()->user();
         $progress = 0;
         if (count($auth->profile) == 1)
-            $progress = 25;
+            $progress = 20;
 
         return view('candidate.home', compact('title','progress','auth'));
     }

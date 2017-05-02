@@ -15,13 +15,18 @@ class CreateUserProfilesTable extends Migration
     {
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id', false, true);
+            $table->integer('country_id', false, true);
+            $table->integer('city_id', false, true);
             $table->longText('bio')->nullable();
             $table->longText('cover_letter')->nullable();
             $table->string('address')->nullable();
-            $table->integer('user_id', false, true)->unsigned();
+            $table->date('date_of_birth')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
         });
     }
 

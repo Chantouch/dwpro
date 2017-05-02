@@ -62,10 +62,16 @@ class HomeController extends Controller
         $full_time_posts = Post::where('status', 1)->get();
         $filed_up_posts = Post::where('status', 2)->get();
         $applications = User::where('status', 1)->get();
+        $feature_cities = City::where('status', 1)->orderBy('created_at', 'ASC')->take(5)->get();
+        $feature_functions = Functions::where('status', 1)->orderBy('created_at', 'ASC')->take(5)->get();
+        $feature_industries = Industry::where('status', 1)->orderBy('created_at', 'ASC')->take(5)->get();
+        $feature_companies = Employee::where('status', 1)->orderBy('created_at', 'ASC')->take(5)->get();
+
         return view('front.index', compact(
             'posts', 'feature_posts', 'companies',
             'contract_terms', 'full_time_posts', 'filed_up_posts',
-            'applications', 'cities'
+            'applications', 'cities', 'feature_cities', 'feature_companies',
+            'feature_functions', 'feature_industries'
         ));
     }
 
@@ -81,6 +87,10 @@ class HomeController extends Controller
         if ($id === null) {
             return redirect()->back()->with('error', 'We can not find this job.');
         }
+        $feature_functions = Functions::where('status', 1)->orderBy('created_at', 'ASC')->take(5)->get();
+        $feature_industries = Industry::where('status', 1)->orderBy('created_at', 'ASC')->take(5)->get();
+        $feature_companies = Employee::where('status', 1)->orderBy('created_at', 'ASC')->take(5)->get();
+        $feature_cities = City::where('status', 1)->orderBy('created_at', 'ASC')->take(5)->get();
         $post = $this->post->with(['industry', 'employee.company_profile'])->where('slug', $slug)->first();
         $name = explode(' ', trim($post->name));
         $related_jobs = $this->post
@@ -89,7 +99,12 @@ class HomeController extends Controller
             ->get();
         $contract_types = ContractType::where('status', 1)->get();
         $full_time_posts = Post::where('status', 1)->get();
-        return view('front.jobs.view', compact('post', 'related_jobs', 'contract_types', 'full_time_posts'));
+        return view('front.jobs.view',
+            compact(
+                'post', 'related_jobs', 'contract_types', 'full_time_posts',
+                'feature_functions', 'feature_industries', 'feature_companies', 'feature_cities'
+            )
+        );
     }
 
     //For candidate apply job directly from site
@@ -274,7 +289,10 @@ class HomeController extends Controller
         $category = Functions::with('posts')->where('status', 1)->limit(5)->get();
         $industry = Industry::with('posts')->where('status', 1)->orderBy('name', 'ASC')->take(5)->get();
         $company = Employee::with('posts')->where('status', 1)->limit(5)->get();
-        $cite = City::with('posts')->where('status', 1)->take(5)->get();
+        $feature_functions = Functions::where('status', 1)->orderBy('created_at', 'ASC')->take(5)->get();
+        $feature_industries = Industry::where('status', 1)->orderBy('created_at', 'ASC')->take(5)->get();
+        $feature_companies = Employee::where('status', 1)->orderBy('created_at', 'ASC')->take(5)->get();
+        $feature_cities = City::where('status', 1)->orderBy('created_at', 'ASC')->take(5)->get();
         $top_jobs = Post::with('industry', 'employee')->where('status', 1)->where('closing_date', '>=', $current_date)->orderBy('salary', 'DESC')->take(5)->get();
         $cities = City::with('posts')->where('status', 1)->pluck('name', 'id');
         $query = Post::query();
@@ -311,7 +329,11 @@ class HomeController extends Controller
         //$jobs->appends(['name'=> $post_name]);
         Session::flash('_old_input', $request->all());
         return view('front.jobs.search',
-            compact('jobs', 'cities', 'top_jobs', 'cit', 'company', 'category', 'industry', 'feature_posts')
+            compact(
+                'jobs', 'cities', 'top_jobs', 'company', 'category',
+                'industry', 'feature_posts', 'feature_functions', 'feature_industries',
+                'feature_companies', 'feature_cities'
+            )
         );
     }
 }
