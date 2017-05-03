@@ -426,7 +426,11 @@ class PostController extends Controller
         $marital_status = \Helper::marital_status();
         $salary = \Helper::salary();
         $gender = \Helper::gender();
-        $contact = Contact::where('status', 1)->where('employee_id', $this->emp_id())->pluck('name', 'id');
+        $contact = Contact::select(DB::raw("CONCAT(first_name, ' ',last_name) AS name"), 'id')
+            ->where('status', 1)
+            ->where('id', '=',$this->emp_id())
+            ->orWhere('parent_id', $this->emp_id())
+            ->pluck('name', 'id');
         return view('employee.post.edit', compact('job', 'functions', 'contract', 'cities', 'levels', 'qualifications', 'year_experience',
             'langs', 'gender', 'marital_status', 'industries', 'salary', 'contact'
         ));

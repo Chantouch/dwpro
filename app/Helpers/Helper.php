@@ -10,6 +10,9 @@ use Carbon\Carbon;
 class Helper
 {
 
+    /**
+     * @return array
+     */
     public static function year_experience()
     {
         return [
@@ -20,6 +23,9 @@ class Helper
         ];
     }
 
+    /**
+     * @return array
+     */
     public static function gender()
     {
         return [
@@ -29,7 +35,22 @@ class Helper
         ];
     }
 
+    /**
+     * @return array
+     */
+    public static function language_level()
+    {
+        return [
+            '' => 'Select the level of proficiency you have in this language',
+            '0' => 'Basic Knowledge',
+            '1' => 'Conversational',
+            '2' => 'Full working proficiency',
+        ];
+    }
 
+    /**
+     * @return array
+     */
     public static function marital_status()
     {
         return [
@@ -39,6 +60,9 @@ class Helper
         ];
     }
 
+    /**
+     * @return string
+     */
     public static function relationship($model)
     {
         if ($model == null) {
@@ -48,6 +72,9 @@ class Helper
         }
     }
 
+    /**
+     * @return array
+     */
     public static function salary()
     {
         return [
@@ -60,6 +87,9 @@ class Helper
         ];
     }
 
+    /**
+     * @return array
+     */
     public static function no_employee()
     {
         return [
@@ -76,9 +106,24 @@ class Helper
         ];
     }
 
+    /**
+     * @return array
+     */
+    public static function candidate_status()
+    {
+        return [
+            '0' => 'Select',
+            '1' => 'Active Searching'
+        ];
+    }
+
 
     //-------Show at the front end of user-----------------//
 
+    /**
+     * @param $status
+     * @return string
+     */
     public static function status($status)
     {
         if ($status == 0) {
@@ -95,6 +140,9 @@ class Helper
         //return $status;
     }
 
+    /**
+     * @return string
+     */
     public static function show_salary($convert)
     {
         if ($convert == 0) {
@@ -121,6 +169,10 @@ class Helper
 
     }
 
+    /**
+     * @param $status
+     * @return string
+     */
     public static function show_marital($status)
     {
         if ($status == 0) {
@@ -136,6 +188,10 @@ class Helper
         }
     }
 
+    /**
+     * @param $year
+     * @return string
+     */
     public static function show_year_exp($year)
     {
         if ($year == 0) {
@@ -154,6 +210,10 @@ class Helper
         }
     }
 
+    /**
+     * @param $gender
+     * @return string
+     */
     public static function show_gender($gender)
     {
         if ($gender == 0) {
@@ -169,8 +229,33 @@ class Helper
         }
     }
 
+    /**
+     * @param $date
+     * @return string
+     */
     public static function date_time_format($date)
     {
         return Carbon::parse($date)->format('D-d-M-Y H:i A');
+    }
+
+    public static function skill_level()
+    {
+        return [
+            '' => 'Select the level of proficiency',
+            '1' => 'Beginner',
+            '2' => 'Intermediate',
+            '3' => 'Professional',
+        ];
+    }
+
+    public static function skill_year()
+    {
+        return [
+            '' => 'Select the years of experience in this skill',
+            '1' => '1 year or less',
+            '2' => '2-5 years',
+            '3' => '5-7 years',
+            '4' => 'More than 7 years',
+        ];
     }
 }

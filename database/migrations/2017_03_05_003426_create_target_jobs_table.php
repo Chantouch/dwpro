@@ -15,10 +15,10 @@ class CreateTargetJobsTable extends Migration
     {
         Schema::create('target_jobs', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('status', ['Actively searching', 'Employed but open to opportunities', 'Employed, not open to opportunities']);
+            $table->enum('status', ['1', '2', '3']);
             $table->integer('user_id', false, true)->unsigned();
             $table->integer('contract_type_id', false, true)->unsigned();
-            $table->enum('desired_salary', ['Unspecified', '0 - 199 USD', '200 - 499 USD', '500 - 999 USD', '1,000 - 1,999 USD', '2,000 USD+']);
+            $table->enum('desired_salary', ['0', '1', '2', '3', '4', '5']);
             $table->integer('industry_id', false, true)->unisgned();
             $table->integer('city_id', false, true)->unisgned();
             $table->timestamps();

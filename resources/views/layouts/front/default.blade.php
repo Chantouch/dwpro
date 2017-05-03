@@ -51,9 +51,10 @@
 </head>
 <body>
 <div id="wrapper"><!-- start main wrapper -->
-    <div id="header"><!-- start main header -->
+    <div id="header"><!-- start main header
         @include('layouts.front.header')
     </div><!-- end main header -->
+    @yield('contents')
     <div class="main-page-title"><!-- start main page title -->
         <div class="container">
             @if (Session::has('alert'))
@@ -66,7 +67,6 @@
             @yield('main_page_container')
         </div>
     </div><!-- end main page title -->
-    @yield('contents')
     <div id="page-content">
         @yield('page_content')
     </div>
@@ -105,6 +105,8 @@
 <script src="{{ asset('js/jcolabs.js')}}" type="text/javascript"></script>
 <script src="{!! asset('js/classie.js') !!}"></script>
 <script src="{!! asset('js/selectFx.js') !!}"></script>
+<script type="text/javascript" src="{!! asset('js/vuejs/vue.js') !!}"></script>
+<script src="{!! asset('js/vuejs/vue-resource.min.js') !!}"></script>
 @yield('page_specific_js')
 <script src="{{ asset('assets/plugins/typeahead/bootstrap3-typeahead.min.js')}}" type="text/javascript"></script>
 <!-- Select2 -->

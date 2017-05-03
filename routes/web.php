@@ -82,8 +82,6 @@ Route::group(['prefix' => 'admin'], function () {
     });
 });
 
-Route::resource('posts', 'Employee\PostController');
-
 //Employee Route
 Route::prefix('employee')->name('employee.')->group(function () {
     Route::get('register', 'Auth\EmployeeLoginController@showRegisterForm')->name('register');
@@ -109,8 +107,7 @@ Route::prefix('employee')->name('employee.')->group(function () {
     Route::get('edit-profile', 'Employee\EmployeeController@edit_profile')->name('edit_profile');
     Route::patch('update-profile', 'Employee\EmployeeController@update_profile')->name('update_profile');
     Route::patch('update-profile-about', 'Employee\EmployeeController@update_profile_about')->name('update_profile_about');
-    //Test api.
-    //Route::get('posts', 'Employee\EmployeeController@posts')->name('posts');
+
     Route::prefix('posts')->group(function () {
         Route::name('posts.')->group(function () {
             Route::get('all', 'Employee\EmployeeController@posts')->name('json');
@@ -119,7 +116,6 @@ Route::prefix('employee')->name('employee.')->group(function () {
             Route::get('expired', 'Employee\PostController@status_expired')->name('expired');
             Route::get('unpublished', 'Employee\PostController@unpublished')->name('unpublished');
             Route::get('{id}/{draft}', 'Employee\PostController@edit_draft')->name('edit.draft');
-            Route::resource('/', 'Employee\PostController');
         });
         Route::prefix('update_status')->name('update_job.')->group(function () {
             Route::get('disabled/{num}', 'Employee\PostController@update_job_status')->name('status_filled_up');
@@ -127,6 +123,7 @@ Route::prefix('employee')->name('employee.')->group(function () {
             Route::get('filled_up/{num}', 'Employee\PostController@update_job_status')->name('status_disabled');
         });
     });
+    Route::resource('posts', 'Employee\PostController');
     // Contact
     Route::get('/contact-list', 'Employee\EmployeeController@contact_form')->name('contacts_data');
     Route::get('/contact-list/deleted', 'Employee\EmployeeController@get_contact_deleted')->name('get_contact_deleted_list');

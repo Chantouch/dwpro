@@ -247,10 +247,35 @@
             text-align: center;
         }
 
+        .panel-title {
+            margin-top: 6px;
+            margin-bottom: 0;
+            font-size: 22px;
+            color: inherit;
+        }
+
+        .select2-container {
+            display: block;
+        }
+
+        .select2-container-multi .select2-choices .select2-search-choice {
+            margin: 7px 0 3px 5px;
+        }
+
+        .select2-container .select2-choice {
+            display: block;
+            height: 34px;
+            padding: 3px 0 0 8px;
+        }
+
+        .select2-container .select2-choice .select2-arrow b {
+            position: relative;
+            top: 2px;
+        }
+
     </style>
 @stop
 @section('main_page_container')
-
     <div class="row">
         <!-- Profile info -->
         <div class="col-md-7">
@@ -303,86 +328,103 @@
                 </div>
             </div>
         </div>
-    </div>
-@stop
 
-@section('contents')
-    <div class="container" style="padding:20px 0">
-        <div class="row">
-            <div class="col-md-12 text-right">
-                <a class="aug_legend rigt" href="#" target="_blank">
-                    Views/Print Identity Card <i class="fa fa-external-link"></i>
-                </a>&nbsp;
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left">
+                        About me
+                    </h3>
+                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        I'm a dedicated and passionate professional with broad experience in [your field of expertise]
+                        in the [industry of the companies you have worked in] industry. I’m also able to demonstrate
+                        strong [list your skills] skills.
+                    </p>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left">
+                        Target job
+                    </h3>
+                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    @include('candidate.target-job')
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left">
+                        Work experience
+                    </h3>
+                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    @include('candidate.work-experience')
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left">
+                        Education
+                    </h3>
+                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    @include('candidate.education')
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left">
+                        Language
+                    </h3>
+                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    @include('candidate.language')
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left">
+                        Professional Skills
+                    </h3>
+                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    @include('candidate.professional')
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left">
+                        References
+                    </h3>
+                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    @include('candidate.reference')
+                </div>
             </div>
         </div>
-        <div class="row">
-            <a href="#">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <div class="info-box blue-bg">
-                        <i class="fa fa-user"></i>
-                        <div class="count">Bio/Personal Information</div>
-                    </div><!--/.info-box-->
-                </div><!--/.col-->
-            </a>
-            <a href="#">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <div class="info-box facebook-bg">
-                        <i class="fa fa-book"></i>
-                        <div class="count">Education Details</div>
-                    </div><!--/.info-box-->
-                </div><!--/.col-->
-            </a>
-            <a href="#">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <div class="info-box dark-bg">
-                        <i class="fa fa-comments-o"></i>
-                        <div class="count">Languages Known</div>
-                    </div><!--/.info-box-->
-                </div><!--/.col-->
-            </a>
-            <a href="#">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <div class="info-box linkedin-bg">
-                        <i class="fa fa-cubes"></i>
-                        <div class="count">Experience</div>
-                    </div><!--/.info-box-->
-                </div><!--/.col-->
-            </a>
-            <a href="#">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <div class="info-box pink-bg">
-                        <i class="fa fa-cubes"></i>
-                        <div class="count">Professional Skills</div>
-                    </div><!--/.info-box-->
-                </div><!--/.col-->
-            </a>
-            <a href="#">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <div class="info-box dark-heading-bg">
-                        <i class="fa fa-cubes"></i>
-                        <div class="count">References</div>
-                    </div><!--/.info-box-->
-                </div><!--/.col-->
-            </a>
-            <a href="#">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <div class="info-box brown-bg">
-                        <i class="fa fa-cubes"></i>
-                        <div class="count">Accomplish</div>
-                    </div><!--/.info-box-->
-                </div><!--/.col-->
-            </a>
-            <a href="#">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <div class="info-box teal-bg">
-                        <i class="fa fa-comments-o"></i>
-                        <div class="count">Attachment</div>
-                    </div><!--/.info-box-->
-                </div><!--/.col-->
-            </a>
-        </div><!--/.row-->
     </div>
+
 @stop
+
 @section('page_content')
     <div class="content-about">
         <div id="cs">
@@ -394,19 +436,28 @@
                     deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non
                     provident, similique sunt.
                 </p>
-                <h1 class="phone-cs">Call: 1 800 000 500</h1>
+                <h1 class="phone-cs">Call: 070 375 783</h1>
             </div>
         </div>
     </div>
 @stop
 @section('page_specific_js')
-    <script type="text/javascript"
-            src="{!! asset('assets/plugins/image-preview/jquery.uploadPreview.min.js') !!}"></script>
+    <script src="{!! asset('assets/plugins/image-preview/jquery.uploadPreview.min.js') !!}"></script>
+    <script src="{!! asset('assets/plugins/select2/select2.min.js') !!}"></script>
 @stop
 @section('page_specific_scripts')
     $.uploadPreview({
     input_field: "#image-upload",
     preview_box: "#image-preview",
     label_field: "#image-label"
+    });
+
+    $("#contract_type").select2({
+    placeholder: "Select your desired contract type",
+    allowClear: true
+    });
+
+    $(".select2").select2({
+    allowClear: true
     });
 @stop
