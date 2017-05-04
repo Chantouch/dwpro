@@ -21,13 +21,13 @@ class CreateUserExperiencesTable extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->tinyInteger('is_working')->nullable(0);
-            $table->integer('country_id', false, true)->unsigned();
-            $table->integer('city_id', false, true)->unsigned();
-            $table->integer('contract_id', false, true)->ungigned()->nullable();
-            $table->integer('industry_id', false, true)->unsigned();
+            $table->integer('country_id', false, true)->nullable();
+            $table->integer('city_id', false, true)->nullable();
+            $table->integer('contract_id', false, true)->nullable();
+            $table->integer('industry_id', false, true)->nullable();
             $table->string('role')->nullable();
-            $table->integer('level_id', false, true)->unsigned();
-            $table->integer('user_id', false, true)->insigned();
+            $table->integer('level_id', false, true)->nullable();
+            $table->integer('user_id', false, true)->nullable();
             $table->timestamps();
             $table->softDeletes();
 

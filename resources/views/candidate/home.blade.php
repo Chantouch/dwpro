@@ -7,6 +7,10 @@
             margin-right: 0 !important;
         }
 
+        [v-cloak] {
+            display: none;
+        }
+
         a.tryitbtn, a.tryitbtn:link, a.tryitbtn:visited, a.showbtn, a.showbtn:link, a.showbtn:visited {
             font-family: Verdana, Geneva, Tahoma, Arial, Helvetica, sans-serif;
             display: inline-block;
@@ -276,7 +280,7 @@
     </style>
 @stop
 @section('main_page_container')
-    <div class="row">
+    <div class="row" id="user_profile">
         <!-- Profile info -->
         <div class="col-md-7">
             <div class="clearfix complete-bar-width complete-bar">
@@ -296,11 +300,11 @@
                         </div>
                         <div class="col-md-8">
                             <div class="profile-info">
-                                <p>Lives in: {!! $auth->profile_city !!}</p>
-                                <p>Email: {!! $auth->email !!}</p>
-                                <p>Phone: {!! $auth->phone_number !!}</p>
-                                <p>Gender: {!! Helper::show_gender($auth->gender) !!}</p>
-                                <p>Address: {!! $auth->profile_address !!}</p>
+                                <p>Lives in: @{{ profile_city.name }}</p>
+                                <p>Email: @{{ data.email }}</p>
+                                <p>Phone: @{{ data.phone_number }}</p>
+                                <p>Gender: @{{ data.gender | gender }}</p>
+                                <p>Address: @{{ profile.address }}</p>
                             </div>
                         </div>
                     </div>
@@ -335,15 +339,16 @@
                     <h3 class="panel-title pull-left">
                         About me
                     </h3>
-                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
+                    <button class="btn btn-default pull-right" v-if="show" @click.prevent="editAboutMe('about_me')">
+                        <i class="glyphicon glyphicon-pencil"></i> Edit
+                    </button>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
-                    <p>
-                        I'm a dedicated and passionate professional with broad experience in [your field of expertise]
-                        in the [industry of the companies you have worked in] industry. I’m also able to demonstrate
-                        strong [list your skills] skills.
+                    <p v-if="profile.about_me != null && show" v-cloak="">
+                        @{{ profile.about_me }}
                     </p>
+                    @include('candidate.about-me')
                 </div>
             </div>
 
@@ -365,7 +370,9 @@
                     <h3 class="panel-title pull-left">
                         Work experience
                     </h3>
-                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
+                    <button class="btn btn-default pull-right">
+                        <i class="glyphicon glyphicon-pencil" @click.prevent="editAboutMe('work_experience')"></i> Edit
+                    </button>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
@@ -444,6 +451,7 @@
 @section('page_specific_js')
     <script src="{!! asset('assets/plugins/image-preview/jquery.uploadPreview.min.js') !!}"></script>
     <script src="{!! asset('assets/plugins/select2/select2.min.js') !!}"></script>
+    <script src="{!! asset('js/controller/candidate/index.js') !!}"></script>
 @stop
 @section('page_specific_scripts')
     $.uploadPreview({

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ config('app.locale') }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}" id="token">
     <title>@yield('title') &#8226; {{ config('app.name', 'Laravel') }}</title>
     <!-- Scripts -->
     <script>
@@ -51,7 +51,7 @@
 </head>
 <body>
 <div id="wrapper"><!-- start main wrapper -->
-    <div id="header"><!-- start main header
+    <div id="header"><!-- start main header -->
         @include('layouts.front.header')
     </div><!-- end main header -->
     @yield('contents')
@@ -73,7 +73,6 @@
     <div id="footer"><!-- Footer -->
         @include('layouts.front.footer')
     </div><!-- Footer -->
-
 </div><!-- end main wrapper -->
 <!-- jQuery 2.1.4 -->
 <script src="{{ asset('assets/js/jquery.min.js')}}" type="text/javascript"></script>
@@ -107,6 +106,7 @@
 <script src="{!! asset('js/selectFx.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('js/vuejs/vue.js') !!}"></script>
 <script src="{!! asset('js/vuejs/vue-resource.min.js') !!}"></script>
+<script src="{!! asset('js/apps.js') !!}"></script>
 @yield('page_specific_js')
 <script src="{{ asset('assets/plugins/typeahead/bootstrap3-typeahead.min.js')}}" type="text/javascript"></script>
 <!-- Select2 -->
@@ -123,10 +123,10 @@
         @endif
         @if (Session::has('message') && !$errors->any())
             notify('{!! Session::get('message')!!}', 'success', 'topCenter');
-        @endif
-        @if ($errors->any())
-        {!! implode('', $errors->all('notify(\':message\', \'warning\'); ')) !!}
-        @endif
+                @endif
+                @if ($errors->any())
+                {!! implode('', $errors->all('notify(\':message\', \'warning\'); ')) !!}
+                @endif
 
         var path = "";
         var city_path = "";

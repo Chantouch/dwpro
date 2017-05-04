@@ -16,9 +16,9 @@ class CreateUserSkillsTable extends Migration
         Schema::create('user_skills', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
-            $table->enum('level', ['Beginner', 'Intermediate', 'Professional']);
+            $table->enum('level', ['1', '2', '3']);
             $table->integer('year_exp')->nullable();
-            $table->integer('user_id', false, true)->unsigned();
+            $table->integer('user_id', false, true)->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

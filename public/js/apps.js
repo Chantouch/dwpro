@@ -19,14 +19,26 @@ Vue.filter('dateshow', function (value) {
 });
 
 Vue.filter('status', function (value) {
-    if (value == 0) {
+    if (value === 0) {
         return "Disabled";
-    } else if (value == 1) {
+    } else if (value === 1) {
         return 'Enabled';
-    } else if (value == '2') {
+    } else if (value === 2) {
         return 'Filled Up';
     } else {
         return 'Suspend';
+    }
+});
+
+Vue.filter('gender', function (value) {
+    if (value === "0") {
+        return "Unspecified";
+    } else if (value === "1") {
+        return 'Male';
+    } else if (value === "2") {
+        return 'Female';
+    } else {
+        return 'Others';
     }
 });
 

@@ -27,7 +27,6 @@ class HomeController extends Controller
         $progress = 0;
         if (count($auth->profile) == 1)
             $progress = 20;
-
         $contract_type = ContractType::where('status', 1)->orderBy('name')->pluck('name', 'id');
         $industries = Industry::where('status', 1)->orderBy('name')->pluck('name', 'id');
         $languages = Language::where('status', 1)->orderBy('name')->pluck('name', 'id');

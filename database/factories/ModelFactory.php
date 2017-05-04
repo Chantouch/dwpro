@@ -31,7 +31,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 $factory->define(\App\Models\UserProfile::class, function (\Faker\Generator $faker) {
     return [
-        'bio' => $faker->paragraph,
+        'about_me' => $faker->paragraph,
         'cover_letter' => $faker->paragraph,
         'address' => $faker->address,
         'user_id' => mt_rand(1, 5),

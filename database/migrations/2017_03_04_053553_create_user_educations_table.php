@@ -20,12 +20,12 @@ class CreateUserEducationsTable extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->tinyInteger('is_studying')->nullable(0);
-            $table->integer('country_id', false, true)->unsigned();
-            $table->integer('city_id', false, true)->unsigned();
+            $table->integer('country_id', false, true)->unsigned()->nullable();
+            $table->integer('city_id', false, true)->unsigned()->nullable();
             $table->string('field_of_study')->nullable();
             $table->string('grade')->nullable();
             $table->string('level')->nullable();
-            $table->integer('user_id', false, true)->insigned();
+            $table->integer('user_id', false, true)->insigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
 
