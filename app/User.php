@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\UserExperience;
 use App\Models\UserProfile;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -65,6 +66,14 @@ class User extends Authenticatable
     public function verified_by()
     {
         return $this->belongsTo(Admin::class, 'verified_by');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function work_experience()
+    {
+        return $this->hasMany(UserExperience::class);
     }
 
     /**

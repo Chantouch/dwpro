@@ -299,12 +299,20 @@
                             @endif
                         </div>
                         <div class="col-md-8">
-                            <div class="profile-info">
-                                <p>Lives in: @{{ profile_city.name }}</p>
+                            <div class="profile-info" v-if="data.profile != null">
+                                <p v-if="data.profile.city != null">Lives in: @{{ profile_city.name }}</p>
+                                <p v-else="">Lives in: </p>
                                 <p>Email: @{{ data.email }}</p>
                                 <p>Phone: @{{ data.phone_number }}</p>
                                 <p>Gender: @{{ data.gender | gender }}</p>
-                                <p>Address: @{{ profile.address }}</p>
+                                <p>Address: @{{ data.profile.address }}</p>
+                            </div>
+                            <div class="profile-info" v-else="">
+                                <p>Lives in: </p>
+                                <p>Email: @{{ data.email }}</p>
+                                <p>Phone: @{{ data.phone_number }}</p>
+                                <p>Gender: @{{ data.gender | gender }}</p>
+                                <p>Address: </p>
                             </div>
                         </div>
                     </div>
@@ -339,13 +347,14 @@
                     <h3 class="panel-title pull-left">
                         About me
                     </h3>
-                    <button class="btn btn-default pull-right" v-if="show" @click.prevent="editAboutMe('about_me')">
+                    <button class="btn btn-default pull-right" v-if="show && data.profile != null"
+                            @click.prevent="editAboutMe('about_me')">
                         <i class="glyphicon glyphicon-pencil"></i> Edit
                     </button>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
-                    <p v-if="profile.about_me != null && show" v-cloak="">
+                    <p v-if="profile.about_me !== null && show ">
                         @{{ profile.about_me }}
                     </p>
                     @include('candidate.about-me')
@@ -370,12 +379,18 @@
                     <h3 class="panel-title pull-left">
                         Work experience
                     </h3>
-                    <button class="btn btn-default pull-right">
+                    <button class="btn btn-default pull-right" v-if="show && data.work_experience != ''">
                         <i class="glyphicon glyphicon-pencil" @click.prevent="editAboutMe('work_experience')"></i> Edit
+                    </button>
+                    <button class="btn btn-default pull-right" v-if="show && data.work_experience != ''">
+                        <i class="glyphicon glyphicon-plus" @click.prevent="editAboutMe('work_experience')"></i> Add
                     </button>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
+                    <p v-if="data.work_experience != '' && show" v-for="we in data.work_experience">
+                        <span>@{{ we.job_title }}</span>
+                    </p>
                     @include('candidate.work-experience')
                 </div>
             </div>

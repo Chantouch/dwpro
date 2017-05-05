@@ -16,6 +16,9 @@ const wrapper = new Vue({
             show: true,
             new_about_me: {
                 about_me: ''
+            },
+            file_work_experience: {
+                job_title: ""
             }
         }
     },
@@ -26,12 +29,13 @@ const wrapper = new Vue({
     methods: {
         fetchProfile(){
             this.$http.get('/candidate/api/profile').then((response) => {
-                //console.log(response.data);
                 this.data = response.data;
-                this.profile = response.data.profile;
-                this.profile_city = response.data.profile.city;
+                if (response.data.profile !== null) {
+                    this.profile = response.data.profile;
+                    this.profile_city = response.data.profile.city;
+                }
                 this.edit = true;
-            })
+            });
         },
         editAboutMe(id){
             let fill = this.fill_profile;
@@ -46,7 +50,7 @@ const wrapper = new Vue({
                     this.edit = true;
                     break;
                 case "work_experience":
-                    alert('Nice work');
+                    console.log('Thanks');
                     // this.show = false;
                     // this.edit = true;
                     break;
@@ -60,16 +64,26 @@ const wrapper = new Vue({
         },
         updateAboutMe(id){
             let input = this.fill_profile;
-            this.$http.patch('/candidate/api/profile-update', input).then((response) => {
-                this.new_about_me = {
-                    about_me: "",
-                    id: "",
-                    job_title: ""
-                };
-            });
+            let input_new = this.new_about_me;
             this.fetchProfile();
             switch (id) {
                 case "about_me":
+                    this.$http.patch('/candidate/api/profile-update', input).then((response) => {
+                        this.new_about_me = {
+                            about_me: "",
+                            id: "",
+                            job_title: ""
+                        };
+                    });
+                    this.show = true;
+                    this.edit = false;
+                    break;
+                case "create_about_me":
+                    this.$http.post('/candidate/api/profile-create', input_new).then((response) => {
+                        this.new_about_me = {
+                            about_me: "",
+                        };
+                    });
                     this.show = true;
                     this.edit = false;
                     break;
@@ -77,5 +91,15 @@ const wrapper = new Vue({
                     break;
             }
         },
+        create_work_experience(){
+            let input = this.file_work_experience;
+            //console.log(input);
+            let vm = this;
+            vm.$http.post('/candidate/api/work-experience/create', input).then((response) => {
+                this.file_work_experience = {
+                    job_title: ""
+                }
+            });
+        }
     }
 });

@@ -137,6 +137,10 @@ Route::prefix('employee')->name('employee.')->group(function () {
 Auth::routes();
 Route::prefix('candidate')->name('candidate.')->group(function () {
     Route::get('/home', 'Candidate\HomeController@index')->name('home');
-    Route::get('/api/profile', 'Candidate\RestController@index')->name('api.profile');
-    Route::patch('/api/profile-update', 'Candidate\RestController@update_about_me')->name('api.profile-update');
+});
+Route::prefix('candidate')->name('candidate.api.')->group(function () {
+    Route::get('/api/profile', 'Candidate\RestController@index')->name('profile');
+    Route::patch('/api/profile-update', 'Candidate\RestController@update_about_me')->name('profile-update');
+    Route::post('/api/profile-create', 'Candidate\RestController@create_profile')->name('profile-create');
+    Route::post('/api/work-experience/create', 'Candidate\RestController@create_work_experience')->name('work-experience.create');
 });
