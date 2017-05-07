@@ -280,6 +280,10 @@
     </style>
 @stop
 @section('main_page_container')
+    {{--<div id="wait"--}}
+         {{--style="display:none;width:69px;height:89px;border:1px solid black;position:absolute;top:50%;left:50%;padding:2px;">--}}
+        {{--<img src='demo_wait.gif' width="64" height="64"/><br>Loading..--}}
+    {{--</div>--}}
     <div class="row" id="user_profile">
         <!-- Profile info -->
         <div class="col-md-7">

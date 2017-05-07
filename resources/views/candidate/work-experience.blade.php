@@ -3,6 +3,9 @@
         <div class="form-group col-md-6 col-sm-6">
             <label for="job_title">Job Title</label>
             {!! Form::text('job_title', null, ['class' => 'form-control', 'v-model'=>'file_work_experience.job_title']) !!}
+            <span class="error text-danger" v-if="formErrors['job_title']">
+                @{{ formErrors['job_title'] }}
+            </span>
         </div>
         <div class="form-group col-md-6 col-sm-6">
             <label for="company_name">Company</label>

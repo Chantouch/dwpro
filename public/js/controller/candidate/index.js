@@ -19,7 +19,8 @@ const wrapper = new Vue({
             },
             file_work_experience: {
                 job_title: ""
-            }
+            },
+            formErrors: {},
         }
     },
     computed: {},
@@ -65,7 +66,6 @@ const wrapper = new Vue({
         updateAboutMe(id){
             let input = this.fill_profile;
             let input_new = this.new_about_me;
-            this.fetchProfile();
             switch (id) {
                 case "about_me":
                     this.$http.patch('/candidate/api/profile-update', input).then((response) => {
@@ -74,31 +74,50 @@ const wrapper = new Vue({
                             id: "",
                             job_title: ""
                         };
+                        this.fetchProfile();
+                        this.show = true;
+                        this.edit = false;
                     });
-                    this.show = true;
-                    this.edit = false;
                     break;
                 case "create_about_me":
                     this.$http.post('/candidate/api/profile-create', input_new).then((response) => {
                         this.new_about_me = {
                             about_me: "",
                         };
+                        this.fetchProfile();
+                        this.show = true;
+                        this.edit = false;
                     });
-                    this.show = true;
-                    this.edit = false;
                     break;
                 default:
                     break;
+                    this.fetchProfile();
             }
+        },
+        save_about(){
+            let input = this.fill_profile;
+            this.$http.patch('/candidate/api/profile-update', input).then((response) => {
+                this.new_about_me = {
+                    about_me: "",
+                    id: ""
+                };
+                this.fetchProfile();
+                this.show = true;
+                this.edit = false;
+                this.formErrors = false;
+            }, (response) => {
+                this.formErrors = response.data;
+            });
         },
         create_work_experience(){
             let input = this.file_work_experience;
-            //console.log(input);
             let vm = this;
             vm.$http.post('/candidate/api/work-experience/create', input).then((response) => {
                 this.file_work_experience = {
                     job_title: ""
                 }
+            }, (response) => {
+                this.formErrors = response.data;
             });
         }
     }

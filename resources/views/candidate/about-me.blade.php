@@ -1,9 +1,12 @@
 <form method="POST" enctype="multipart/form-data" v-else-if="data.profile != null"
-      v-on:submit.prevent="updateAboutMe('about_me')">
+      v-on:submit.prevent="save_about">
     <div class="form-group col-md-12 col-sm-6">
         <textarea name="about_me" id="about_me" cols="30" rows="10"
                   class="form-control" v-model="fill_profile.about_me">
         </textarea>
+        <span v-if="formErrors['about_me']" class="error text-danger">
+            @{{ formErrors['about_me'] }}
+        </span>
     </div>
     <div class="from- col-md-12">
         <div class="pull-right">

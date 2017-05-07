@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Candidate;
 use App\Models\UserExperience;
 use App\Models\UserProfile;
 use App\User;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -36,6 +37,9 @@ class RestController extends Controller
     {
         $data = $request->all();
         try {
+            $this->validate($request, [
+                'about_me' => 'required|min:2|max:255',
+            ]);
             $profile = UserProfile::with('candidate')->where('user_id', $this->auth()->id)->firstOrFail();
             $update = $profile->update($data);
             if (!$update) {
@@ -67,6 +71,9 @@ class RestController extends Controller
     {
         $data = $request->all();
         try {
+            $this->validate($request, [
+                'job_title' => 'required'
+            ]);
             $data['user_id'] = $this->auth()->id;
             $data['is_working'] = 1;
             $work_experience = UserExperience::create($data);
@@ -85,5 +92,21 @@ class RestController extends Controller
     public function auth()
     {
         return auth()->guard()->user();
+    }
+
+
+    public function update(Request $request)
+    {
+        $data = $request->all();
+        try {
+            $profile = UserProfile::with('candidate')->where('user_id', $this->auth()->id)->firstOrFail();
+            $update = $profile->update($data);
+            if (!$update) {
+                return back()->withInput()->with('error', 'Unable to save your data');
+            }
+        } catch (ModelNotFoundException $exception) {
+            return back()->withInput()->with('error', 'Unable to save your data');
+        }
+        return back()->with('success', 'Successfully update your data.');
     }
 }

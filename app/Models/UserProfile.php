@@ -12,6 +12,22 @@ class UserProfile extends Model
         'date_of_birth', 'country_id', 'city_id'
     ];
 
+
+    public static function rule()
+    {
+        return [
+            'about_me' => 'required|min:2|max:255'
+        ];
+    }
+
+
+    public static function message()
+    {
+        return [
+            'about_me.required' => 'Please field your profile.',
+        ];
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

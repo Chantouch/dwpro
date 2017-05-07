@@ -21,8 +21,8 @@
     <link href="{{ asset('assets/plugins/noty/animate.css') }}" rel="stylesheet" type="text/css"/>
     <!-- fonts -->
     <link href="{{ asset('font-awesome/4.4.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css"/>
-    <link href='http://fonts.googleapis.com/css?family=Nunito:300,400,700' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Nunito:300,400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700' rel='stylesheet' type='text/css'>
     <!-- fonts -->
     <!-- Owl Carousel -->
     <link href="{{ asset('assets/plugins/owl-carousel/owl.carousel.css') }}" rel="stylesheet" type="text/css"/>
@@ -97,7 +97,7 @@
 <script src="{{ asset('assets/plugins/form-slider/jquery.slider.js')}}" type="text/javascript"></script>
 <!-- Form Slider -->
 <!-- Map -->
-<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script src="https://maps.googleapis.com/maps/api/js"></script>
 <!-- Map -->
 <script src="{{ asset('js/dwpro.js')}}" type="text/javascript"></script>
 <script src="{{ asset('js/main.js')}}" type="text/javascript"></script>
