@@ -60,17 +60,6 @@ class Helper
         ];
     }
 
-    /**
-     * @return string
-     */
-    public static function relationship($model)
-    {
-        if ($model == null) {
-            return "Not Selected";
-        } else {
-            return $model->name;
-        }
-    }
 
     /**
      * @return array
@@ -114,6 +103,27 @@ class Helper
         return [
             '0' => 'Select',
             '1' => 'Active Searching'
+        ];
+    }
+
+    public static function skill_level()
+    {
+        return [
+            '' => 'Select the level of proficiency',
+            '1' => 'Beginner',
+            '2' => 'Intermediate',
+            '3' => 'Professional',
+        ];
+    }
+
+    public static function skill_year()
+    {
+        return [
+            '' => 'Select the years of experience in this skill',
+            '1' => '1 year or less',
+            '2' => '2-5 years',
+            '3' => '5-7 years',
+            '4' => 'More than 7 years',
         ];
     }
 
@@ -238,24 +248,28 @@ class Helper
         return Carbon::parse($date)->format('D-d-M-Y H:i A');
     }
 
-    public static function skill_level()
+    /**
+     * @param $parent
+     * @return null
+     */
+    public static function check_null($parent)
     {
-        return [
-            '' => 'Select the level of proficiency',
-            '1' => 'Beginner',
-            '2' => 'Intermediate',
-            '3' => 'Professional',
-        ];
+        if ($parent == null || $parent == '') {
+            return null;
+        }
+        return $parent;
     }
 
-    public static function skill_year()
+    /**
+     * @param $model
+     * @return string
+     */
+    public static function relationship($model)
     {
-        return [
-            '' => 'Select the years of experience in this skill',
-            '1' => '1 year or less',
-            '2' => '2-5 years',
-            '3' => '5-7 years',
-            '4' => 'More than 7 years',
-        ];
+        if ($model == null) {
+            return "Not Selected";
+        } else {
+            return $model->name;
+        }
     }
 }

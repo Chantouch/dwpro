@@ -137,6 +137,7 @@ Route::prefix('employee')->name('employee.')->group(function () {
 Auth::routes();
 Route::prefix('candidate')->name('candidate.')->group(function () {
     Route::get('/home', 'Candidate\HomeController@index')->name('home');
+    Route::get('/personal', 'Candidate\HomeController@edit_personal')->name('personal');
 });
 Route::prefix('candidate')->name('candidate.api.')->group(function () {
     Route::get('/api/profile', 'Candidate\RestController@index')->name('profile');

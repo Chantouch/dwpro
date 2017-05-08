@@ -288,31 +288,51 @@
         <!-- Profile info -->
         <div class="col-md-7">
             <div class="clearfix complete-bar-width complete-bar">
-                <div class="complete-bar-center">
-                    <h3 class="profile-completion-header">Profile Info</h3>
+                {!! Form::open(array('route' => 'employee.posts.store','method'=>'POST', 'class'=> '', 'role'=> 'form')) !!}
+                <div class="col-md-4">
+                    <div id="image-preview" style="background-image: url('{!! $auth->avatar_path !!}')">
+                        <label for="image-upload" id="image-label">Choose File</label>
+                        {!! Form::file('logo_photo',['id'=>'image-upload']) !!}
+                    </div>
+                    @if ($errors->has('logo_photo'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('logo_photo') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="col-md-8">
                     <div class="row">
-                        <div class="col-md-4">
-                            <div id="image-preview" style="background-image: url('{!! $auth->avatar_path !!}')">
-                                <label for="image-upload" id="image-label">Choose File</label>
-                                {!! Form::file('logo_photo',['id'=>'image-upload']) !!}
-                            </div>
-                            @if ($errors->has('logo_photo'))
+                        <div class="form-group col-sm-6 {{ $errors->has('name') ? ' has-error' : '' }}">
+                            {!! Form::label('first_name', 'First name:') !!}
+                            {!! Form::text('first_name', null, ['class' => 'form-control', 'autofocus']) !!}
+                            @if ($errors->has('first_name'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('logo_photo') }}</strong>
+                                    <strong>{{ $errors->first('first_name') }}</strong>
                                 </span>
                             @endif
                         </div>
-                        <div class="col-md-8">
-                            <div class="profile-info">
-                                <p>Lives in: {!! Helper::relationship($auth->city) !!}</p>
-                                <p>Email: {!! $auth->email !!}</p>
-                                <p>Phone: {!! $auth->phone_number !!}</p>
-                                <p>Gender: {!! Helper::show_gender($auth->gender) !!}</p>
-                                <p>Address: @if($auth->profile != null) {!! $auth->profile->address !!} @else @endif</p>
+                        <div class="form-group col-sm-6 {{ $errors->has('name') ? ' has-error' : '' }}">
+                            {!! Form::label('last_name', 'Last name:') !!}
+                            {!! Form::text('last_name', null, ['class' => 'form-control', 'autofocus']) !!}
+                            @if ($errors->has('last_name'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('last_name') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                        <div class="from-control col-md-12">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-success"><i
+                                            class="glyphicon glyphicon-floppy-save"></i> Submit
+                                </button>
+                                <button type="button" class="btn btn-default"><i
+                                            class="glyphicon glyphicon-remove-circle"></i> Cancel
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
+                {!! Form::close() !!}
             </div>
         </div>
 
@@ -333,185 +353,6 @@
                 <div class="profile-completion-tip">
                     <div class="profile-completion-tip-header">Tip:</div>
                     <div class="profile-completion-tip">Add your Work Experience and gain 30 points</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container" style="padding:20px 0">
-            <div class="row">
-                <div class="col-md-12 text-right">
-                    <a class="aug_legend right" href="#" target="_blank">
-                        Views/Print Identity Card <i class="fa fa-external-link"></i>
-                    </a>&nbsp;
-                </div>
-            </div>
-            <div class="row">
-                <a href="{!! route('candidate.personal') !!}">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <div class="info-box blue-bg">
-                            <i class="fa fa-user"></i>
-                            <div class="count">Bio/Personal Information</div>
-                        </div><!--/.info-box-->
-                    </div><!--/.col-->
-                </a>
-                <a href="#">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <div class="info-box facebook-bg">
-                            <i class="fa fa-book"></i>
-                            <div class="count">Education Details</div>
-                        </div><!--/.info-box-->
-                    </div><!--/.col-->
-                </a>
-                <a href="#">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <div class="info-box dark-bg">
-                            <i class="fa fa-comments-o"></i>
-                            <div class="count">Languages Known</div>
-                        </div><!--/.info-box-->
-                    </div><!--/.col-->
-                </a>
-                <a href="#">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <div class="info-box linkedin-bg">
-                            <i class="fa fa-cubes"></i>
-                            <div class="count">Experience</div>
-                        </div><!--/.info-box-->
-                    </div><!--/.col-->
-                </a>
-                <a href="#">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <div class="info-box pink-bg">
-                            <i class="fa fa-cubes"></i>
-                            <div class="count">Professional Skills</div>
-                        </div><!--/.info-box-->
-                    </div><!--/.col-->
-                </a>
-                <a href="#">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <div class="info-box dark-heading-bg">
-                            <i class="fa fa-cubes"></i>
-                            <div class="count">References</div>
-                        </div><!--/.info-box-->
-                    </div><!--/.col-->
-                </a>
-                <a href="#">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <div class="info-box brown-bg">
-                            <i class="fa fa-cubes"></i>
-                            <div class="count">Accomplish</div>
-                        </div><!--/.info-box-->
-                    </div><!--/.col-->
-                </a>
-                <a href="#">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <div class="info-box teal-bg">
-                            <i class="fa fa-comments-o"></i>
-                            <div class="count">Attachment</div>
-                        </div><!--/.info-box-->
-                    </div><!--/.col-->
-                </a>
-            </div><!--/.row-->
-        </div>
-
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title pull-left">
-                        About me
-                    </h3>
-                    <button class="btn btn-default pull-right" v-if="show && data.profile != null"
-                            @click.prevent="editAboutMe('about_me')">
-                        <i class="glyphicon glyphicon-pencil"></i> Edit
-                    </button>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="panel-body">
-                    <p v-if="profile.about_me !== null && show ">
-                        @{{ profile.about_me }}
-                    </p>
-                    @include('candidate.about-me')
-                </div>
-            </div>
-
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title pull-left">
-                        Target job
-                    </h3>
-                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="panel-body">
-                    @include('candidate.target-job')
-                </div>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title pull-left">
-                        Work experience
-                    </h3>
-                    <button class="btn btn-default pull-right" v-if="show && data.work_experience != ''">
-                        <i class="glyphicon glyphicon-pencil" @click.prevent="editAboutMe('work_experience')"></i> Edit
-                    </button>
-                    <button class="btn btn-default pull-right" v-if="show && data.work_experience != ''">
-                        <i class="glyphicon glyphicon-plus" @click.prevent="editAboutMe('work_experience')"></i> Add
-                    </button>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="panel-body">
-                    <p v-if="data.work_experience != '' && show" v-for="we in data.work_experience">
-                        <span>@{{ we.job_title }}</span>
-                    </p>
-                    @include('candidate.work-experience')
-                </div>
-            </div>
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title pull-left">
-                        Education
-                    </h3>
-                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="panel-body">
-                    @include('candidate.education')
-                </div>
-            </div>
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title pull-left">
-                        Language
-                    </h3>
-                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="panel-body">
-                    @include('candidate.language')
-                </div>
-            </div>
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title pull-left">
-                        Professional Skills
-                    </h3>
-                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="panel-body">
-                    @include('candidate.professional')
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title pull-left">
-                        References
-                    </h3>
-                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="panel-body">
-                    @include('candidate.reference')
                 </div>
             </div>
         </div>
@@ -538,7 +379,6 @@
 @section('page_specific_js')
     <script src="{!! asset('assets/plugins/image-preview/jquery.uploadPreview.min.js') !!}"></script>
     <script src="{!! asset('assets/plugins/select2/select2.min.js') !!}"></script>
-    <script src="{!! asset('js/controller/candidate/index.js') !!}"></script>
 @stop
 @section('page_specific_scripts')
     $.uploadPreview({

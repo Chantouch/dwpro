@@ -44,4 +44,13 @@ class HomeController extends Controller
             )
         );
     }
+
+    public function edit_personal(Request $request)
+    {
+        $progress = 0;
+        $auth = auth()->guard()->user();
+        if (count($auth->profile) == 1)
+            $progress = 20;
+        return view('candidate.personal', compact('auth', 'progress'));
+    }
 }

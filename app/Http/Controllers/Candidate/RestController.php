@@ -9,6 +9,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class RestController extends Controller
 {
@@ -23,9 +24,9 @@ class RestController extends Controller
 
     public function index()
     {
-        $candidate = $this->auth()->with([
+        $candidate = auth()->guard()->user()->with([
             'profile.city', 'verified_by', 'work_experience'
-        ])->firstOrFail();
+        ]);
         return response()->json($candidate);
     }
 
@@ -91,7 +92,7 @@ class RestController extends Controller
      */
     public function auth()
     {
-        return auth()->guard()->user();
+        return Auth::guard()->user();
     }
 
 
