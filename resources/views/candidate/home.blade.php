@@ -346,7 +346,7 @@
                 </div>
             </div>
             <div class="row">
-                <a href="{!! route('candidate.personal') !!}">
+                <a href="{!! route('candidate.personal',[$auth->profile->hashid]) !!}">
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                         <div class="info-box blue-bg">
                             <i class="fa fa-user"></i>

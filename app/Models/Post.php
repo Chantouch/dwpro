@@ -157,6 +157,9 @@ class Post extends Model
         return $this->name . '-' . $this->industry->name . $this->functions->name . ' in ' . $this->city->name;
     }
 
+    /**
+     * @return mixed
+     */
     public function getHashidAttribute()
     {
         return Hashids::encode($this->attributes['id']);

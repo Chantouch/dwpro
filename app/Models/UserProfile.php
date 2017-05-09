@@ -4,13 +4,24 @@ namespace App\Models;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Vinkla\Hashids\Facades\Hashids;
 
 class UserProfile extends Model
 {
+    protected $appends = ['hashid'];
+
     protected $fillable = [
         'user_id', 'cover_letter', 'about_me', 'address',
         'date_of_birth', 'country_id', 'city_id'
     ];
+
+    /**
+     * @return mixed
+     */
+    public function getHashidAttribute()
+    {
+        return Hashids::encode($this->attributes['id']);
+    }
 
 
     public static function rule()

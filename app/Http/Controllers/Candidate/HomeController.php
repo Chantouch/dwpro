@@ -9,12 +9,17 @@ use App\Models\Language;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Vinkla\Hashids\HashidsManager;
 
 class HomeController extends Controller
 {
-    public function __construct()
+
+    public $hashid;
+
+    public function __construct(HashidsManager $hashid)
     {
         $this->middleware('auth');
+        $this->hashid = $hashid;
     }
 
     /**
@@ -45,12 +50,22 @@ class HomeController extends Controller
         );
     }
 
-    public function edit_personal(Request $request)
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function edit_personal($id)
     {
         $progress = 0;
+        $decoded = $this->hashid->decode($id);
+        $id = @$decoded[0];
+        if ($id === null) {
+            return redirect()->back()->with('error', 'We can not find your info.');
+        }
         $auth = auth()->guard()->user();
+        $profile = $auth->profile->find($id);
         if (count($auth->profile) == 1)
             $progress = 20;
-        return view('candidate.personal', compact('auth', 'progress'));
+        return view('candidate.personal', compact('auth', 'progress', 'profile'));
     }
 }

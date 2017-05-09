@@ -288,7 +288,7 @@
         <!-- Profile info -->
         <div class="col-md-7">
             <div class="clearfix complete-bar-width complete-bar">
-                {!! Form::open(array('route' => 'employee.posts.store','method'=>'POST', 'class'=> '', 'role'=> 'form')) !!}
+                {!! Form::model($profile, ['route' => ['employee.posts.update', $profile->hashid], 'method' => 'patch']) !!}
                 <div class="col-md-4">
                     <div id="image-preview" style="background-image: url('{!! $auth->avatar_path !!}')">
                         <label for="image-upload" id="image-label">Choose File</label>
