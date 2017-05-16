@@ -137,7 +137,9 @@ Route::prefix('employee')->name('employee.')->group(function () {
 Auth::routes();
 Route::prefix('candidate')->name('candidate.')->group(function () {
     Route::get('/home', 'Candidate\HomeController@index')->name('home');
-    Route::get('/personal/{id}/edit', 'Candidate\HomeController@edit_personal')->name('personal');
+    Route::get('/personal/edit', 'Candidate\HomeController@edit_personal')->name('personal');
+    Route::get('/about-me/edit', 'Candidate\HomeController@edit')->name('about_me');
+    Route::patch('/about-me/update', 'Candidate\HomeController@update')->name('update');
 });
 Route::prefix('candidate')->name('candidate.api.')->group(function () {
     Route::get('/api/profile', 'Candidate\RestController@index')->name('profile');

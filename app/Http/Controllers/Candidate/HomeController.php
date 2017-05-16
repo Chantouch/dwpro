@@ -6,10 +6,13 @@ use App\Models\City;
 use App\Models\ContractType;
 use App\Models\Industry;
 use App\Models\Language;
+use App\Models\UserProfile;
 use App\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Vinkla\Hashids\HashidsManager;
+use Validator;
 
 class HomeController extends Controller
 {
@@ -20,6 +23,11 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
         $this->hashid = $hashid;
+    }
+
+    public function auth()
+    {
+        return auth()->guard()->user();
     }
 
     /**
@@ -51,21 +59,43 @@ class HomeController extends Controller
     }
 
     /**
-     * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function edit_personal($id)
+    public function edit_personal()
     {
         $progress = 0;
-        $decoded = $this->hashid->decode($id);
-        $id = @$decoded[0];
-        if ($id === null) {
-            return redirect()->back()->with('error', 'We can not find your info.');
-        }
-        $auth = auth()->guard()->user();
-        $profile = $auth->profile->find($id);
+        $auth = $this->auth();
+        $profile = $auth->profile;
         if (count($auth->profile) == 1)
             $progress = 20;
         return view('candidate.personal', compact('auth', 'progress', 'profile'));
+    }
+
+    public function edit()
+    {
+        $progress = 0;
+        $auth = $this->auth();
+        $profile = $auth->profile;
+        if (count($auth->profile) == 1)
+            $progress = 20;
+        return view('candidate.edit', compact('auth', 'progress', 'profile'));
+    }
+
+    public function update(Request $request)
+    {
+        try {
+            $data = $request->all();
+            $validator = Validator::make($data,UserProfile::rule(),UserProfile::message());
+            if ($validator->fails()) {
+                return redirect()->back()->withInput()->withErrors($validator);
+            }
+            $update = $this->auth()->profile->update($data);
+            if (!$update) {
+                return redirect()->back()->with('error', 'Error while update your profile.');
+            }
+            return redirect()->route('candidate.home')->with('message', 'Updated successfully');
+        } catch (ModelNotFoundException $exception) {
+            return redirect()->back()->with('error', 'Error while update your profile.');
+        }
     }
 }

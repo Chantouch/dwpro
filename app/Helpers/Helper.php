@@ -151,6 +151,7 @@ class Helper
     }
 
     /**
+     * @param $convert
      * @return string
      */
     public static function show_salary($convert)

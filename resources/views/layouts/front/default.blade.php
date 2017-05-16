@@ -69,6 +69,20 @@
     </div><!-- end main page title -->
     <div id="page-content">
         @yield('page_content')
+        <div class="content-about">
+            <div id="cs">
+                <div class="container">
+                    <div class="spacer-1">&nbsp;</div>
+                    <h1>Hey Friends Any Quries?</h1>
+                    <p>
+                        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
+                        deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non
+                        provident, similique sunt.
+                    </p>
+                    <h1 class="phone-cs">Call: 070 375 783</h1>
+                </div>
+            </div>
+        </div>
     </div>
     <div id="footer"><!-- Footer -->
         @include('layouts.front.footer')

@@ -2,6 +2,7 @@
 
 @section('page_specific_styles')
     <link rel="stylesheet" href="{!! asset('css/circle.css') !!}">
+    <link rel="stylesheet" href="{!! asset('plugins/summernote/summernote.css') !!}">
     <style>
         .form-horizontal .form-group {
             margin-right: 0 !important;
@@ -285,74 +286,33 @@
     {{--<img src='demo_wait.gif' width="64" height="64"/><br>Loading..--}}
     {{--</div>--}}
     <div class="row" id="user_profile">
-        <!-- Profile info -->
-        <div class="col-md-7">
-            <div class="clearfix complete-bar-width complete-bar">
-                {!! Form::model($profile, ['route' => ['employee.posts.update', $profile], 'method' => 'patch']) !!}
-                <div class="col-md-4">
-                    <div id="image-preview" style="background-image: url('{!! $auth->avatar_path !!}')">
-                        <label for="image-upload" id="image-label">Choose File</label>
-                        {!! Form::file('logo_photo',['id'=>'image-upload']) !!}
-                    </div>
-                    @if ($errors->has('logo_photo'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('logo_photo') }}</strong>
-                        </span>
-                    @endif
-                </div>
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="form-group col-sm-6 {{ $errors->has('name') ? ' has-error' : '' }}">
-                            {!! Form::label('first_name', 'First name:') !!}
-                            {!! Form::text('first_name', null, ['class' => 'form-control', 'autofocus']) !!}
-                            @if ($errors->has('first_name'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('first_name') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="form-group col-sm-6 {{ $errors->has('name') ? ' has-error' : '' }}">
-                            {!! Form::label('last_name', 'Last name:') !!}
-                            {!! Form::text('last_name', null, ['class' => 'form-control', 'autofocus']) !!}
-                            @if ($errors->has('last_name'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('last_name') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="from-control col-md-12">
-                            <div class="pull-right">
-                                <button type="submit" class="btn btn-success"><i
-                                            class="glyphicon glyphicon-floppy-save"></i> Submit
-                                </button>
-                                <button type="button" class="btn btn-default"><i
-                                            class="glyphicon glyphicon-remove-circle"></i> Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {!! Form::close() !!}
-            </div>
-        </div>
+        @include('candidate.profile-info')
 
-        <!-- Profile completion -->
-        <div class="col-md-5">
-            <div class="clearfix complete-bar-width complete-bar">
-                <div class="complete-bar-center">
-                    <h3 class="profile-completion-header">Profile Completion</h3>
-                    <div class="c100 p{!! $progress !!} green">
-                        <span>{!! $progress !!}%</span>
-                        <div class="slice">
-                            <div class="bar"></div>
-                            <div class="fill"></div>
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left">
+                        About me
+                    </h3>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    {!! Form::model($profile, ['route' => ['candidate.update'], 'method' => 'patch']) !!}
+                    <div class="form-group col-md-12 col-sm-6">
+                        {!! Form::textarea('about_me', null, ['class' => 'form-control summernote', 'autofocus']) !!}
+                        <span class="error text-danger"></span>
+                    </div>
+                    <div class="from- col-md-12">
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-success">
+                                <i class="glyphicon glyphicon-floppy-save"></i> Submit
+                            </button>
+                            <button type="button" class="btn btn-default">
+                                <i class="glyphicon glyphicon-remove-circle"></i> Cancel
+                            </button>
                         </div>
                     </div>
-                </div>
-                <h4 class="profile-completion-level">Beginner</h4>
-                <div class="profile-completion-tip">
-                    <div class="profile-completion-tip-header">Tip:</div>
-                    <div class="profile-completion-tip">Add your Work Experience and gain 30 points</div>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
@@ -360,39 +320,13 @@
 
 @stop
 
-@section('page_content')
-    <div class="content-about">
-        <div id="cs">
-            <div class="container">
-                <div class="spacer-1">&nbsp;</div>
-                <h1>Hey Friends Any Quries?</h1>
-                <p>
-                    At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
-                    deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non
-                    provident, similique sunt.
-                </p>
-                <h1 class="phone-cs">Call: 070 375 783</h1>
-            </div>
-        </div>
-    </div>
-@stop
 @section('page_specific_js')
-    <script src="{!! asset('assets/plugins/image-preview/jquery.uploadPreview.min.js') !!}"></script>
-    <script src="{!! asset('assets/plugins/select2/select2.min.js') !!}"></script>
-@stop
-@section('page_specific_scripts')
-    $.uploadPreview({
-    input_field: "#image-upload",
-    preview_box: "#image-preview",
-    label_field: "#image-label"
-    });
-
-    $("#contract_type").select2({
-    placeholder: "Select your desired contract type",
-    allowClear: true
-    });
-
-    $(".select2").select2({
-    allowClear: true
-    });
+    <script src="{!! asset('plugins/summernote/summernote.min.js') !!}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.summernote').summernote({
+                height: 200,
+            });
+        });
+    </script>
 @stop

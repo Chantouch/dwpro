@@ -27,7 +27,7 @@ class UserProfile extends Model
     public static function rule()
     {
         return [
-            'about_me' => 'required|min:2|max:255'
+            'about_me' => 'required|min:2'
         ];
     }
 
