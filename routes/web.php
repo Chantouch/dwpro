@@ -140,6 +140,9 @@ Route::prefix('candidate')->name('candidate.')->group(function () {
     Route::get('/personal/edit', 'Candidate\HomeController@edit_personal')->name('personal');
     Route::get('/about-me/edit', 'Candidate\HomeController@edit')->name('about_me');
     Route::patch('/about-me/update', 'Candidate\HomeController@update')->name('update');
+    Route::get('/experience/create', 'Candidate\HomeController@create')->name('experience.create');
+    Route::resource('/experiences', 'Candidate\ExperienceController');
+    Route::resource('/educations', 'Candidate\EducationController');
 });
 Route::prefix('candidate')->name('candidate.api.')->group(function () {
     Route::get('/api/profile', 'Candidate\RestController@index')->name('profile');

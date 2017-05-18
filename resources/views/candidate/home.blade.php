@@ -277,6 +277,10 @@
             top: 2px;
         }
 
+        .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+            /*border-top: none;*/
+        }
+
     </style>
 @stop
 @section('main_page_container')
@@ -287,82 +291,6 @@
     <div class="row" id="user_profile">
         <!-- Profile info -->
         @include('candidate.profile-info')
-
-        <div class="container" style="padding:20px 0">
-            <div class="row">
-                <div class="col-md-12 text-right">
-                    <a class="aug_legend right" href="#" target="_blank">
-                        Views/Print Identity Card <i class="fa fa-external-link"></i>
-                    </a>&nbsp;
-                </div>
-            </div>
-            <div class="row">
-                <a href="{!! route('candidate.personal') !!}">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <div class="info-box blue-bg">
-                            <i class="fa fa-user"></i>
-                            <div class="count">Bio/Personal Information</div>
-                        </div><!--/.info-box-->
-                    </div><!--/.col-->
-                </a>
-                <a href="#">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <div class="info-box facebook-bg">
-                            <i class="fa fa-book"></i>
-                            <div class="count">Education Details</div>
-                        </div><!--/.info-box-->
-                    </div><!--/.col-->
-                </a>
-                <a href="#">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <div class="info-box dark-bg">
-                            <i class="fa fa-comments-o"></i>
-                            <div class="count">Languages Known</div>
-                        </div><!--/.info-box-->
-                    </div><!--/.col-->
-                </a>
-                <a href="#">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <div class="info-box linkedin-bg">
-                            <i class="fa fa-cubes"></i>
-                            <div class="count">Experience</div>
-                        </div><!--/.info-box-->
-                    </div><!--/.col-->
-                </a>
-                <a href="#">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <div class="info-box pink-bg">
-                            <i class="fa fa-cubes"></i>
-                            <div class="count">Professional Skills</div>
-                        </div><!--/.info-box-->
-                    </div><!--/.col-->
-                </a>
-                <a href="#">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <div class="info-box dark-heading-bg">
-                            <i class="fa fa-cubes"></i>
-                            <div class="count">References</div>
-                        </div><!--/.info-box-->
-                    </div><!--/.col-->
-                </a>
-                <a href="#">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <div class="info-box brown-bg">
-                            <i class="fa fa-cubes"></i>
-                            <div class="count">Accomplish</div>
-                        </div><!--/.info-box-->
-                    </div><!--/.col-->
-                </a>
-                <a href="#">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <div class="info-box teal-bg">
-                            <i class="fa fa-comments-o"></i>
-                            <div class="count">Attachment</div>
-                        </div><!--/.info-box-->
-                    </div><!--/.col-->
-                </a>
-            </div><!--/.row-->
-        </div>
 
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -407,19 +335,60 @@
                     <h3 class="panel-title pull-left">
                         Work experience
                     </h3>
-                    <button class="btn btn-default pull-right" v-if="show && data.work_experience != ''">
-                        <i class="glyphicon glyphicon-pencil" @click.prevent="editAboutMe('work_experience')"></i> Edit
-                    </button>
-                    <button class="btn btn-default pull-right" v-if="show && data.work_experience != ''">
-                        <i class="glyphicon glyphicon-plus" @click.prevent="editAboutMe('work_experience')"></i> Add
-                    </button>
+                    <a href="{!! route('candidate.experiences.create') !!}" class="btn btn-default pull-right">
+                        <i class="glyphicon glyphicon-plus"></i> Add
+                    </a>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
-                    <p v-if="data.work_experience != '' && show" v-for="we in data.work_experience">
-                        <span>@{{ we.job_title }}</span>
-                    </p>
-                    @include('candidate.work-experience')
+                    @if(count($auth->work_experience))
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Job Title</th>
+                                    <th>Company</th>
+                                    <th>Term</th>
+                                    <th>Start-End</th>
+                                    <th>Location</th>
+                                    <th>Industry</th>
+                                    <th>Job Role</th>
+                                    <th>Career Level</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($auth->work_experience as $experience)
+                                    <tr>
+                                        <td>{!! $experience->job_title !!}</td>
+                                        <td>{!! $experience->company_name !!}</td>
+                                        <td>{!! Helper::relationship($experience->contract_type) !!}</td>
+                                        <td>{!! $experience->start_date .'-'.$experience->end_data !!}</td>
+                                        <td>{!! Helper::relationship($experience->city) !!},Cambodia</td>
+                                        <td>{!! Helper::relationship($experience->industry) !!}</td>
+                                        <td>{!! Helper::relationship($experience->functions) !!}</td>
+                                        <td>{!! Helper::relationship($experience->level) !!}</td>
+                                        <td>{!! $experience->description !!}</td>
+                                        <td>
+                                            {!! Form::open(['route' => ['candidate.experiences.edit', $experience->hashid], 'method' => 'delete']) !!}
+                                            <a href="{!! route('candidate.experiences.edit', [$experience->hashid]) !!}"
+                                               class='btn btn-default btn-xs waves-effect waves-light'>
+                                                <i class="glyphicon glyphicon-edit"></i>
+                                            </a>
+                                            {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs waves-effect waves-light', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                                            {!! Form::close() !!}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        {!! Form::open(['route' => ['candidate.experiences.store'], 'method' => 'POST']) !!}
+                        @include('candidate.experience.field')
+                        {!! Form::close() !!}
+                    @endif
                 </div>
             </div>
             <div class="panel panel-info">
@@ -427,11 +396,19 @@
                     <h3 class="panel-title pull-left">
                         Education
                     </h3>
-                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
+                    <a href="{!! route('candidate.experiences.create') !!}" class="btn btn-default pull-right">
+                        <i class="glyphicon glyphicon-plus"></i> Add
+                    </a>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
-                    @include('candidate.education')
+                    @if(count($auth->education))
+                        Education table
+                    @else
+                        {!! Form::open(['route' => ['candidate.educations.store'], 'method' => 'POST']) !!}
+                        @include('candidate.education.field')
+                        {!! Form::close() !!}
+                    @endif
                 </div>
             </div>
             <div class="panel panel-info">
