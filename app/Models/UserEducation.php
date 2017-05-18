@@ -7,8 +7,6 @@ use Vinkla\Hashids\Facades\Hashids;
 
 class UserEducation extends Model
 {
-
-
     protected $appends = "hashid";
     protected $fillable = [
         'school_name', 'description', 'start_date', 'end_date', 'is_studying', 'country_id', 'city_id',
@@ -37,5 +35,13 @@ class UserEducation extends Model
     public function getHashidAttribute()
     {
         return Hashids::encode($this->attributes['id']);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 }

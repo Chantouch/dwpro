@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\UserEducation;
 use App\Models\UserExperience;
 use App\Models\UserProfile;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -74,6 +75,14 @@ class User extends Authenticatable
     public function work_experience()
     {
         return $this->hasMany(UserExperience::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function education()
+    {
+        return $this->hasMany(UserEducation::class);
     }
 
     /**

@@ -131,10 +131,10 @@ class EducationController extends Controller
         }
         $progress = 0;
         $auth = $this->auth();
-        $profile = $auth->work_experience->find($id);
+        $profile = $auth->education->find($id);
         if (count($auth->profile) == 1)
             $progress = 20;
-        if (count($auth->work_experience) >= 1)
+        if (count($auth->education) >= 1)
             $progress = 25;
         $contract_type = ContractType::where('status', 1)->orderBy('name')->pluck('name', 'id');
         $industries = Industry::where('status', 1)->orderBy('name')->pluck('name', 'id');
@@ -146,7 +146,7 @@ class EducationController extends Controller
         $language_level = \Helper::language_level();
         $levels = Level::where('status', 1)->orderBy('name')->pluck('name', 'id');
         $skill_year = \Helper::skill_year();
-        return view('candidate.experience.edit', compact('auth', 'progress', 'profile', 'cd_status', 'contract_type',
+        return view('candidate.education.edit', compact('auth', 'progress', 'profile', 'cd_status', 'contract_type',
             'desired_salary', 'industries', 'cities', 'language_level', 'languages', 'job_roles',
             'levels', 'skill_year'));
     }
@@ -165,20 +165,20 @@ class EducationController extends Controller
             $decoded = $this->hashid->decode($id);
             $id = @$decoded[0];
             if ($id === null) {
-                return redirect()->route('admin.currencies.index')->with('error', 'We can not find currency with that id, please try the other');
+                return redirect()->route('admin.educations.index')->with('error', 'We can not find educations with that id, please try the other');
             }
-            $experience = $this->auth()->work_experience->find($id);
+            $education = $this->auth()->education->find($id);
             $validator = Validator::make($data, UserEducation::rules(), UserEducation::messages());
             if ($validator->fails()) {
                 return redirect()->back()->withInput()->withErrors($validator);
             }
-            $update = $experience->update($data);
+            $update = $education->update($data);
             if (!$update) {
-                return redirect()->back()->with('error', 'Error while update your profile.');
+                return redirect()->back()->with('error', 'Error while update your educations.');
             }
-            return redirect()->route('candidate.home')->with('message', 'Your experience updated successfully');
+            return redirect()->route('candidate.home')->with('message', 'Your educations updated successfully');
         } catch (ModelNotFoundException $exception) {
-            return redirect()->back()->with('error', 'Error while update your profile.');
+            return redirect()->back()->with('error', 'Error while update your educations.');
         }
     }
 
@@ -193,13 +193,13 @@ class EducationController extends Controller
         $decoded = $this->hashid->decode($id);
         $id = @$decoded[0];
         if ($id === null) {
-            return redirect()->back()->with('error', 'We can not find currency with that id, please try the other');
+            return redirect()->back()->with('error', 'We can not find education with that id, please try the other');
         }
-        $experience = $this->auth()->work_experience->find($id);
-        $delete = $experience->delete();
+        $educations = $this->auth()->education->find($id);
+        $delete = $educations->delete();
         if (!$delete) {
-            return back()->with('error', 'Your currency can not delete from your system right now. Plz try again later.');
+            return back()->with('error', 'Your educations can not delete from your system right now. Plz try again later.');
         }
-        return redirect()->back()->with('success', 'Currency deleted successfully');
+        return redirect()->back()->with('success', 'Educations deleted successfully');
     }
 }

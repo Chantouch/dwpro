@@ -371,7 +371,7 @@
                                         <td>{!! Helper::relationship($experience->level) !!}</td>
                                         <td>{!! $experience->description !!}</td>
                                         <td>
-                                            {!! Form::open(['route' => ['candidate.experiences.edit', $experience->hashid], 'method' => 'delete']) !!}
+                                            {!! Form::open(['route' => ['candidate.experiences.destroy', $experience->hashid], 'method' => 'delete']) !!}
                                             <a href="{!! route('candidate.experiences.edit', [$experience->hashid]) !!}"
                                                class='btn btn-default btn-xs waves-effect waves-light'>
                                                 <i class="glyphicon glyphicon-edit"></i>
@@ -396,14 +396,47 @@
                     <h3 class="panel-title pull-left">
                         Education
                     </h3>
-                    <a href="{!! route('candidate.experiences.create') !!}" class="btn btn-default pull-right">
+                    <a href="{!! route('candidate.educations.create') !!}" class="btn btn-default pull-right">
                         <i class="glyphicon glyphicon-plus"></i> Add
                     </a>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
                     @if(count($auth->education))
-                        Education table
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>School</th>
+                                    <th>Location</th>
+                                    <th>Field of study</th>
+                                    <th>Grad</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($auth->education as $edu)
+                                    <tr>
+                                        <td>{!! $edu->school_name !!}</td>
+                                        <td>{!! Helper::relationship($edu->city) !!}, Cambodia</td>
+                                        <td>{!! $edu->field_of_study !!}</td>
+                                        <td>{!! $edu->grad !!}</td>
+                                        <td>{!! $edu->description !!}</td>
+                                        <td>
+                                            {!! Form::open(['route' => ['candidate.educations.destroy', $edu->hashid], 'method' => 'delete']) !!}
+                                            <a href="{!! route('candidate.educations.edit', [$edu->hashid]) !!}"
+                                               class='btn btn-default btn-xs waves-effect waves-light'>
+                                                <i class="glyphicon glyphicon-edit"></i>
+                                            </a>
+                                            {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs waves-effect waves-light', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                                            {!! Form::close() !!}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     @else
                         {!! Form::open(['route' => ['candidate.educations.store'], 'method' => 'POST']) !!}
                         @include('candidate.education.field')

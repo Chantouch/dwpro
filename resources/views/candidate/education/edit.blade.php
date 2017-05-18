@@ -297,21 +297,8 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
-                    {!! Form::model($profile, ['route' => ['candidate.update'], 'method' => 'patch']) !!}
-                    <div class="form-group col-md-12 col-sm-6">
-                        {!! Form::textarea('about_me', null, ['class' => 'form-control summernote', 'autofocus']) !!}
-                        <span class="error text-danger"></span>
-                    </div>
-                    <div class="from- col-md-12">
-                        <div class="pull-right">
-                            <button type="submit" class="btn btn-success">
-                                <i class="glyphicon glyphicon-floppy-save"></i> Submit
-                            </button>
-                            <button type="button" class="btn btn-default">
-                                <i class="glyphicon glyphicon-remove-circle"></i> Cancel
-                            </button>
-                        </div>
-                    </div>
+                    {!! Form::model($profile, ['route' => ['candidate.educations.update',$profile->hashid], 'method' => 'patch']) !!}
+                    @include('candidate.education.field')
                     {!! Form::close() !!}
                 </div>
             </div>
@@ -323,7 +310,7 @@
 @section('page_specific_js')
     <script src="{!! asset('plugins/summernote/summernote.min.js') !!}"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.summernote').summernote({
                 height: 200,
             });

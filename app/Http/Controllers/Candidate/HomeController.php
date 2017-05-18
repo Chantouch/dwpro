@@ -55,11 +55,13 @@ class HomeController extends Controller
         $language_level = \Helper::language_level();
         $skill_level = \Helper::skill_level();
         $skill_year = \Helper::skill_year();
+        $job_roles = Functions::where('status', 1)->orderBy('name')->pluck('name', 'id');
+        $levels = Level::where('status', 1)->orderBy('name')->pluck('name', 'id');
         return view('candidate.home',
             compact(
                 'title', 'progress', 'auth', 'cd_status', 'contract_type',
                 'desired_salary', 'industries', 'cities', 'language_level', 'languages',
-                'skill_level', 'skill_year'
+                'skill_level', 'skill_year', 'job_roles', 'levels'
             )
         );
     }
