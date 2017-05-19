@@ -143,6 +143,7 @@ Route::prefix('candidate')->name('candidate.')->group(function () {
     Route::get('/experience/create', 'Candidate\HomeController@create')->name('experience.create');
     Route::resource('/experiences', 'Candidate\ExperienceController');
     Route::resource('/educations', 'Candidate\EducationController');
+    Route::resource('/languages', 'Candidate\LanguageController');
 });
 Route::prefix('candidate')->name('candidate.api.')->group(function () {
     Route::get('/api/profile', 'Candidate\RestController@index')->name('profile');

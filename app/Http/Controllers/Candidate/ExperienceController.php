@@ -164,7 +164,7 @@ class ExperienceController extends Controller
             $decoded = $this->hashid->decode($id);
             $id = @$decoded[0];
             if ($id === null) {
-                return redirect()->route('admin.currencies.index')->with('error', 'We can not find currency with that id, please try the other');
+                return redirect()->route('admin.experiences.index')->with('error', 'We can not find currency with that id, please try the other');
             }
             $experience = $this->auth()->work_experience->find($id);
             $validator = Validator::make($data, UserExperience::rules(), UserExperience::messages());
@@ -192,13 +192,13 @@ class ExperienceController extends Controller
         $decoded = $this->hashid->decode($id);
         $id = @$decoded[0];
         if ($id === null) {
-            return redirect()->back()->with('error', 'We can not find currency with that id, please try the other');
+            return redirect()->back()->with('error', 'We can not find Experience with that id, please try the other');
         }
         $experience = $this->auth()->work_experience->find($id);
         $delete = $experience->delete();
         if (!$delete) {
-            return back()->with('error', 'Your currency can not delete from your system right now. Plz try again later.');
+            return back()->with('error', 'Your Experience can not delete from your system right now. Plz try again later.');
         }
-        return redirect()->back()->with('success', 'Currency deleted successfully');
+        return redirect()->back()->with('success', 'Experience deleted successfully');
     }
 }

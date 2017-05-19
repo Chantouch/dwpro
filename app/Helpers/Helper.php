@@ -273,4 +273,17 @@ class Helper
             return $model->name;
         }
     }
+
+    /**
+     * @return array
+     */
+    public static function language_level_show($)
+    {
+        return [
+            '' => 'Select the level of proficiency you have in this language',
+            '0' => 'Basic Knowledge',
+            '1' => 'Conversational',
+            '2' => 'Full working proficiency',
+        ];
+    }
 }

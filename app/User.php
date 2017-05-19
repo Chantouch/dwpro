@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\UserEducation;
 use App\Models\UserExperience;
+use App\Models\UserLanguage;
 use App\Models\UserProfile;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -83,6 +84,13 @@ class User extends Authenticatable
     public function education()
     {
         return $this->hasMany(UserEducation::class);
+    }
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function language()
+    {
+        return $this->hasMany(UserLanguage::class);
     }
 
     /**

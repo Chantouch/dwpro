@@ -10,7 +10,7 @@ class UserEducation extends Model
     protected $appends = "hashid";
     protected $fillable = [
         'school_name', 'description', 'start_date', 'end_date', 'is_studying', 'country_id', 'city_id',
-        'field_of_study', 'grad', 'level', 'user_id'
+        'field_of_study', 'grade', 'level', 'user_id'
     ];
 
     public static function rules()
