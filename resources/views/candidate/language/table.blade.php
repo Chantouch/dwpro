@@ -4,13 +4,6 @@
         <tr>
             <th>Job Title</th>
             <th>Company</th>
-            <th>Term</th>
-            <th>Start-End</th>
-            <th>Location</th>
-            <th>Industry</th>
-            <th>Job Role</th>
-            <th>Career Level</th>
-            <th>Description</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -18,7 +11,7 @@
         @foreach($auth->language as $language)
             <tr>
                 <td>{!! Helper::relationship($language->language) !!}</td>
-                <td>{!! Helper::language_level() !!}</td>
+                <td>{!! Helper::language_level_show($language->level) !!}</td>
                 <td>
                     {!! Form::open(['route' => ['candidate.languages.destroy', $language->hashid], 'method' => 'delete']) !!}
                     <a href="{!! route('candidate.languages.edit', [$language->hashid]) !!}"

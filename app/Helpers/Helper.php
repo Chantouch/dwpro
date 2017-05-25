@@ -275,15 +275,17 @@ class Helper
     }
 
     /**
-     * @return array
+     * @param $level
+     * @return array|string
      */
-    public static function language_level_show($)
+    public static function language_level_show($level)
     {
-        return [
-            '' => 'Select the level of proficiency you have in this language',
-            '0' => 'Basic Knowledge',
-            '1' => 'Conversational',
-            '2' => 'Full working proficiency',
-        ];
+        if ($level === 0)
+            return 'Basic Knowledge';
+        if ($level === 1)
+            return 'Conversational';
+        if ($level === 2)
+            return 'Full working proficiency';
+        return "None for all ";
     }
 }
