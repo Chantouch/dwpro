@@ -287,18 +287,17 @@
     {{--</div>--}}
     <div class="row" id="user_profile">
         @include('candidate.profile-info')
-
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title pull-left">
-                        Work Experience
+                        Experience
                     </h3>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
-                    {!! Form::open(['route' => ['candidate.languages.store'], 'method' => 'POST']) !!}
-                    @include('candidate.language.field')
+                    {!! Form::model($profile, ['route' => ['candidate.target-jobs.update',$profile->hashid], 'method' => 'patch']) !!}
+                    @include('candidate.target-job.field')
                     {!! Form::close() !!}
                 </div>
             </div>
@@ -308,12 +307,31 @@
 @stop
 
 @section('page_specific_js')
+    <script src="{!! asset('assets/plugins/image-preview/jquery.uploadPreview.min.js') !!}"></script>
+    <script src="{!! asset('assets/plugins/select2/select2.min.js') !!}"></script>
+    <script src="{!! asset('js/controller/candidate/index.js') !!}"></script>
     <script src="{!! asset('plugins/summernote/summernote.min.js') !!}"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.summernote').summernote({
                 height: 200,
             });
         });
     </script>
+@stop
+@section('page_specific_scripts')
+    $.uploadPreview({
+    input_field: "#image-upload",
+    preview_box: "#image-preview",
+    label_field: "#image-label"
+    });
+
+    $("#contract_type").select2({
+    placeholder: "Select your desired contract type",
+    allowClear: true
+    });
+
+    $(".select2").select2({
+    allowClear: true
+    });
 @stop

@@ -48,6 +48,27 @@ class Helper
         ];
     }
 
+    public static function professional_level()
+    {
+        return [
+            '' => 'Select the level of proficiency',
+            '1' => 'Beginner',
+            '2' => 'Intermediate',
+            '3' => 'Professional',
+        ];
+    }
+
+    public static function year_exp()
+    {
+        return [
+            '' => 'Select the years of experience in this skill',
+            '1' => '1 year or less',
+            '2' => '2-5 years',
+            '3' => '5-7 years',
+            '4' => 'More than 7 years',
+        ];
+    }
+
     /**
      * @return array
      */
@@ -101,8 +122,10 @@ class Helper
     public static function candidate_status()
     {
         return [
-            '0' => 'Select',
-            '1' => 'Active Searching'
+            '0' => 'Select your current employment status',
+            '1' => 'Active Searching',
+            '2' => 'Employed but open to opportunities',
+            '3' => 'Employed not open to opportunities',
         ];
     }
 
@@ -280,12 +303,55 @@ class Helper
      */
     public static function language_level_show($level)
     {
-        if ($level === 0)
+        if ($level === "0")
             return 'Basic Knowledge';
-        if ($level === 1)
+        if ($level === "1")
             return 'Conversational';
-        if ($level === 2)
+        if ($level === "2")
             return 'Full working proficiency';
-        return "None for all ";
+        return "None for all";
     }
+
+    public static function professional_level_show($professional)
+    {
+        if ($professional === "1")
+            return 'Beginner';
+        if ($professional === "2")
+            return 'Intermediate';
+        if ($professional === "3")
+            return 'Professional';
+        return "None for all";
+    }
+
+    public static function year_exp_show($years)
+    {
+        if ($years == "1")
+            return '1 year or less';
+        if ($years == "2")
+            return '2-5 years';
+        if ($years == "3")
+            return '5-7 years';
+        if ($years == "4")
+            return 'More than 7 years';
+        return "None for all";
+    }
+
+    /**
+     * @param $status
+     * @return string
+     */
+    public static function candidate_status_show($status)
+    {
+        if ($status == "1")
+            return "Active Searching";
+        if ($status == "2")
+            return 'Employed but open to opportunities';
+        if ($status == "3")
+            return 'Employed not open to opportunities';
+
+        return "None for all";
+
+    }
+
+
 }

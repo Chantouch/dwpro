@@ -292,14 +292,22 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title pull-left">
-                        About me
+                        @if(Request::segment(2) == 'cover-letter')
+                            Cover letter
+                        @else
+                            About me
+                        @endif
                     </h3>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
                     {!! Form::model($profile, ['route' => ['candidate.update'], 'method' => 'patch']) !!}
                     <div class="form-group col-md-12 col-sm-6">
-                        {!! Form::textarea('about_me', null, ['class' => 'form-control summernote', 'autofocus']) !!}
+                        @if(Request::segment(2) == 'cover-letter')
+                            {!! Form::textarea('cover_letter', null, ['class' => 'form-control summernote', 'autofocus']) !!}
+                        @else
+                            {!! Form::textarea('about_me', null, ['class' => 'form-control summernote', 'autofocus']) !!}
+                        @endif
                         <span class="error text-danger"></span>
                     </div>
                     <div class="from- col-md-12">
@@ -323,7 +331,7 @@
 @section('page_specific_js')
     <script src="{!! asset('plugins/summernote/summernote.min.js') !!}"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.summernote').summernote({
                 height: 200,
             });

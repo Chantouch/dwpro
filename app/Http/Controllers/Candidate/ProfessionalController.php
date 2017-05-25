@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers\Candidate;
 
-use App\Models\City;
-use App\Models\ContractType;
-use App\Models\Functions;
-use App\Models\Industry;
-use App\Models\Level;
-use App\Models\TargetJob;
+use App\Models\Language;
+use App\Models\UserSkill;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,7 +11,7 @@ use Vinkla\Hashids\HashidsManager;
 use Validator;
 use DB;
 
-class TargetJobController extends Controller
+class ProfessionalController extends Controller
 {
     public $hashid;
 
@@ -62,7 +58,7 @@ class TargetJobController extends Controller
             $progress = 35;
         $year_exp = \Helper::year_exp();
         $professional_level = \Helper::professional_level();
-        return view('candidate.target-job.create', compact('auth', 'progress', 'year_exp', 'professional_level'));
+        return view('candidate.professional.create', compact('auth', 'progress', 'year_exp', 'professional_level'));
     }
 
     /**
@@ -76,21 +72,23 @@ class TargetJobController extends Controller
         $data = $request->all();
         try {
             DB::beginTransaction();
-            $validator = Validator::make($data, TargetJob::rules(), TargetJob::messages());
+            $validator = Validator::make($data, UserSkill::rules(), UserSkill::messages());
             if ($validator->fails()) {
                 return redirect()->back()->withInput()->withErrors($validator);
             }
             $data['user_id'] = $this->auth()->id;
-            $save = TargetJob::create($data);
+            $data['level'] = $request->level;
+            $data['year_exp'] = $request->year_exp;
+            $save = UserSkill::create($data);
             if (!$save) {
                 DB::rollback();
-                return redirect()->back()->with('error', 'Error while saving your target-job.');
+                return redirect()->back()->with('error', 'Error while saving your professional.');
             }
             DB::commit();
-            return redirect()->route('candidate.home')->with('message', 'Target job saved successfully');
+            return redirect()->route('candidate.home')->with('message', 'Professional skill saved successfully');
 
         } catch (ModelNotFoundException $exception) {
-            return redirect()->back()->with('error', 'Error while saving your target-job.');
+            return redirect()->back()->with('error', 'Error while saving your professional.');
         }
     }
 
@@ -122,23 +120,14 @@ class TargetJobController extends Controller
         $auth = $this->auth();
         $year_exp = \Helper::year_exp();
         $professional_level = \Helper::professional_level();
-        $profile = $auth->target_job->find($id);
+        $profile = $auth->professional->find($id);
         if (count($auth->profile) == 1)
             $progress = 20;
         if (count($auth->work_experience) >= 1)
             $progress = 25;
-        if (count($auth->target_job) >= 1)
+        if (count($auth->professional) >= 1)
             $progress = 30;
-
-        $contract_type = ContractType::where('status', 1)->orderBy('name')->pluck('name', 'id');
-        $industries = Industry::where('status', 1)->orderBy('name')->pluck('name', 'id');
-        $cities = City::where('status', 1)->orderBy('name')->pluck('name', 'id');
-        $cd_status = \Helper::candidate_status();
-        $desired_salary = \Helper::salary();
-        return view('candidate.target-job.edit',
-            compact('profile', 'progress', 'auth', 'year_exp', 'professional_level',
-                'cd_status', 'contract_type', 'industries', 'desired_salary', 'cities')
-        );
+        return view('candidate.professional.edit', compact('profile', 'progress', 'auth', 'year_exp', 'professional_level'));
     }
 
     /**
@@ -155,19 +144,21 @@ class TargetJobController extends Controller
             $decoded = $this->hashid->decode($id);
             $id = @$decoded[0];
             if ($id === null) {
-                return redirect()->route('admin.target-jobs.index')->with('error', 'We can not find Target job with that id, please try the other');
+                return redirect()->route('admin.professionals.index')->with('error', 'We can not find Professional skill with that id, please try the other');
             }
-            $target_job = $this->auth()->target_job->find($id);
-            $validator = Validator::make($data, TargetJob::rules(), TargetJob::messages());
+            $professional = $this->auth()->professional->find($id);
+            $validator = Validator::make($data, UserSkill::rules(), UserSkill::messages());
             if ($validator->fails()) {
                 return redirect()->back()->withInput()->withErrors($validator);
             }
-            $update = $target_job->update($data);
+            $data['level'] = $request->level;
+            $data['year_exp'] = $request->year_exp;
+            $update = $professional->update($data);
             if (!$update) {
                 return redirect()->back()->with('error', 'Error while update your profile.');
             }
             DB::commit();
-            return redirect()->route('candidate.home')->with('message', 'Target job updated successfully');
+            return redirect()->route('candidate.home')->with('message', 'Professional skill updated successfully');
         } catch (ModelNotFoundException $exception) {
             return redirect()->back()->with('error', 'Error while update your profile.');
         }
@@ -184,13 +175,13 @@ class TargetJobController extends Controller
         $decoded = $this->hashid->decode($id);
         $id = @$decoded[0];
         if ($id === null) {
-            return redirect()->back()->with('error', 'We can not find target-job with that id, please try the other');
+            return redirect()->back()->with('error', 'We can not find professional with that id, please try the other');
         }
-        $target_job = $this->auth()->target_job->find($id);
-        $delete = $target_job->delete();
+        $professional = $this->auth()->professional->find($id);
+        $delete = $professional->delete();
         if (!$delete) {
-            return back()->with('error', 'Your target-job can not delete from your system right now. Plz try again later.');
+            return back()->with('error', 'Your professional can not delete from your system right now. Plz try again later.');
         }
-        return redirect()->back()->with('message', 'Your target-job deleted successfully');
+        return redirect()->back()->with('message', 'Your professional deleted successfully');
     }
 }

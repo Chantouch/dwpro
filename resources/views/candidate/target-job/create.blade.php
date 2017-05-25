@@ -297,8 +297,8 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
-                    {!! Form::open(['route' => ['candidate.languages.store'], 'method' => 'POST']) !!}
-                    @include('candidate.language.field')
+                    {!! Form::open(['route' => ['candidate.experiences.store'], 'method' => 'POST']) !!}
+                    @include('candidate.experience.field')
                     {!! Form::close() !!}
                 </div>
             </div>

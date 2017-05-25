@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Candidate;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\UserAttachment;
+use Illuminate\Http\Request;
 
-class ProSkillController extends Controller
+class UserAttachmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class ProSkillController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\UserAttachment  $userAttachment
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(UserAttachment $userAttachment)
     {
         //
     }
@@ -52,10 +53,10 @@ class ProSkillController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\UserAttachment  $userAttachment
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(UserAttachment $userAttachment)
     {
         //
     }
@@ -64,10 +65,10 @@ class ProSkillController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\UserAttachment  $userAttachment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, UserAttachment $userAttachment)
     {
         //
     }
@@ -75,10 +76,10 @@ class ProSkillController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\UserAttachment  $userAttachment
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(UserAttachment $userAttachment)
     {
         //
     }

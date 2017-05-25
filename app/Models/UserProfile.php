@@ -39,6 +39,36 @@ class UserProfile extends Model
         ];
     }
 
+    public static function rule_about()
+    {
+        return [
+            'about_me' => 'required|min:2'
+        ];
+    }
+
+
+    public static function message_about()
+    {
+        return [
+            'about_me.required' => 'Please field your profile.',
+        ];
+    }
+
+    public static function rule_cover()
+    {
+        return [
+            'cover_letter' => 'required|min:2'
+        ];
+    }
+
+
+    public static function message_cover()
+    {
+        return [
+            'cover_letter.required' => 'Please field your cover letter',
+        ];
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

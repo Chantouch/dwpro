@@ -2,10 +2,14 @@
 
 namespace App;
 
+use App\Models\TargetJob;
+use App\Models\UserAttachment;
 use App\Models\UserEducation;
 use App\Models\UserExperience;
 use App\Models\UserLanguage;
 use App\Models\UserProfile;
+use App\Models\UserReference;
+use App\Models\UserSkill;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Notifications\Notifiable;
@@ -85,12 +89,45 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserEducation::class);
     }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function language()
     {
         return $this->hasMany(UserLanguage::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function professional()
+    {
+        return $this->hasMany(UserSkill::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reference()
+    {
+        return $this->hasMany(UserReference::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function attachment()
+    {
+        return $this->hasMany(UserAttachment::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function target_job()
+    {
+        return $this->hasOne(TargetJob::class);
     }
 
     /**

@@ -297,8 +297,8 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
-                    {!! Form::model($profile, ['route' => ['candidate.educations.update',$profile->hashid], 'method' => 'patch']) !!}
-                    @include('candidate.education.field')
+                    {!! Form::model($profile, ['route' => ['candidate.languages.update',$profile->hashid], 'method' => 'patch']) !!}
+                    @include('candidate.language.field')
                     {!! Form::close() !!}
                 </div>
             </div>

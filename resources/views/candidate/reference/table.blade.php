@@ -2,19 +2,25 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Language</th>
-            <th>Level</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Position</th>
+            <th>Phone number</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($auth->language as $language)
+        @foreach($auth->reference as $reference)
             <tr>
-                <td>{!! Helper::relationship($language->language) !!}</td>
-                <td>{!! Helper::language_level_show($language->level) !!}</td>
+                <td>{!! $reference->first_name !!}</td>
+                <td>{!! $reference->last_name !!}</td>
+                <td>{!! $reference->email !!}</td>
+                <td>{!! $reference->position !!}</td>
+                <td>{!! $reference->phone_number !!}</td>
                 <td>
-                    {!! Form::open(['route' => ['candidate.languages.destroy', $language->hashid], 'method' => 'delete']) !!}
-                    <a href="{!! route('candidate.languages.edit', [$language->hashid]) !!}"
+                    {!! Form::open(['route' => ['candidate.references.destroy', $reference->hashid], 'method' => 'delete']) !!}
+                    <a href="{!! route('candidate.references.edit', [$reference->hashid]) !!}"
                        class='btn btn-default btn-xs waves-effect waves-light'>
                         <i class="glyphicon glyphicon-edit"></i>
                     </a>

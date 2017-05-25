@@ -2,6 +2,7 @@
 
 @section('page_specific_styles')
     <link rel="stylesheet" href="{!! asset('css/circle.css') !!}">
+    <link rel="stylesheet" href="{!! asset('plugins/summernote/summernote.css') !!}">
     <style>
         .form-horizontal .form-group {
             margin-right: 0 !important;
@@ -311,9 +312,25 @@
                     @if(!empty($auth->profile))
                         @if(!empty($auth->profile->about_me))
                             <p>{!! $auth->profile->about_me !!}</p>
+                        @else
+                            {!! Form::model($auth->profile, ['route' => ['candidate.update'], 'method' => 'patch']) !!}
+                            <div class="form-group col-md-12 col-sm-6">
+                                {!! Form::textarea('about_me', null, ['class' => 'form-control summernote', 'autofocus']) !!}
+                                <span class="error text-danger"></span>
+                            </div>
+                            <div class="from- col-md-12">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="glyphicon glyphicon-floppy-save"></i> Submit
+                                    </button>
+                                    <button type="button" class="btn btn-default">
+                                        <i class="glyphicon glyphicon-remove-circle"></i> Cancel
+                                    </button>
+                                </div>
+                            </div>
+                            {!! Form::close() !!}
                         @endif
                     @endif
-                    {{--@include('candidate.about-me')--}}
                 </div>
             </div>
 
@@ -326,7 +343,13 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
-                    @include('candidate.target-job')
+                    @if(!empty($auth->target_job))
+                        @include('candidate.target-job.table')
+                    @else
+                        {!! Form::open(['route' => ['candidate.target-jobs.store'], 'method' => 'POST']) !!}
+                        @include('candidate.target-job.field')
+                        {!! Form::close() !!}
+                    @endif
                 </div>
             </div>
 
@@ -375,7 +398,8 @@
                     <h3 class="panel-title pull-left">
                         Language
                     </h3>
-                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                    <a href="{!! route('candidate.languages.create') !!}" class="btn btn-default pull-right">
+                        <i class="glyphicon glyphicon-plus"></i> Add</a>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
@@ -393,11 +417,18 @@
                     <h3 class="panel-title pull-left">
                         Professional Skills
                     </h3>
-                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
+                    <a href="{!! route('candidate.professionals.create') !!}" class="btn btn-default pull-right">
+                        <i class="glyphicon glyphicon-plus"></i> Add</a>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
-                    @include('candidate.professional')
+                    @if(count($auth->professional))
+                        @include('candidate.professional.table')
+                    @else
+                        {!! Form::open(['route' => ['candidate.professionals.store'], 'method' => 'POST']) !!}
+                        @include('candidate.professional.field')
+                        {!! Form::close() !!}
+                    @endif
                 </div>
             </div>
             <div class="panel panel-default">
@@ -405,11 +436,58 @@
                     <h3 class="panel-title pull-left">
                         References
                     </h3>
-                    <button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
+                    <a href="{!! route('candidate.references.create') !!}" class="btn btn-default pull-right">
+                        <i class="glyphicon glyphicon-plus"></i> Add</a>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
-                    @include('candidate.reference')
+                    @if(count($auth->reference))
+                        @include('candidate.reference.table')
+                    @else
+                        {!! Form::open(['route' => ['candidate.references.store'], 'method' => 'POST']) !!}
+                        @include('candidate.reference.field')
+                        {!! Form::close() !!}
+                    @endif
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left">
+                        Cover Letter
+                    </h3>
+                    @if(!empty($auth->profile))
+                        @if(!empty($auth->profile->cover_letter))
+                            <a href="{!! route('candidate.cover_letter') !!}" class="btn btn-default pull-right">
+                                <i class="glyphicon glyphicon-pencil"></i> Edit
+                            </a>
+                        @endif
+                    @endif
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    @if(!empty($auth->profile))
+                        @if(!empty($auth->profile->cover_letter))
+                            <p>{!! $auth->profile->cover_letter !!}</p>
+                        @else
+                            {!! Form::model($auth->profile, ['route' => ['candidate.update'], 'method' => 'patch']) !!}
+                            <div class="form-group col-md-12 col-sm-6">
+                                {!! Form::textarea('cover_letter', null, ['class' => 'form-control summernote', 'autofocus']) !!}
+                                <span class="error text-danger"></span>
+                            </div>
+                            <div class="from- col-md-12">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="glyphicon glyphicon-floppy-save"></i> Submit
+                                    </button>
+                                    <button type="button" class="btn btn-default">
+                                        <i class="glyphicon glyphicon-remove-circle"></i> Cancel
+                                    </button>
+                                </div>
+                            </div>
+                            {!! Form::close() !!}
+                        @endif
+                    @endif
                 </div>
             </div>
         </div>
@@ -420,6 +498,14 @@
     <script src="{!! asset('assets/plugins/image-preview/jquery.uploadPreview.min.js') !!}"></script>
     <script src="{!! asset('assets/plugins/select2/select2.min.js') !!}"></script>
     <script src="{!! asset('js/controller/candidate/index.js') !!}"></script>
+    <script src="{!! asset('plugins/summernote/summernote.min.js') !!}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.summernote').summernote({
+                height: 200,
+            });
+        });
+    </script>
 @stop
 @section('page_specific_scripts')
     $.uploadPreview({

@@ -291,7 +291,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title pull-left">
-                        About me
+                        Experience
                     </h3>
                     <div class="clearfix"></div>
                 </div>

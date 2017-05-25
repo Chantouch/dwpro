@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Vinkla\Hashids\Facades\Hashids;
 
-class UserSkill extends Model
+class UserAttachment extends Model
 {
-
     protected $appends = "hashid";
     protected $fillable = [
-        'name', 'level', 'year_exp', 'user_id'
+        'user_id', 'name', 'path', 'file'
     ];
 
     /**
@@ -21,21 +20,18 @@ class UserSkill extends Model
         return Hashids::encode($this->attributes['id']);
     }
 
-
     public static function rules()
     {
         return [
-            'year_exp' => 'required',
             'name' => 'required',
-            'level' => 'required',
+            'file' => 'required',
         ];
     }
 
     public static function messages()
     {
         return [
-            'year_exp.required' => 'Years of Experience is required',
+
         ];
     }
-
 }

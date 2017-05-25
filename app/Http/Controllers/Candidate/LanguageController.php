@@ -52,9 +52,9 @@ class LanguageController extends Controller
             $progress = 20;
         if (count($auth->education) >= 1)
             $progress = 25;
-        $language = Language::where('status', 1)->orderBy('name')->pluck('name', 'id');
+        $languages = Language::where('status', 1)->orderBy('name')->pluck('name', 'id');
         $language_level = \Helper::language_level();
-        return view('candidate.language', compact('auth', 'progress', 'language', 'language_level'));
+        return view('candidate.language.create', compact('auth', 'progress', 'languages', 'language_level'));
     }
 
     /**
@@ -73,6 +73,7 @@ class LanguageController extends Controller
                 return redirect()->back()->withInput()->withErrors($validator);
             }
             $data['user_id'] = $this->auth()->id;
+            $data['level'] = $request->level;
             $save = UserLanguage::create($data);
             if (!$save) {
                 DB::rollback();
@@ -112,11 +113,16 @@ class LanguageController extends Controller
         }
         $progress = 0;
         $auth = $this->auth();
-        $profile = $auth->work_experience->find($id);
+        $languages = Language::where('status', 1)->orderBy('name')->pluck('name', 'id');
+        $language_level = \Helper::language_level();
+        $profile = $auth->language->find($id);
         if (count($auth->profile) == 1)
             $progress = 20;
         if (count($auth->work_experience) >= 1)
             $progress = 25;
+        if (count($auth->language) >= 1)
+            $progress = 30;
+        return view('candidate.language.edit', compact('profile', 'progress', 'auth', 'languages', 'language_level'));
     }
 
     /**
@@ -135,12 +141,13 @@ class LanguageController extends Controller
             if ($id === null) {
                 return redirect()->route('admin.languages.index')->with('error', 'We can not find currency with that id, please try the other');
             }
-            $experience = $this->auth()->work_experience->find($id);
+            $language = $this->auth()->language->find($id);
             $validator = Validator::make($data, UserLanguage::rules(), UserLanguage::messages());
             if ($validator->fails()) {
                 return redirect()->back()->withInput()->withErrors($validator);
             }
-            $update = $experience->update($data);
+            $data['level'] = $request->level;
+            $update = $language->update($data);
             if (!$update) {
                 return redirect()->back()->with('error', 'Error while update your profile.');
             }
@@ -164,11 +171,11 @@ class LanguageController extends Controller
         if ($id === null) {
             return redirect()->back()->with('error', 'We can not find language with that id, please try the other');
         }
-        $experience = $this->auth()->work_experience->find($id);
-        $delete = $experience->delete();
+        $language = $this->auth()->language->find($id);
+        $delete = $language->delete();
         if (!$delete) {
             return back()->with('error', 'Your language can not delete from your system right now. Plz try again later.');
         }
-        return redirect()->back()->with('success', 'Your language deleted successfully');
+        return redirect()->back()->with('message', 'Your language deleted successfully');
     }
 }

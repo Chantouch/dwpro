@@ -292,13 +292,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title pull-left">
-                        Work Experience
+                        About me
                     </h3>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
-                    {!! Form::open(['route' => ['candidate.languages.store'], 'method' => 'POST']) !!}
-                    @include('candidate.language.field')
+                    {!! Form::model($profile, ['route' => ['candidate.professionals.update',$profile->hashid], 'method' => 'patch']) !!}
+                    @include('candidate.professional.field')
                     {!! Form::close() !!}
                 </div>
             </div>

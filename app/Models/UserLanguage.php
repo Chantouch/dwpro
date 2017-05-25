@@ -36,4 +36,12 @@ class UserLanguage extends Model
             'level.required' => 'Please choose a level of what you can',
         ];
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function language()
+    {
+        return $this->belongsTo(Language::class);
+    }
 }

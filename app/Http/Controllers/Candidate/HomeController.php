@@ -14,6 +14,7 @@ use App\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 use Vinkla\Hashids\HashidsManager;
 use Validator;
 use DB;
@@ -57,11 +58,13 @@ class HomeController extends Controller
         $skill_year = \Helper::skill_year();
         $job_roles = Functions::where('status', 1)->orderBy('name')->pluck('name', 'id');
         $levels = Level::where('status', 1)->orderBy('name')->pluck('name', 'id');
+        $year_exp = \Helper::year_exp();
+        $professional_level = \Helper::professional_level();
         return view('candidate.home',
             compact(
                 'title', 'progress', 'auth', 'cd_status', 'contract_type',
                 'desired_salary', 'industries', 'cities', 'language_level', 'languages',
-                'skill_level', 'skill_year', 'job_roles', 'levels'
+                'skill_level', 'skill_year', 'job_roles', 'levels', 'year_exp', 'professional_level'
             )
         );
     }
@@ -127,7 +130,6 @@ class HomeController extends Controller
     }
 
     /**
-     * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit()
@@ -140,11 +142,16 @@ class HomeController extends Controller
         return view('candidate.edit', compact('auth', 'progress', 'profile'));
     }
 
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request)
     {
         try {
             $data = $request->all();
-            $validator = Validator::make($data, UserProfile::rule(), UserProfile::message());
+            $validator = Validator::make($data, UserProfile::rule_cover(), UserProfile::message_cover());
             if ($validator->fails()) {
                 return redirect()->back()->withInput()->withErrors($validator);
             }
@@ -157,4 +164,5 @@ class HomeController extends Controller
             return redirect()->back()->with('error', 'Error while update your profile.');
         }
     }
+
 }
